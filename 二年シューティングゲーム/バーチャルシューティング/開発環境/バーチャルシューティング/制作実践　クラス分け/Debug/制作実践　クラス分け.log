@@ -1,0 +1,9 @@
+﻿  button.cpp
+  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+c:\users\s-jobi-035\documents\visual studio 2015\projects\制作実践　クラス分け\制作実践　クラス分け\main.h(33): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
+  c:\program files (x86)\microsoft directx sdk (june 2010)\include\dinput.h(42): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
+c:\users\s-jobi-035\documents\visual studio 2015\projects\制作実践　クラス分け\制作実践　クラス分け\scene.h(12): warning C4005: 'MAX_PRIORITY': マクロが再定義されました。
+  c:\program files (x86)\windows kits\8.1\include\um\winspool.h(307): note: 'MAX_PRIORITY' の以前の定義を確認してください
+c:\users\s-jobi-035\documents\visual studio 2015\projects\制作実践　クラス分け\制作実践　クラス分け\button.cpp(234): warning C4244: '引数': 'LONG' から 'FLOAT' への変換です。データが失われる可能性があります。
+  制作実践　クラス分け.vcxproj -> C:\Users\S-JoBi-035\documents\visual studio 2015\Projects\制作実践　クラス分け\Debug\制作実践　クラス分け.exe
+  制作実践　クラス分け.vcxproj -> C:\Users\S-JoBi-035\documents\visual studio 2015\Projects\制作実践　クラス分け\Debug\制作実践　クラス分け.pdb (Full PDB)

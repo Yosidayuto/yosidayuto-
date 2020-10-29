@@ -1,0 +1,9 @@
+﻿  model.cpp
+c:\users\s-jobi-035\desktop\3dプログラム\model.cpp(294): warning C4305: '引数': 'double' から 'FLOAT' へ切り詰めます。
+c:\users\s-jobi-035\desktop\3dプログラム\model.cpp(309): warning C4305: '引数': 'double' から 'FLOAT' へ切り詰めます。
+c:\users\s-jobi-035\desktop\3dプログラム\model.cpp(314): warning C4305: '引数': 'double' から 'FLOAT' へ切り詰めます。
+c:\users\s-jobi-035\desktop\3dプログラム\model.cpp(335): warning C4244: '+=': 'double' から 'float' への変換です。データが失われる可能性があります。
+  magic_ui.cpp
+  コードを生成中...
+  3D.vcxproj -> C:\Users\S-JoBi-035\Desktop\3Dプログラム\Debug\3D.exe
+  3D.vcxproj -> C:\Users\S-JoBi-035\Desktop\3Dプログラム\Debug\3D.pdb (Full PDB)

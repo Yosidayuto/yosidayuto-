@@ -1,0 +1,5 @@
+﻿  enemy.cpp
+c:\users\s-jobi-035\documents\visual studio 2015\projects\3dチーム制作\3dチーム制作\enemy.cpp(123): warning C4305: '引数': 'double' から 'FLOAT' へ切り詰めます。
+c:\users\s-jobi-035\documents\visual studio 2015\projects\3dチーム制作\3dチーム制作\enemy.cpp(330): warning C4715: 'GetEnemy': 値を返さないコントロール パスがあります。
+  3Dチーム制作.vcxproj -> C:\Users\S-JoBi-035\documents\visual studio 2015\Projects\3Dチーム制作\Debug\3Dチーム制作.exe
+  3Dチーム制作.vcxproj -> C:\Users\S-JoBi-035\documents\visual studio 2015\Projects\3Dチーム制作\Debug\3Dチーム制作.pdb (Full PDB)

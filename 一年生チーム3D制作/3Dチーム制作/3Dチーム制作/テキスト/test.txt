@@ -1,0 +1,360 @@
+MOTIONSET
+	LOOP = 1		
+	NUM_KEY = 2		
+
+	KEYSET			
+		FRAME = 40
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.03 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 -0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 -0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 -0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+	END_KEYSET
+
+	KEYSET			
+		FRAME = 40
+		KEY
+			POS = 0.00 -1.00 0.00
+			ROT = -0.03 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.06 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.06 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 -0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 -0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.0 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 1.00 0.00
+			ROT = 0.00 -0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 -0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 1.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.0 0.00 0.00
+		END_KEY
+	END_KEYSET
+END_MOTIONSET
+
+
+
+
+MOTIONSET
+	LOOP = 1		
+	NUM_KEY = 4
+
+	KEYSET			
+		FRAME = 20
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.00 0.15 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 -0.15 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 -0.35 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.50 -0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.50 0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 1.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.50 0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.50 -0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+	END_KEYSET
+
+	KEYSET			
+		FRAME = 20
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.00 -0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 -0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.00 0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.00 0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 -0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+	END_KEYSET
+
+	KETSET
+		FRAME = 20
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.00 -0.15 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.15 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.00 0.35 0.00 
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.50 -0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 1.00 0.00 -0.00 
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.50 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.50 0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.00 0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.50 -0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+	END_KEYSET
+
+	KEYSET
+		FRAME = 20
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.00 -0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 -0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.00 0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.00 0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = -0.00 0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 -0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 -0.00 0.00
+		END_KEY
+
+		KEY
+			POS = 0.00 0.00 0.00
+			ROT = 0.00 0.00 0.00
+		END_KEY
+	END_KEYSET
+END_MOTIONSET

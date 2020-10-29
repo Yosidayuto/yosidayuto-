@@ -1,0 +1,66 @@
+﻿  title.cpp
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\title.cpp(28): warning C4101: 'nCntTitle': ローカル変数は 1 度も使われていません。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\title.cpp(178): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\title.cpp(185): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+  spawn.cpp
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\spawn.cpp(17): warning C4244: '引数': 'time_t' から 'unsigned int' への変換です。データが失われる可能性があります。
+  score.cpp
+  result.cpp
+  player.cpp
+  main.cpp
+  life.cpp
+  Item.cpp
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\item.cpp(142): warning C4305: '引数': 'double' から 'FLOAT' へ切り詰めます。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\item.cpp(96): warning C4101: 'nCntPlayer': ローカル変数は 1 度も使われていません。
+  input.cpp
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\input.cpp(50): warning C4353: 非標準の拡張機能が使用: 関数式として定数 0 が使用されています。本来の '__noop' 関数を使用してください
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\input.cpp(56): warning C4353: 非標準の拡張機能が使用: 関数式として定数 0 が使用されています。本来の '__noop' 関数を使用してください
+  game.cpp
+  fade.cpp
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\fade.cpp(67): warning C4101: 'nCntFade': ローカル変数は 1 度も使われていません。
+  explosion.cpp
+  enemy.cpp
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\enemy.cpp(31): warning C4244: '引数': 'time_t' から 'unsigned int' への変換です。データが失われる可能性があります。
+  effect.cpp
+  bullet.cpp
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bullet.cpp(108): warning C4101: 'nCntPlayer': ローカル変数は 1 度も使われていません。
+  bombSaid.cpp
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(165): error C2065: 'g_aLife': 定義されていない識別子です。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(165): error C2228: '.pos' の左側はクラス、構造体、共用体でなければなりません
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(165): error C2228: '.x' の左側はクラス、構造体、共用体でなければなりません
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(165): error C2065: 'LIFE_SION_X': 定義されていない識別子です。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(165): error C2065: 'nCntLife': 定義されていない識別子です。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(165): error C2228: '.y' の左側はクラス、構造体、共用体でなければなりません
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(165): error C2065: 'LIFE_SION_Y': 定義されていない識別子です。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(165): error C2440: '<function-style-cast>': 'float' から 'D3DXVECTOR3' に変換できません。
+  c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(165): note: コンストラクターはソース型を持てません、またはコンストラクターのオーバーロードの解決があいまいです。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(166): error C2065: 'g_aLife': 定義されていない識別子です。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(166): error C2228: '.pos' の左側はクラス、構造体、共用体でなければなりません
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(166): error C2228: '.x' の左側はクラス、構造体、共用体でなければなりません
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(166): error C2065: 'LIFE_SION_X': 定義されていない識別子です。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(166): error C2065: 'nCntLife': 定義されていない識別子です。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(166): error C2228: '.y' の左側はクラス、構造体、共用体でなければなりません
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(166): error C2065: 'LIFE_SION_Y': 定義されていない識別子です。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(166): error C2440: '<function-style-cast>': 'float' から 'D3DXVECTOR3' に変換できません。
+  c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(166): note: コンストラクターはソース型を持てません、またはコンストラクターのオーバーロードの解決があいまいです。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(167): error C2065: 'g_aLife': 定義されていない識別子です。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(167): error C2065: 'nCntLife': 定義されていない識別子です。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(167): error C2228: '.pos' の左側はクラス、構造体、共用体でなければなりません
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(167): error C2228: '.x' の左側はクラス、構造体、共用体でなければなりません
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(167): error C2065: 'LIFE_SION_X': 定義されていない識別子です。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(167): error C2228: '.y' の左側はクラス、構造体、共用体でなければなりません
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(167): error C2065: 'LIFE_SION_Y': 定義されていない識別子です。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(167): error C2440: '<function-style-cast>': 'float' から 'D3DXVECTOR3' に変換できません。
+  c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(167): note: コンストラクターはソース型を持てません、またはコンストラクターのオーバーロードの解決があいまいです。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(168): error C2065: 'g_aLife': 定義されていない識別子です。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(168): error C2065: 'nCntLife': 定義されていない識別子です。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(168): error C2228: '.pos' の左側はクラス、構造体、共用体でなければなりません
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(168): error C2228: '.x' の左側はクラス、構造体、共用体でなければなりません
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(168): error C2065: 'LIFE_SION_X': 定義されていない識別子です。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(168): error C2228: '.y' の左側はクラス、構造体、共用体でなければなりません
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(168): error C2065: 'LIFE_SION_Y': 定義されていない識別子です。
+c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(168): error C2440: '<function-style-cast>': 'float' から 'D3DXVECTOR3' に変換できません。
+  c:\users\s-jobi-035\desktop\就職作品\一年生　シューティングゲーム\シューティング　メイン\bombsaid.cpp(168): note: コンストラクターはソース型を持てません、またはコンストラクターのオーバーロードの解決があいまいです。
+  bomb.cpp
+  bg.cpp
+  コードを生成中...

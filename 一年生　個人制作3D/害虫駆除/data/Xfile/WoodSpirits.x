@@ -2364,7 +2364,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "./Xファイル/Xファイル画像/木目テクスチャ.jpg";
+    "data/image/GrassTexture.jpg";
    }
   }
   Material {

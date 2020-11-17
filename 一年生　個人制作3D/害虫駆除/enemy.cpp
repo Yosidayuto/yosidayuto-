@@ -30,7 +30,7 @@ int g_nNumber=0;
 FILE g_FileEnemy[ENEMY_PARTS_MAX] =
 {
 	{ "data/Xfile/slime.x"},
-	{ "data/Xfile/InflammatoryMonsterx"},
+	{ "data/Xfile/InflammatoryMonsterx.x"},
 	{ "data/Xfile/WoodSpirits.x"},
 	{ "data/Xfile/UFO.x" },
 };

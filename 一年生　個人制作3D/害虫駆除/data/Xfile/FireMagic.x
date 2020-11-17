@@ -690,7 +690,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.670000;0.670000;0.670000;;
    TextureFilename {
-    "./Xファイル/Xファイル画像/炎のテクスチャ.jpg";
+    "data/image/PhlogisticTexture.jpg";
    }
   }
  }

@@ -11853,7 +11853,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "./Xファイル/Xファイル画像/地面　テクスチャ.jpg";
+    "data/image/GroundTexture.jpg";
    }
   }
   Material {
@@ -11868,7 +11868,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "./Xファイル/Xファイル画像/岩　テクスチャ.jpg";
+    "data/image/RockTexture.jpg";
    }
   }
   Material {
@@ -11877,7 +11877,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "./Xファイル/Xファイル画像/岩　テクスチャ.jpg";
+    "data/image/RockTexture.jpg";
    }
   }
   Material {
@@ -11886,7 +11886,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "./Xファイル/Xファイル画像/岩　テクスチャ.jpg";
+    "data/image/RockTexture.jpg";
    }
   }
   Material {
@@ -11895,7 +11895,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "./Xファイル/Xファイル画像/岩　テクスチャ.jpg";
+    "data/image/RockTexture.jpg";
    }
   }
  }

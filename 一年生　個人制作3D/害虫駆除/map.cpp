@@ -16,7 +16,7 @@ void InitMap(void)
 	
 		/*Xƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ*/
 		D3DXLoadMeshFromX(
-			"deta/Xfile/Stage.x",
+			"data/Xfile/Stage.x",
 			D3DXMESH_MANAGED,
 			pDevice,
 			NULL,

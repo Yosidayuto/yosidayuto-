@@ -1521,7 +1521,7 @@ Mesh {
    0.000000;0.000000;0.000000;;
    0.000000;0.000000;0.000000;;
    TextureFilename {
-    "白　木材テクスチャ.jpg";
+    "data/image/GrassTexture.jpg";
    }
   }
  }

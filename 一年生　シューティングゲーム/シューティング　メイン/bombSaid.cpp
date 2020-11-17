@@ -1,11 +1,11 @@
 #include"bomuSaid.h"
 #include"main.h"
 #include"player.h"
+
 LPDIRECT3DTEXTURE9 g_pTexturBomuSaid = NULL;//テクスチャへのポインター
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBomuSaid = NULL;//バッファへのポインター
 
 BOMUSAID g_aBomuSaid[MAX_BOMUSAID];
-
 void InintBomuSaid(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
@@ -130,7 +130,7 @@ void UpdateBomuSaid(void)
 	//頂点データをアンロックする
 	g_pVtxBomuSaid->Unlock();
 }
-void DrawLife(void)
+void DrawBomuSaid(void)
 {
 	int nCntBomuSaid;
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
@@ -146,7 +146,7 @@ void DrawLife(void)
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, nCntBomuSaid * 4, NUM_POLYGON);
 	}
 }
-void SetLife(D3DXVECTOR3 pos)
+void SetBomuSaid(D3DXVECTOR3 pos)
 {
 	int nCntBomuSaid;
 	int nCntPos;
@@ -162,10 +162,10 @@ void SetLife(D3DXVECTOR3 pos)
 			for (nCntPos = 0; nCntPos < MAX_BOMUSAID; nCntPos = nCntPos + 4)
 			{
 				/*頂点座標の設定（右回りで設定する*/
-				pVtx[0 + nCntPos].pos = D3DXVECTOR3(g_aLife[nCntBomuSaid].pos.x + (nCntzi)+(-LIFE_SION_X / 2), g_aLife[nCntLife].pos.y + (-LIFE_SION_Y / 2), 0.0f);
-				pVtx[1 + nCntPos].pos = D3DXVECTOR3(g_aLife[nCntBomuSaid].pos.x + (nCntzi)+(LIFE_SION_X / 2), g_aLife[nCntLife].pos.y + (-LIFE_SION_Y / 2), 0.0f);
-				pVtx[2 + nCntPos].pos = D3DXVECTOR3(g_aLife[nCntLife].pos.x + (nCntzi)+(-LIFE_SION_X / 2), g_aLife[nCntLife].pos.y + (LIFE_SION_Y / 2), 0.0f);
-				pVtx[3 + nCntPos].pos = D3DXVECTOR3(g_aLife[nCntLife].pos.x + (nCntzi)+(LIFE_SION_X / 2), g_aLife[nCntLife].pos.y + (LIFE_SION_Y / 2), 0.0f);
+				pVtx[0 + nCntPos].pos = D3DXVECTOR3(g_aBomuSaid[nCntBomuSaid].pos.x + (nCntzi)+(-BOMUSAID_SION_X / 2), g_aBomuSaid[nCntBomuSaid].pos.y + (-BOMUSAID_SION_Y / 2), 0.0f);
+				pVtx[1 + nCntPos].pos = D3DXVECTOR3(g_aBomuSaid[nCntBomuSaid].pos.x + (nCntzi)+(BOMUSAID_SION_X / 2), g_aBomuSaid[nCntBomuSaid].pos.y + (-BOMUSAID_SION_Y / 2), 0.0f);
+				pVtx[2 + nCntPos].pos = D3DXVECTOR3(g_aBomuSaid[nCntBomuSaid].pos.x + (nCntzi)+(-BOMUSAID_SION_X / 2), g_aBomuSaid[nCntBomuSaid].pos.y + (BOMUSAID_SION_Y / 2), 0.0f);
+				pVtx[3 + nCntPos].pos = D3DXVECTOR3(g_aBomuSaid[nCntBomuSaid].pos.x + (nCntzi)+(BOMUSAID_SION_X / 2), g_aBomuSaid[nCntBomuSaid].pos.y + (BOMUSAID_SION_Y / 2), 0.0f);
 				nCntzi += 50;
 				/*使用している状態にする*/
 				g_aBomuSaid[nCntPos].bUse = true;

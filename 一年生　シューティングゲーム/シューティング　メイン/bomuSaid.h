@@ -5,6 +5,7 @@
 #define BOMUSAID_SION_Y (50)
 #define BOMUSAID_SION_X (30)
 
+
 #define MAX_BOMUSAID (3*4-1)//スコアパネルの最大数
 #include"main.h"
 /*構造体*/

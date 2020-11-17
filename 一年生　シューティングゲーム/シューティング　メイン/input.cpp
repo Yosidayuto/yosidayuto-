@@ -47,13 +47,13 @@ void Uninitkeyboard(void)
 		/*キーボードへのアクセス権を開放（入力制御終了）*/
 		g_pDevkeyboord->Unacquire();
 		g_pDevkeyboord->Release();
-		g_pDevkeyboord = NULL();
+		g_pDevkeyboord = NULL;
 	}
 	/*DireCtInputオブジェクトの開放*/
 	if (g_pInput != NULL)
 	{
 		g_pInput->Release();
-		g_pInput = NULL();
+		g_pInput = NULL;
 	}
 }
 /*------------------------*/

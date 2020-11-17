@@ -20,12 +20,12 @@ void InitFade(MODE modeNext)
 	VERTEX_2D *pVtx;//頂点情報へのポインター
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//pDevice->CreateVertexBuffer(sizeof(VERTEX_2D)*NUM_VERTEX,		//バッファサイズ
-	//	D3DUSAGE_WRITEONLY,											//(固定)
-	//	FVF_VERTEX_2D,												//頂点フォーマット
-	//	D3DPOOL_MANAGED,											//（固定）
-	//	&g_pVtxBuffFade,												//変数名が変わると変更が必要
-	//	NULL);
+	pDevice->CreateVertexBuffer(sizeof(VERTEX_2D)*NUM_VERTEX,		//バッファサイズ
+		D3DUSAGE_WRITEONLY,											//(固定)
+		FVF_VERTEX_2D,												//頂点フォーマット
+		D3DPOOL_MANAGED,											//（固定）
+		&g_pVtxBuffFade,												//変数名が変わると変更が必要
+		NULL);
 	g_pVtxBuffFade->Lock(0, 0, (void**)&pVtx, 0);//頂点データの範囲をロックし、頂点バッファへのポインタを取得
 
 	pVtx[0].pos = D3DXVECTOR3(0, 0, 0.0f);

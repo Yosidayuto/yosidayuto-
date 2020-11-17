@@ -21,7 +21,7 @@ FILE_MAGIC_UI g_FileMafic_Ui[MAGIC_UI_TEXTURE_MAX] =
 	{ "data/image/UI_MagicCover.png" },
 	{ "data/image/UI_Magic2.png" },
 	{ "data/image/Number.png" },
-	{ "data/image/UI_MagicCover,png" },
+	{ "data/image/UI_MagicCover.png" },
 };
 MAGIC_NUMBER g_Magic;
 void InintMafic_Ui(void)

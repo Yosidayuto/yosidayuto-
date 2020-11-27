@@ -1,0 +1,38 @@
+﻿  wait.cpp
+  ui.cpp
+  turn wait.cpp
+  tooth.cpp
+  title.cpp
+  tcp_client.cpp
+  sound.cpp
+  scene2d.cpp
+  scene.cpp
+  result.cpp
+  renderer.cpp
+  polygon.cpp
+c:\users\s-jobi-035\desktop\10月2日\オンライン利用技術　チーム製作(ゲーム)\polygon.cpp(139): warning C4244: '引数': 'LONG' から 'FLOAT' への変換です。データが失われる可能性があります。
+  mouse_pointer.cpp
+  manager.cpp
+  main.cpp
+  load.cpp
+c:\users\s-jobi-035\desktop\10月2日\オンライン利用技術　チーム製作(ゲーム)\load.cpp(17): warning C4244: '=': 'float' から 'int' への変換です。データが失われる可能性があります。
+c:\users\s-jobi-035\desktop\10月2日\オンライン利用技術　チーム製作(ゲーム)\load.cpp(54): warning C4244: '引数': 'int' から 'FLOAT' への変換です。データが失われる可能性があります。
+  input_mouse.cpp
+c:\users\s-jobi-035\desktop\10月2日\オンライン利用技術　チーム製作(ゲーム)\input_mouse.cpp(11): warning C4244: '=': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+c:\users\s-jobi-035\desktop\10月2日\オンライン利用技術　チーム製作(ゲーム)\input_mouse.cpp(12): warning C4244: '=': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+c:\users\s-jobi-035\desktop\10月2日\オンライン利用技術　チーム製作(ゲーム)\input_mouse.cpp(34): warning C4244: '=': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+c:\users\s-jobi-035\desktop\10月2日\オンライン利用技術　チーム製作(ゲーム)\input_mouse.cpp(35): warning C4244: '=': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+  input_keyboard.cpp
+  input.cpp
+  game.cpp
+  コードを生成中...
+  コンパイル中...
+  fade.cpp
+  die screen.cpp
+  death.cpp
+  communication.cpp
+  clean.cpp
+  bg.cpp
+  コードを生成中...
+  オンライン利用技術　チーム製作(ゲーム).vcxproj -> C:\Users\S-JoBi-035\Desktop\10月2日\Debug\オンライン利用技術　チーム製作(ゲーム).exe
+  オンライン利用技術　チーム製作(ゲーム).vcxproj -> C:\Users\S-JoBi-035\Desktop\10月2日\Debug\オンライン利用技術　チーム製作(ゲーム).pdb (Full PDB)

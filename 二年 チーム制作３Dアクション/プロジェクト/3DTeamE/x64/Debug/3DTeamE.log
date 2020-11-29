@@ -1,0 +1,5 @@
+﻿  player.cpp
+c:\users\s-jobi-035\desktop\新しいフォルダー\teame2020\プロジェクト\3dteame\player.cpp(712): warning C4244: '引数': 'int' から 'FLOAT' への変換です。データが失われる可能性があります。
+c:\users\s-jobi-035\desktop\新しいフォルダー\teame2020\プロジェクト\3dteame\player.cpp(871): warning C4244: '引数': 'double' から 'FLOAT' への変換です。データが失われる可能性があります。
+  3DTeamE.vcxproj -> C:\Users\S-JoBi-035\Desktop\新しいフォルダー\TeamE2020\プロジェクト\x64\Debug\3DTeamE.exe
+  3DTeamE.vcxproj -> C:\Users\S-JoBi-035\Desktop\新しいフォルダー\TeamE2020\プロジェクト\x64\Debug\3DTeamE.pdb (Full PDB)

@@ -1,4 +1,0 @@
-﻿  fade.cpp
-c:\users\s-jobi-035\desktop\制作作品\一年生　シューティングゲーム\シューティング　メイン\fade.cpp(67): warning C4101: 'nCntFade': ローカル変数は 1 度も使われていません。
-  シューティング　メイン.vcxproj -> C:\Users\S-JoBi-035\Desktop\制作作品\一年生　シューティングゲーム\シューティング　メイン\Debug\シューティング　メイン.exe
-  シューティング　メイン.vcxproj -> C:\Users\S-JoBi-035\Desktop\制作作品\一年生　シューティングゲーム\シューティング　メイン\Debug\シューティング　メイン.pdb (Full PDB)

@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// スコア処理 [polygon.h]
+// 牙の並び処理 [polygon.h]
 // Author : 俵谷 健太郎
 //
 //=============================================================================
@@ -37,12 +37,12 @@ public:
 	void Update(void);								// 更新処理
 	void Draw(void);								// 描画処理
 	int Touch(void);								// タッチ処理
-	void TouchCol(int nTooth);
-	static int GetTooth(void) { return nCountTooth; };
+	void TouchCol(int nTooth);						// カラー処理
+	static int GetTooth(void);						// 歯のゲッター処理
 private:
 	CTooth *m_apTooth[MAX_NUMBER];					// ナンバーのポインタ
 	D3DXVECTOR3 m_pos;								// 位置
-	static int	nCountTooth;
+	static int	nCountTooth;						// 牙の数
 };
 
 

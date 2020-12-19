@@ -22,14 +22,14 @@ public:
 	~CSound();												// デストラクタ
 	typedef enum
 	{
-		SOUND_LABEL_BGM_TITLE = 0,								// タイトルBGM
-		SOUND_LABEL_BGM_LOAD,									// ロードBGM
-		SOUND_LABEL_BGM_GAME,									// ゲームBGM
-		SOUND_LABEL_BGM_RESULT,									// リザルトBGM
-		SOUND_LABEL_SE_BUTTON,									// ボタンSE
-		SOUND_LABEL_SE_CLEAN,									// 掃除SE
-		SOUND_LABEL_SE_BYTE,									// 噛みつきSE
-		SOUND_LABEL_SE_WINNER,									// 勝者SE
+		SOUND_LABEL_BGM_TITLE = 0,							// タイトルBGM
+		SOUND_LABEL_BGM_LOAD,								// ロードBGM
+		SOUND_LABEL_BGM_GAME,								// ゲームBGM
+		SOUND_LABEL_BGM_RESULT,								// リザルトBGM
+		SOUND_LABEL_SE_BUTTON,								// ボタンSE
+		SOUND_LABEL_SE_CLEAN,								// 掃除SE
+		SOUND_LABEL_SE_BYTE,								// 噛みつきSE
+		SOUND_LABEL_SE_WINNER,								// 勝者SE
 		SOUND_LABEL_MAX,
 	} SOUND_LABEL;											// サウンドファイル
 

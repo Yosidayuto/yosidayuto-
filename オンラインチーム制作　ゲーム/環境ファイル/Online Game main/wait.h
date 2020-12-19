@@ -49,5 +49,5 @@ private:
 };
 
 
-#endif // !_WAIT_H_
+#endif
 

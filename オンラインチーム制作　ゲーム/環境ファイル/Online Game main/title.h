@@ -12,9 +12,6 @@
 //*****************************************************************************
 #define MAX_TITLE	(1)
 #define TITLE1_TEXTURE	"data/TEXTURE/title001.png"		// タイトル1のテクスチャパス
-//#define TITLE2_TEXTURE	"data/TEXTURE/bg101.png"		// タイトル2のテクスチャパス
-//#define TITLE3_TEXTURE	"data/TEXTURE/bg102.png"		// タイトル3のテクスチャパス
-
 //*****************************************************************************
 // ヘッダファイルのインクルード
 //*****************************************************************************
@@ -32,23 +29,23 @@ class CScene2D;
 class CTitle : public CScene
 {
 public:
-	CTitle();												// コンストラクタ
-	~CTitle();												// デストラクタ
-	static HRESULT Load(void);								// テクスチャ読み込み
-	static void Unload(void);								// テクスチャ破棄
-	static CTitle *Create(D3DXVECTOR3 size);				// 作成処理
-	HRESULT Init(D3DXVECTOR3 size);							// 初期化処理
-	void Uninit(void);										// 終了処理
-	void Update(void);										// 更新処理
-	void Draw(void);										// 描画処理
+	CTitle();									// コンストラクタ
+	~CTitle();									// デストラクタ
+	static HRESULT Load(void);					// テクスチャ読み込み
+	static void Unload(void);					// テクスチャ破棄
+	static CTitle *Create(D3DXVECTOR3 size);	// 作成処理
+	HRESULT Init(D3DXVECTOR3 size);				// 初期化処理
+	void Uninit(void);							// 終了処理
+	void Update(void);							// 更新処理
+	void Draw(void);							// 描画処理
 
 private:
-	static LPDIRECT3DTEXTURE9 m_apTexture[MAX_TITLE];		// テクスチャのポインタ
-	CScene2D *m_apScene2D[MAX_TITLE];						// Scene2Dのポインタ
-	D3DXVECTOR3 m_pos;										// 位置
+	static LPDIRECT3DTEXTURE9 m_apTexture;		// テクスチャのポインタ
+	CScene2D *m_apScene2D;						// Scene2Dのポインタ
+	D3DXVECTOR3 m_pos;							// 位置
 
 };
 
 
 
-#endif // !_TITLE_H_
+#endif

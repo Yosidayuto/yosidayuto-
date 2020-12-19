@@ -7,7 +7,6 @@
 #include "scene2d.h"
 #include "input_keyboard.h"
 #include "manager.h"
-//#include "sound.h"
 
 
 //=============================================================================
@@ -196,11 +195,6 @@ void CScene2D::SetTexPosition(int nCount, float nPattern)
 	m_pVtxBuff->Lock(0, 0, (void**)&pVtx, 0);
 
 	//テクスチャ座標の設定
-	//pVtx[0].tex = D3DXVECTOR2(nCount*nPattern, 0.0f);
-	//pVtx[1].tex = D3DXVECTOR2(nCount*nPattern + nPattern, 0.0f);
-	//pVtx[2].tex = D3DXVECTOR2(nCount*nPattern, 1.0f);
-	//pVtx[3].tex = D3DXVECTOR2(nCount*nPattern + nPattern, 1.0f);
-
 	pVtx[0].tex = D3DXVECTOR2((nPattern) / nCount, 0.0f);
 	pVtx[1].tex = D3DXVECTOR2((nPattern + 1) / nCount, 0.0f);
 	pVtx[2].tex = D3DXVECTOR2((nPattern) / nCount, 1.0f);

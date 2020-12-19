@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // リザルト処理 [result.cpp]
-// Author : 俵谷 健太郎
+// Author : 俵谷健太郎　吉田悠人
 //
 //=============================================================================
 #include "result.h"
@@ -132,21 +132,16 @@ HRESULT CResult::Init(D3DXVECTOR3 size)
 			{
 			case 0:
 				CUi::Create(D3DXVECTOR3(SCREEN_WIDTH / 2, 250, 0), D3DXVECTOR3(400, 50, 0), CUi::TEX_WINS_1P);
-
 				break;
 			case 1:
 				CUi::Create(D3DXVECTOR3(SCREEN_WIDTH / 2, 250, 0), D3DXVECTOR3(400, 50, 0), CUi::TEX_WINS_2P);
-
 				break;
 			case 2:
 				CUi::Create(D3DXVECTOR3(SCREEN_WIDTH / 2, 250, 0), D3DXVECTOR3(400, 50, 0), CUi::TEX_WINS_3P);
-
 				break;
 			case 3:
 				CUi::Create(D3DXVECTOR3(SCREEN_WIDTH / 2, 250, 0), D3DXVECTOR3(400, 50, 0), CUi::TEX_WINS_4P);
-
 				break;
-
 			}
 
 		}

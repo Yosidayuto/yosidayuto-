@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// 計算処理 [polygon.cpp]
+// 牙の並び計算処理 [polygon.cpp]
 // Author : 俵谷 健太郎
 //
 //=============================================================================
@@ -136,8 +136,9 @@ int CPolygon::Touch(void)
 	{
 		if (m_apTooth[nCount] != NULL)
 		{
+			//マウスポインター取得
 			D3DXVECTOR3 MousePos = D3DXVECTOR3((float)pMouse->GetMousePos().x, (float)pMouse->GetMousePos().y, 0.0f);
-
+			//マウスポインターでクリックした処理
 			m_pos = m_apTooth[nCount]->GetPosition();
 			if (MousePos.x >= m_pos.x - (TEXTURE_WIDTH / 2) &&
 				MousePos.x < m_pos.x + (TEXTURE_WIDTH / 2) &&
@@ -163,6 +164,14 @@ int CPolygon::Touch(void)
 void CPolygon::TouchCol(int nTooth)
 {
 	m_apTooth[nTooth]->Color();
+}
+
+//=============================================================================
+// 歯のゲッター処理
+//=============================================================================
+int CPolygon::GetTooth(void)
+{
+	return nCountTooth;
 }
 
 

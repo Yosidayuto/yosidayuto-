@@ -1,3 +1,10 @@
+//=============================================================================
+//
+// 死亡画面処理 [die screen.cpp]
+// Author : 吉田悠人
+//
+//=============================================================================
+
 #include "manager.h"
 #include "die screen.h"
 #include "game.h"
@@ -69,9 +76,8 @@ CDieScreen * CDieScreen::Create(void)
 //=============================================================================
 HRESULT CDieScreen::Init(void)
 {
-
+	//テクスチャセット
 	BindTexture(m_pTexture);
-
 	//初期化処理
 	CScene2D::Init(D3DXVECTOR3(SCREEN_WIDTH , SCREEN_HEIGHT , 0));
 	//位置設定

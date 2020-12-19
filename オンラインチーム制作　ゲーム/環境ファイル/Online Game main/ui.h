@@ -26,7 +26,6 @@
 #define UI_TEXTURE_WAIT "data/TEXTURE/wait.png"// ポリゴンのテクスチャパス
 //死亡テクスチャ  _ 
 #define UI_TEXTURE_DEATH "data/TEXTURE/death.png"// ポリゴンのテクスチャパス
-
 //勝利テクスチャ
 #define UI_TEXTURE_WINS_1P "data/TEXTURE/Wins_1P.png"// ポリゴンのテクスチャパス
 #define UI_TEXTURE_WINS_2P "data/TEXTURE/Wins_2P.png"// ポリゴンのテクスチャパス
@@ -67,11 +66,11 @@ public:
 		TEX_WINS_4P,
 		TEX_MAX
 	}TEXTYPE;
-	CUi();													// コンストラクタ
-	~CUi();													// デストラクタ
-	static HRESULT Load(void);									// テクスチャ読み込み
-	static void Unload(void);									// テクスチャ破棄
-	static CUi *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, TEXTYPE TYPE);	// 作成処理
+	CUi();																// コンストラクタ
+	~CUi();																// デストラクタ
+	static HRESULT Load(void);											// テクスチャ読み込み
+	static void Unload(void);											// テクスチャ破棄
+	static CUi *Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, TEXTYPE TYPE);// 作成処理
 	TEXTYPE GetTexType(TEXTYPE TYPE);
 
 	HRESULT Init(D3DXVECTOR3 pos, D3DXVECTOR3 size);			// 初期化処理
@@ -83,8 +82,7 @@ public:
 private:
 
 	static LPDIRECT3DTEXTURE9 m_pTexture[TEX_MAX];				// テクスチャのポインタ
-
-	TEXTYPE TexType;
+	TEXTYPE TexType;											// タイプ
 	D3DXVECTOR3 m_pos;											// 位置
 	D3DXVECTOR3 m_size;											// サイズ
 	D3DXVECTOR3 m_Minsize;                                      // 最小サイズ

@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // ƒŒƒ“ƒ_ƒŠƒ“ƒOˆ— [renderer.cpp]
-// Author : •U’J Œ’‘¾˜Y
+// Author : •U’J Œ’‘¾˜Y@@
 //
 //=============================================================================
 #include "renderer.h"
@@ -196,8 +196,5 @@ void CRenderer::DrawFPS(void)
 	char str[256];
 
 	wsprintf(str, "FPS:%d\n", FPS());
-
-	// ƒeƒLƒXƒg•`‰æ
-	//m_pFont->DrawText(NULL, str, -1, &rect, DT_LEFT, D3DCOLOR_ARGB(0xff, 0xff, 0xff, 0xff));
 }
 

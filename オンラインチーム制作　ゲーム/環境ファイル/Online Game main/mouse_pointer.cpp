@@ -10,7 +10,9 @@
 //*****************************************************************************
 #define MAX_SIZE (50)
 
-
+//*****************************************************************************
+// インクルードヘッダー
+//*****************************************************************************
 #include "mouse_pointer.h"
 #include "input_mouse.h"
 #include "manager.h"
@@ -40,7 +42,6 @@ HRESULT CPointer::Load(void)
 {
 	//デバイスの取得
 	LPDIRECT3DDEVICE9 pD3DDevice = CManager::GetRenderer()->GetDevice();
-
 	// テクスチャの生成
 	D3DXCreateTextureFromFile(pD3DDevice, MOUSE_POINTER, &m_pTexture);
 
@@ -58,7 +59,6 @@ void CPointer::Unload(void)
 		m_pTexture->Release();
 		m_pTexture = NULL;
 	}
-
 }
 
 //=============================================================================
@@ -107,7 +107,9 @@ void CPointer::Update(void)
 {
 	//マウス取得
 	CInhMouse *pMouse = CManager::GetMouse();
+	//マウス位置取得
 	D3DXVECTOR3 MousePos = D3DXVECTOR3((float)pMouse->GetMousePos().x, (float)pMouse->GetMousePos().y, 0.0f);
+	//マウスポインター位置をセット
 	SetPosition(D3DXVECTOR3(MousePos.x, MousePos.y, 0.0f));
 }
 

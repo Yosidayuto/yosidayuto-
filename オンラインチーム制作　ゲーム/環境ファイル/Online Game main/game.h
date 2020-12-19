@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // ゲーム処理 [game.h]
-// Author : 俵谷 健太郎
+// Author : 俵谷 健太郎 吉田悠人
 //
 //=============================================================================
 #ifndef _GAME_H_
@@ -41,7 +41,7 @@ public:
 	}MODE;
 	typedef enum	//通信の状態
 	{
-		COMMUNICATTION_MODE_GAME = 0,				// 勝敗が決まったかの処理
+		COMMUNICATTION_MODE_GAME = 0,			// 勝敗が決まったかの処理
 		COMMUNICATTION_MODE_TURN,				// ターン処理
 		COMMUNICATTION_MODE_WINNER,				// 勝利時の処理
 		COMMUNICATTION_MODE_MAX
@@ -56,17 +56,17 @@ public:
 	void Uninit(void);							// 終了処理
 	void Update(void);							// 更新処理
 	void Draw(void);							// 描画処理
-	static void Load(void);							// 情報読み込み
-	static bool GetPlayerDie(int nPlayer) { return m_bPlayerDie[nPlayer]; }
+	static void Load(void);						// 情報読み込み
+	static bool GetPlayerDie(int nPlayer);		// プレイヤーが死んでいるかの確認関数
 private:
 	int				m_nTouch;					// タッチする歯
 	bool			m_bSelect;					// 歯の選択
 	static CCommunication	*pCommunication;	// コミュニケーションクラス
-	static CPolygon *pPolgon;
-	static bool		m_bLoad;					//ロード処理をしているか
-	CUi				*m_pUi;						//UIクラス
-	CDieScreen		*m_pDieScreen;				//死亡画面クラス
-	static bool		m_bPlayerDie[4];			//プレイヤー4人の状態
+	static CPolygon *pPolgon;					// 牙のポインタ
+	static bool		m_bLoad;					// ロード処理をしているか
+	CUi				*m_pUi;						// UIクラス
+	CDieScreen		*m_pDieScreen;				// 死亡画面クラス
+	static bool		m_bPlayerDie[4];			// プレイヤー4人の状態
 };
 
 

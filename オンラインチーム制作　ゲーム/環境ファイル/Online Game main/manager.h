@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // マネージャー処理 [manager.h]
-// Author : 俵谷 健太郎
+// Author : 俵谷 健太郎　吉田悠人
 //
 //=============================================================================
 #ifndef _MANAGER_H_
@@ -65,7 +65,7 @@ private:
 	static CPolygon *m_pPolygon;								// ポリゴンナンバーのポインタ
 	static CInhMouse *m_pInputMouse;							// マウスのポインタ
 	static CTitle *m_pTitle;									// タイトルのポインタ
-	static CLoad *m_pLoad;
+	static CLoad *m_pLoad;										// ロードのポインタ
 	static CGame *m_pGame;										// ゲームのポインタ
 	static CResult *m_pResult;									// リザルトのポインタ
 	static MODE m_mode;											// モードの変数
@@ -77,7 +77,7 @@ private:
 
 
 
-#endif // !_MANAGER_H_
+#endif
 
 
 

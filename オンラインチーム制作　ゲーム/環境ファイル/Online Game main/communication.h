@@ -69,7 +69,7 @@ public:
 	static bool GetbPlayer(void) { return m_bPlayer; }           //プレイヤーの使用状態取得
 	static bool GetabTooth(int nNum) { return m_abTooth[nNum]; } //歯の情報取得
 	static bool GetbRecv(void) { return m_bRecv; }
-	static void SetbRecv(void) { m_bRecv = false; }
+	static void SetbRecv(void) { m_bRecv = false; }				 //受信受け取り状況
 	static int  GetnTooth(void) { return nTooth; }
 	static int  GetnDie(void){ return nDie-1; }					//やられたプレイヤーの状態取得
 private:

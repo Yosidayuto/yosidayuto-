@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // 歯のテクスチャ処理 [tooth.h]
-// Author : 俵谷 健太郎
+// Author : 俵谷健太郎 若山言稀
 //
 //=============================================================================
 #ifndef _TOOTH_H_
@@ -39,9 +39,7 @@ public:
 	void SetRotation(float fAngle);								// テクスチャ回転
 
 private:
-
 	static LPDIRECT3DTEXTURE9 m_pTexture;						// テクスチャのポインタ
-
 	D3DXVECTOR3 m_pos;											// 位置
 	D3DXVECTOR3 m_size;											// サイズ
 };

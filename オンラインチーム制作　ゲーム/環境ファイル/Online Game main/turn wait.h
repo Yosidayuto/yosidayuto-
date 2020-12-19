@@ -1,3 +1,10 @@
+//=============================================================================
+//
+// ターン待ち処理 [turn wait.h]
+// Author : 吉田悠人
+//
+//=============================================================================
+
 #ifndef _TURN_WAIT_H_
 #define _TURN_WAIT_H_
 
@@ -40,5 +47,5 @@ private:
 	CScene2D *m_apScene2D[MAX_TURN_WAIT];					// Scene2Dのポインタ
 	D3DXVECTOR3 m_pos;										// 位置
 };
-#endif // !_TURN_WAIT_H_
+#endif
 

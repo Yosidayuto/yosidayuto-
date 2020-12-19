@@ -140,11 +140,4 @@ void CWait::Update(void)
 //=============================================================================
 void CWait::Draw(void)
 {
-	//for (int nCount = 0; nCount < MAX_TITLE; nCount++)
-	//{
-	//	if (m_apScene2D[nCount] != NULL)
-	//	{
-	//		m_apScene2D[nCount]->Draw();
-	//	}
-	//}
 }

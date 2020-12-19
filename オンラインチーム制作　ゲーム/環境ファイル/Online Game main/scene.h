@@ -54,8 +54,7 @@ private:
 	OBJTYPE m_objType;								// オブジェクトの種類
 };
 
-
-#endif // !_SCENE_H_
+#endif 
 
 
 

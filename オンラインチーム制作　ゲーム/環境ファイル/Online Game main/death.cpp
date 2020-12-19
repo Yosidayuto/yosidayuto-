@@ -12,7 +12,6 @@
 //=============================================================================
 LPDIRECT3DTEXTURE9 CDeath::m_pTexture = NULL;
 
-
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -81,8 +80,10 @@ HRESULT CDeath::Init(D3DXVECTOR3 size)
 {
 	CScene2D::Init(size);
 
+	//アニメーション情報セット
 	CScene2D::SetAnimation((float)m_nPatternAnime, DEATH_ANIMATION);
 
+	//テクスチャ割り当て
 	BindTexture(m_pTexture);
 
 	return S_OK;
@@ -105,12 +106,13 @@ void CDeath::Update(void)
 	//アニメーション速度
 	if (m_nCountAnime >= 4.5f)
 	{
+		//アニメーション情報セット
 		CScene2D::SetAnimation((float)m_nPatternAnime, DEATH_ANIMATION);
 
 		m_nPatternAnime++;
 
 		m_nCountAnime = 0;
-
+		//最大までカウントしたら
 		if (m_nPatternAnime >= DEATH_ANIMATION)
 		{
 			Uninit();

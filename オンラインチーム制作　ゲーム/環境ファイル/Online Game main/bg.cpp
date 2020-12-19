@@ -4,6 +4,9 @@
 // Author : 俵谷 健太郎
 //
 //=============================================================================
+//=============================================
+// ヘッダーファイル
+//=============================================
 #include "bg.h"
 #include "manager.h"
 #include "scene2d.h"
@@ -84,47 +87,41 @@ CBg * CBg::Create(D3DXVECTOR3 size)
 //=============================================================================
 HRESULT CBg::Init(D3DXVECTOR3 size)
 {
-	//for (int nCount = 0; nCount < MAX_TEXTURE; nCount++)
-	//{
-	//	m_apScene2D[nCount] = new CScene2D;
-	//	if (m_apScene2D[nCount] != NULL)
-	//	{
-	//		m_apScene2D[nCount]->BindTexture(m_apTexture[nCount]);
-	//		m_apScene2D[nCount]->Init(size);
-	//		m_pos = m_apScene2D[nCount]->GetPosition();
-	//		m_pos = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_CENTER_Y - 100, 0.0f);
-	//		m_apScene2D[nCount]->SetPosition(m_pos);
-	//	}
-	//}
-
-	int nCount;
-	for (nCount = 0; nCount < 4; nCount++)
+	for (int nCount = 0; nCount < 4; nCount++)
 	{
+		//インスタンス生成
 		m_apScene2D[nCount] = new CScene2D;
 		switch (nCount)
 		{
 		case 0:
+			//BG1_TEXTUREの初期化処理
 			m_apScene2D[nCount]->Init(size);
 			break;
 
 		case 1:
+			//BG2_TEXTUREの初期化処理
 			m_apScene2D[nCount]->Init(size / 2 + (size / 4));
 			break;
 
 		case 2:
+			//BG3_TEXTUREの初期化処理
 			m_apScene2D[nCount]->Init(size / 2 + (size / 4));
 			break;
 
 		case 3:
+			//BG4_TEXTUREの初期化処理
 			m_apScene2D[nCount]->Init(size / 2 + (size / 4));
 			break;
 
 		default:
 			break;
 		}
-		m_pos = m_apScene2D[nCount]->GetPosition();
+	
+		//位置設定
 		m_pos = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_CENTER_Y, 0.0f);
 		m_apScene2D[nCount]->SetPosition(m_pos);
+		
+		//テクスチャセット
 		m_apScene2D[nCount]->BindTexture(m_apTexture[nCount]);
 	}
 

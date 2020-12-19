@@ -1,3 +1,10 @@
+//=============================================================================
+//
+// ターン待ち処理 [turn wait.cpp]
+// Author : 吉田悠人
+//
+//=============================================================================
+
 #include "turn wait.h"
 #include "manager.h"
 #include "scene2d.h"
@@ -89,9 +96,13 @@ HRESULT CTurnWait::Init(D3DXVECTOR3 size)
 		if (m_apScene2D[nCount] == NULL)
 		{
 			m_apScene2D[nCount] = new CScene2D;
+			//テクスチャ設定
 			m_apScene2D[nCount]->BindTexture(m_apTexture[nCount]);
+			//初期化処理
 			m_apScene2D[nCount]->Init(size);
+			//位置取得
 			m_pos = m_apScene2D[nCount]->GetPosition();
+			//位置設定
 			m_pos = D3DXVECTOR3(SCREEN_CENTER_X, SCREEN_CENTER_Y, 0.0f);
 			m_apScene2D[nCount]->SetPosition(m_pos);
 		}
@@ -134,11 +145,4 @@ void CTurnWait::Update(void)
 //=============================================================================
 void CTurnWait::Draw(void)
 {
-	//for (int nCount = 0; nCount < MAX_TITLE; nCount++)
-	//{
-	//	if (m_apScene2D[nCount] != NULL)
-	//	{
-	//		m_apScene2D[nCount]->Draw();
-	//	}
-	//}
 }

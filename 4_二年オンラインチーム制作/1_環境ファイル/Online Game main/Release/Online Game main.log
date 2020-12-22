@@ -1,0 +1,32 @@
+﻿  bg.cpp
+  clean.cpp
+  communication.cpp
+  death.cpp
+  die screen.cpp
+  fade.cpp
+  game.cpp
+  input.cpp
+  input_keyboard.cpp
+  input_mouse.cpp
+  load.cpp
+  main.cpp
+  manager.cpp
+  mouse_pointer.cpp
+  polygon.cpp
+  renderer.cpp
+  result.cpp
+  scene.cpp
+  scene2d.cpp
+  sound.cpp
+  コンパイル中...
+  tcp_client.cpp
+  title.cpp
+  tooth.cpp
+  turn wait.cpp
+  ui.cpp
+  wait.cpp
+  コード生成しています。
+  All 331 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  コード生成が終了しました。
+  Online Game main.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\4_二年オンラインチーム制作\1_環境ファイル\Release\Online Game main.exe
+  Online Game main.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\4_二年オンラインチーム制作\1_環境ファイル\Release\Online Game main.pdb (Full PDB)

@@ -1,9 +1,0 @@
-﻿  main.cpp
-  コード生成しています。
-c:\users\s-jobi-035\desktop\就活\yosidayuto-\4_二年オンラインチーム制作\サーバファイル\環境ファイル\online game server\main.cpp(125): warning C4700: 初期化されていないローカル変数 'n' が使用されます
-  1 of 98 functions ( 1.0%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
-  コード生成が終了しました。
-  Online Game Server.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\4_二年オンラインチーム制作\サーバファイル\環境ファイル\Release\Online Game Server.exe
-  Online Game Server.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\4_二年オンラインチーム制作\サーバファイル\環境ファイル\Release\Online Game Server.pdb (Full PDB)

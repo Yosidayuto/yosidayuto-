@@ -81,7 +81,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	CManager *pManager = NULL;
 	//マネージャー生成
 	pManager = new CManager;
-	pManager->Init(hInstance, hWnd, false);
+	pManager->Init(hInstance, hWnd, true);
 
 	// 分解能を設定
 	timeBeginPeriod(1);

@@ -81,6 +81,7 @@ HRESULT CGame::Init(void)
 	m_Score->SetScore(CManager::GetScore());
 	CPointer::Create(CPointer::POINTER_TYPE_GAME);
 	m_EnemyCreate = ENEMY_CREATE_NONE;
+	m_nCountEnemy = 100;
 	switch (m_StageType)
 	{
 	case STAGE_TYPE_1:

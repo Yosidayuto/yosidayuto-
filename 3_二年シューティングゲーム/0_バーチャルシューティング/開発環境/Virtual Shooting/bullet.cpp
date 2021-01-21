@@ -57,12 +57,12 @@ HRESULT CBullet::Init(D3DXVECTOR3 move, BULLET_TYPE Type)
 	{
 		pSound->Play(CSound::LABEL_SE_SHOTS);
 		m_size = D3DXVECTOR3(BULLET_SIZE / 2, BULLET_SIZE / 2, 0.0f);
-		SetSizeition(m_size);
+		SetSize(m_size);
 	}
 	else if(m_Type == BULLET_TYPE_ENEMY)
 	{
 		m_size = D3DXVECTOR3(20, 20, 0.0f);
-		SetSizeition(m_size);
+		SetSize(m_size);
 	}
 	//初期化処理
 	CScene2d::Init();
@@ -85,14 +85,24 @@ void CBullet::Uninit(void)
 //更新処理
 //----------------------------------
 void CBullet::Update(void)
-{
+{	
+	//オブジェクト取得用
+	CScene* pTop[PRIORITY_MAX] = {};
+	//次チェックするオブジェクトのポインタ
+	CScene* pNext = NULL;
+
+	//topのアドレスを取得
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
+	{
+		pTop[nCount] = *(CScene::GetTop() + nCount);
+	}
+
 	//ポリゴンの位置取得
-	D3DXVECTOR3 pos = GetPosition();
+	D3DXVECTOR3 pos = GetPos();
 	if (m_Type== BULLET_TYPE_PLAYER)
 	{
 		//エフェクト生成
 		CEffect::Create(pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(BULLET_SIZE / 2, BULLET_SIZE, 0.0f), CEffect::EFFECT_TYPE_BULLET);
-
 	}
 
 
@@ -103,9 +113,7 @@ void CBullet::Update(void)
 	//更新処理
 	CScene2d::Update();
 	//ポリゴンの位置を渡す
-	SetPosition(pos);
-	//スコア取得
-	//CScore *pScore = CManager::GetScore();
+	SetPos(pos);
 
 	//射程距離
 	if (nLife <= 0)
@@ -124,23 +132,21 @@ void CBullet::Update(void)
 	if (nLife > 0)		//射程距離内
 	{
 		//バレット効果処理
-		for (int nCut = 0; nCut < MAX_DRAW; nCut++)
+		for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 		{
-			for (int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+			if (pTop[nCount] != NULL)
 			{
-				CScene *pScene = GetScene(nCut, nCntScene);
-				if (pScene != NULL)
+				pNext = pTop[nCount];
+				//その描画優先度のオブジェクトがなくなるまでループ
+				while (pNext != NULL)
 				{
-					OBJTYPE objType;
-					//タイプ取得
-					objType = pScene->GetObjType();
 					switch (m_Type)
 					{
 					case BULLET_TYPE_PLAYER:
-						if (objType == OBJ_TYPE_ENEMY)
+						if (pNext->GetObjType() == OBJ_TYPE_ENEMY)
 						{
-							D3DXVECTOR3 EnemeyPos = ((CScene2d*)pScene)->GetPosition();
-							D3DXVECTOR3 EnemeySize = ((CScene2d*)pScene)->GetSizeition();
+							D3DXVECTOR3 EnemeyPos = ((CScene2d*)pNext)->GetPos();
+							D3DXVECTOR3 EnemeySize = ((CScene2d*)pNext)->GetSize();
 							//当たり判定
 							if (EnemeyPos.x + EnemeySize.x/2 > pos.x
 								&& EnemeyPos.x - EnemeySize.x/2 < pos.x
@@ -148,19 +154,19 @@ void CBullet::Update(void)
 								&&EnemeyPos.y - EnemeySize.y/2 < pos.y)
 							{
 								//エネミーダメージ処理
-								if (typeid(*pScene) == typeid(CEnemy))
+								if (typeid(*pNext) == typeid(CEnemy))
 								{
 									//エクスプロージョン生成
 									CExplosion::Create(EnemeyPos);
 
-									((CEnemy*)pScene)->Damage(1);
+									((CEnemy*)pNext)->Damage(1);
 								}
-								else if (typeid(*pScene) == typeid(CBoss))
+								else if (typeid(*pNext) == typeid(CBoss))
 								{
 									//エクスプロージョン生成
 									CExplosion::Create(pos);
 
-									((CBoss*)pScene)->Damage(1);
+									((CBoss*)pNext)->Damage(1);
 								}
 								//バレット終了処理
 								Uninit();
@@ -169,10 +175,10 @@ void CBullet::Update(void)
 						}
 						break;
 					case BULLET_TYPE_ENEMY:
-						if (objType == OBJ_TYPE_PLAYER)
+						if (pNext->GetObjType() == OBJ_TYPE_PLAYER)
 						{
-							D3DXVECTOR3 PlayerPos = ((CScene2d*)pScene)->GetPosition();
-							D3DXVECTOR3 PlayerSize = ((CScene2d*)pScene)->GetSizeition();
+							D3DXVECTOR3 PlayerPos = ((CScene2d*)pNext)->GetPos();
+							D3DXVECTOR3 PlayerSize = ((CScene2d*)pNext)->GetSize();
 							//当たり判定
 							if (PlayerPos.x  > pos.x - m_size.x
 								&& PlayerPos.x  < pos.x + m_size.x
@@ -182,7 +188,7 @@ void CBullet::Update(void)
 								//エクスプロージョン生成
 								CExplosion::Create(PlayerPos);
 								//エネミー終了処理
-								((CPlayer*)pScene)->Damage(1);
+								((CPlayer*)pNext)->Damage(1);
 								//バレット終了処理
 								Uninit();
 								return;
@@ -192,6 +198,8 @@ void CBullet::Update(void)
 
 					}
 
+					//次のオブジェクトのポインタを更新
+					pNext = pNext->GetNext();
 				}
 			}
 		}
@@ -214,7 +222,7 @@ CBullet * CBullet::Create(D3DXVECTOR3 Pos, D3DXVECTOR3 move, BULLET_TYPE Type)
 {
 	CBullet *pBullet;
 	pBullet = new CBullet;
-	pBullet->Set(Pos);
+	pBullet->SetPos(Pos);
 	pBullet->Init(move, Type);
 	return pBullet;
 }

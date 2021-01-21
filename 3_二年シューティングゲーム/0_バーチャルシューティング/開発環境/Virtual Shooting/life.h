@@ -10,11 +10,12 @@
 //----------------------------------------------
 #define MAX_LIFE 8
 #define PRIORIT_LIFE 5
-//----------------------------------------------
-//前置処理
-//----------------------------------------------
+//=============================================================================
+//前方宣言
+//=============================================================================
 class CScene2d;
 class CUi;
+class CLifeUi;
 //------------------------------------
 //クラス処理
 //------------------------------------
@@ -24,8 +25,6 @@ public:
 	CLife(int nPriorit= 3);							//コンストラクタ
 	~CLife();							//デストラクタ
 
-	static HRESULT	Load(void);		//テクスチャ読み込み
-	static void		Unload(void);	//テクスチャの破棄
 	static CLife*	Create(D3DXVECTOR3 pos);	//生成処理
 
 	HRESULT			Init(void);		//初期化処理
@@ -37,8 +36,8 @@ public:
 	void			DownLife(int nLifeDown);	//ダメージを受けた時
 private:
 	static LPDIRECT3DTEXTURE9	m_apTexture;				//テクスチャへのポインタ
-	CScene2d					*m_apScene2D[MAX_LIFE];		//2Dポリゴンの数
 	CUi							*m_Ui;						//UIクラス
+	CLifeUi						*m_LifeUi[MAX_LIFE];					//ライフUI
 	int							nLife;						//ライフ量
 	D3DXVECTOR3					pos;						//位置
 };

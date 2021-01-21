@@ -89,9 +89,9 @@ HRESULT CTelopText::Init(void)
 	//メモリ確保
 	m_apScene2D = new CScene2d;
 	//位置
-	m_apScene2D->SetPosition(D3DXVECTOR3(SCREEN_WIDTH - 455, 20, 0.0f));
+	m_apScene2D->SetPos(D3DXVECTOR3(SCREEN_WIDTH - 455, 20, 0.0f));
 	//サイズ
-	m_apScene2D->SetSizeition(D3DXVECTOR3(775, 40, 0.0f));
+	m_apScene2D->SetSize(D3DXVECTOR3(775, 40, 0.0f));
 	//初期化処理
 	m_apScene2D->CScene2d::Init();
 	//テクスチャの設定

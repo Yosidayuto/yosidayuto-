@@ -21,7 +21,7 @@
 //静的メンバー変数
 //----------------------------------
 LPDIRECT3DTEXTURE9 CPlayer::m_pTexture = NULL;
-CPlayer::WEAPON_MODE CPlayer::m_Weapon[MAX_WEAPON] =
+WEAPON_MODE CPlayer::m_Weapon[MAX_WEAPON] =
 {
 	WEAPONS_MODE_BUTTOL,
 	WEAPONS_MODE_NONE
@@ -104,7 +104,7 @@ HRESULT CPlayer::Init(void)
 	}
 	
 	//サイズ
-	SetSizeition(D3DXVECTOR3(PLAYER_SIZE / 2, PLAYER_SIZE / 2, 0.0f));
+	SetSize(D3DXVECTOR3(PLAYER_SIZE / 2, PLAYER_SIZE / 2, 0.0f));
 	//初期化処理
 	CScene2d::Init();
 	//テクスチャの設定
@@ -135,7 +135,7 @@ void CPlayer::Update(void)
 	CInihKeyboard *pKeyboard = CManager::GetKeyboard();	//キーボード取得
 	CInihMouse *pMouse = CManager::GetMouse();			//マウス取得
 	D3DXVECTOR3 pos;
-	pos = GetPosition();
+	pos = GetPos();
 
 	if (pMouse->GetClick(0) == true)
 	{
@@ -174,7 +174,7 @@ void CPlayer::Update(void)
 	
 	pos += MoveLimit(pos, fAngle);
 	//座標更新
-	SetPosition(pos);
+	SetPos(pos);
 
 	CScene2d::Update();
 
@@ -197,7 +197,7 @@ void CPlayer::Draw(void)
 //=============================================================================
 void CPlayer::Set(D3DXVECTOR3 Pos)
 {
-	CScene2d::Set(Pos);
+	CScene2d::SetPos(Pos);
 }
 
 //=============================================================================
@@ -234,7 +234,7 @@ void CPlayer::StatasManage(void)
 	switch (Stats)
 	{
 	case STATS_MODE_NORMAL:
-		ColChange(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 		break;
 	case STATS_MODE_DAMAGE:
@@ -243,11 +243,11 @@ void CPlayer::StatasManage(void)
 		//ダメージカラー
 		if (nDamageTime % 25)
 		{
-			ColChange(D3DXCOLOR(1.0f, 0.5f, 0.5f, 0.0f));
+			SetCol(D3DXCOLOR(1.0f, 0.5f, 0.5f, 0.0f));
 		}
 		else
 		{
-			ColChange(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 		}
 
 		if (nDamageTime <= 0)
@@ -267,10 +267,10 @@ void CPlayer::StatasManage(void)
 		pSound->Play(CSound::LABEL_SE_DIE);
 		
 		//エクスプロージョン生成
-		CExplosion::Create(GetPosition());
+		CExplosion::Create(GetPos());
 
 		//セレクト移動
-		pFade->Set(CManager::GAME_MODE_SELECT);		
+		pFade->SetFade(GAME_MODE_SELECT);
 		
 		//終了処理
 		CPlayer::Uninit();

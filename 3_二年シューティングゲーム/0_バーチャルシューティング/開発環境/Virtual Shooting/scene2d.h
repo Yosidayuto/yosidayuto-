@@ -1,48 +1,59 @@
-#pragma once
-//----------------------------------------------
-//ヘッダーファイル
-//----------------------------------------------
+//=============================================================================
+//
+// 2Dシーン [scene2d.h]
+// Author : 吉田悠人
+//
+//=============================================================================
+#ifndef _SCENE2D_H_
+#define _SCENE2D_H_
+
+//=============================================================================
+// ヘッダファイルのインクルード
+//=============================================================================
 #include"main.h"	//メインヘッダー
 #include"scene.h"	//シーンファイル
-//----------------------------------------------
-//クラス
-//----------------------------------------------
+//=============================================================================
+// 前方宣言
+//=============================================================================
+typedef struct
+{
+	LPDIRECT3DTEXTURE9	m_pTexture;	// テクスチャへのポインタ
+	char*				m_cFileName;// ファイルの名前
+} TEXTURE_DATA;
+
+//=============================================================================
+//クラス定義
+//=============================================================================
 class CScene2d :public CScene
 {
 public:
 	
-	CScene2d(int nPriorit = 3);						//コンストラクタ
-	~CScene2d();					//デストラクタ
-	void BindTexture(LPDIRECT3DTEXTURE9 pTexture);	//テクスチャの読み込み処理
-	static CScene2d*
-		Create(D3DXVECTOR3 Pos);	//生成処理
-	HRESULT Init(void);				//初期化処理
-	void	Uninit(void);			//終了処理
-	void	Update(void);			//更新処理
-	void	Draw(void);				//描画処理
-	void	Set(D3DXVECTOR3 Pos);	//設置位置
+	CScene2d(int nPriorit = 3);					//コンストラクタ
+	~CScene2d();								//デストラクタ
+	static CScene2d*	Create(const D3DXVECTOR3 pos, const D3DXVECTOR3 size, const float frot, const LPDIRECT3DTEXTURE9 pTexture, const int nPriority);    // ポリゴン生成処理
+	HRESULT Init(void);							//初期化処理
+	void	Uninit(void);						//終了処理
+	void	Update(void);						//更新処理
+	void	Draw(void);							//描画処理
+	
 
-	void	TextureAnim(D3DXVECTOR2 *Texture);	//テクスチャアニメーション
-	void	SetRotate(void);			//ポリゴン回転
+	void	SetPos(D3DXVECTOR3 pos); 	//位置設置
+	void	SetRot(float frot);			//向き設定
+	void	SetSize(D3DXVECTOR3 size);	//サイズセット
+	void	SetCol(D3DXCOLOR col);		//カラーセット
 
-	void	SetPosition(D3DXVECTOR3 pos) { m_posPolygon = pos; }		//位置設置
-	D3DXVECTOR3 GetPosition(void) { return m_posPolygon; }				//位置取得
+	D3DXVECTOR3 GetPos(void);			//位置取得
+	D3DXVECTOR3 GetSize(void);			//サイズ取得
+	float		GetRot(void);			//向き取得
 
-
-	void	SetSizeition(D3DXVECTOR3 size) { m_sizePolygon = size; }	//サイズセット
-	D3DXVECTOR3 GetSizeition(void) { return m_sizePolygon; }			//サイズ取得
-
-	void	ColChange(D3DXCOLOR col);									//カラーセット
-
+	void	BindTexture(LPDIRECT3DTEXTURE9 pTexture);	//テクスチャの読み込み処理
+	void	TextureAnim(D3DXVECTOR2 *Texture);			//テクスチャアニメーション
 private:
-
-	D3DXVECTOR3				m_posPolygon;	// ポリゴンの位置
-	D3DXVECTOR3				m_sizePolygon;	// ポリゴンの大きさ
-
-	float					m_fLengthpos;	//頂点までの長さ	
-	float					m_fAngle;		//中心から頂点までの角度
-
 	LPDIRECT3DTEXTURE9		m_pTexture;		// テクスチャへのポインタ
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;		// 頂点バッファへのポインタ
-
+	D3DXVECTOR3				m_pos;			// ポリゴンの位置
+	D3DXVECTOR3				m_size;			// ポリゴンの大きさ
+	D3DCOLOR				m_col;			// ポリゴンのカラー
+	float					m_fRot;			// ポリゴンの向き
 };
+#endif

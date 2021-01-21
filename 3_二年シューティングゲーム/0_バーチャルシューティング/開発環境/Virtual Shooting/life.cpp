@@ -1,16 +1,17 @@
 //----------------------------------
 //ヘッダファイル
 //----------------------------------
-#include "life.h"		//ライフファイル
-#include "scene2d.h"	//シーン２D（2Dポリゴン）ファイル
-#include "manager.h"	//マネージャーファイル
-#include "renderer.h"	//レンダリングファイル	
-#include "ui.h"			//UIファイル
+#include "life.h"		
+#include "scene2d.h"	
+#include "manager.h"	
+#include "renderer.h"	
+#include "ui.h"			
+#include "life ui.h"
 //----------------------------------------------
 //マクロ定義
 //----------------------------------------------
 #define LIFE_SIZE_X (200.0f,20.0f)
-#define LIFE_SIZE_Y 30.0f
+#define LIFE_SIZE_Y (30.0f)
 
 //----------------------------------------------
 //静的メンバー変数
@@ -35,32 +36,6 @@ CLife::~CLife()
 }
 
 //----------------------------------
-//テクスチャ読み込み処理
-//----------------------------------
-HRESULT CLife::Load(void)
-{
-	//デバイス取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetObjects();
-	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice, "data/TEXTURE/Life_UI.png", &m_apTexture);
-	return S_OK;
-
-}
-
-//----------------------------------
-//テクスチャ破棄処理
-//----------------------------------
-void CLife::Unload(void)
-{
-	//テクスチャの破棄
-	if (m_apTexture != NULL)
-	{
-		m_apTexture->Release();
-		m_apTexture = NULL;
-	}
-}
-
-//----------------------------------
 //生成処理
 //----------------------------------
 CLife * CLife::Create(D3DXVECTOR3 pos)
@@ -79,16 +54,7 @@ HRESULT CLife::Init(void)
 {
 	for (int nCount = 0; nCount < MAX_LIFE; nCount++)
 	{
-		//メモリ確保
-		m_apScene2D[nCount] = new CScene2d(PRIORIT_LIFE);
-		//位置
-		m_apScene2D[nCount]->SetPosition(D3DXVECTOR3((nCount*LIFE_SIZE_X + LIFE_SIZE_X/2)+ pos.x,(pos.y - LIFE_SIZE_Y / 2),0.0f));
-		//サイズ
-		m_apScene2D[nCount]->SetSizeition(D3DXVECTOR3(LIFE_SIZE_X, LIFE_SIZE_Y, 0.0f));
-		//初期化処理
-		m_apScene2D[nCount]->CScene2d::Init();
-		//テクスチャの設定
-		m_apScene2D[nCount]->BindTexture(m_apTexture);
+		m_LifeUi[nCount] = CLifeUi::Create(D3DXVECTOR3((nCount*LIFE_SIZE_X + LIFE_SIZE_X / 2) + pos.x, (pos.y - LIFE_SIZE_Y / 2), 0.0f), D3DXVECTOR3(LIFE_SIZE_X, LIFE_SIZE_Y, 0.0f));
 	}
 	m_Ui = CUi::Create(D3DXVECTOR3((float)(LIFE_SIZE_X*(MAX_LIFE/2)+ pos.x), (float)(pos.y - LIFE_SIZE_Y / 2),0.0f), D3DXVECTOR3((float)(LIFE_SIZE_X*(MAX_LIFE*1.5f)), LIFE_SIZE_Y*1.5,0.0f), CUi::TEXTURE_TYPE_LIFE);
 	return S_OK;
@@ -102,9 +68,9 @@ void CLife::Uninit(void)
 {
 	for (int nCount = 0; nCount < MAX_LIFE; nCount++)
 	{
-		if (m_apScene2D[nCount] != NULL)
+		if (m_LifeUi[nCount] != NULL)
 		{
-			m_apScene2D[nCount]->CScene2d::Uninit();
+			m_LifeUi[nCount]->Uninit();
 		}
 	}
 	if (m_Ui != NULL)
@@ -119,7 +85,18 @@ void CLife::Uninit(void)
 //----------------------------------
 void CLife::Update(void)
 {
+	for (int nCount = 0; nCount < MAX_LIFE; nCount++)
+	{
+		if (nCount>=nLife)
+		{
+			m_LifeUi[nCount]->SetCol(D3DXCOLOR(0.0f,0.0f,0.0f,0.0f));
+		}
+		else
+		{
+			m_LifeUi[nCount]->SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
+		}
+	}
 }
 
 //----------------------------------
@@ -130,14 +107,6 @@ void CLife::Draw(void)
 	if (m_Ui != NULL)
 	{
 		m_Ui->Draw();
-	}
-
-	for (int nCount = 0; nCount < nLife; nCount++)
-	{
-		if (m_apScene2D[nCount] != NULL)
-		{
-			m_apScene2D[nCount]->CScene2d::Draw();
-		}
 	}
 
 }

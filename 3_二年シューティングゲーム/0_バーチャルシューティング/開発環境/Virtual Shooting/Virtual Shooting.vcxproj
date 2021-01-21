@@ -147,10 +147,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="bg.cpp" />
     <ClCompile Include="bg_game.cpp" />
     <ClCompile Include="boss.cpp" />
     <ClCompile Include="boss_anime.cpp" />
     <ClCompile Include="bullet.cpp" />
+    <ClCompile Include="button p.cpp" />
     <ClCompile Include="button.cpp" />
     <ClCompile Include="clear.cpp" />
     <ClCompile Include="effect.cpp" />
@@ -163,6 +165,8 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="inputmouse.cpp" />
     <ClCompile Include="laser.cpp" />
+    <ClCompile Include="life button.cpp" />
+    <ClCompile Include="life ui.cpp" />
     <ClCompile Include="life.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="manager.cpp" />
@@ -176,13 +180,17 @@
     <ClCompile Include="scene2d.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="select.cpp" />
-    <ClCompile Include="selectbg.cpp" />
+    <ClCompile Include="select bg.cpp" />
     <ClCompile Include="sound.cpp" />
+    <ClCompile Include="start button.cpp" />
     <ClCompile Include="telop_bar.cpp" />
     <ClCompile Include="telop_text.cpp" />
     <ClCompile Include="text.cpp" />
+    <ClCompile Include="title bg.cpp" />
     <ClCompile Include="title.cpp" />
+    <ClCompile Include="tutorial bg.cpp" />
     <ClCompile Include="tutorial.cpp" />
+    <ClCompile Include="ui count.cpp" />
     <ClCompile Include="ui.cpp" />
     <ClCompile Include="warning.cpp" />
     <ClCompile Include="weapon_UI.cpp" />
@@ -190,10 +198,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
+    <ClInclude Include="bg.h" />
     <ClInclude Include="bg_game.h" />
     <ClInclude Include="boss.h" />
     <ClInclude Include="boss_anime.h" />
     <ClInclude Include="bullet.h" />
+    <ClInclude Include="button p.h" />
     <ClInclude Include="button.h" />
     <ClInclude Include="clear.h" />
     <ClInclude Include="effect.h" />
@@ -206,6 +216,8 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="inputmouse.h" />
     <ClInclude Include="laser.h" />
+    <ClInclude Include="life button.h" />
+    <ClInclude Include="life ui.h" />
     <ClInclude Include="life.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="manager.h" />
@@ -219,13 +231,17 @@
     <ClInclude Include="scene2d.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="select.h" />
-    <ClInclude Include="selectbg.h" />
+    <ClInclude Include="select bg.h" />
     <ClInclude Include="sound.h" />
+    <ClInclude Include="start button.h" />
     <ClInclude Include="telop_bar.h" />
     <ClInclude Include="telop_text.h" />
     <ClInclude Include="text.h" />
+    <ClInclude Include="title bg.h" />
     <ClInclude Include="title.h" />
+    <ClInclude Include="tutorial bg.h" />
     <ClInclude Include="tutorial.h" />
+    <ClInclude Include="ui count.h" />
     <ClInclude Include="ui.h" />
     <ClInclude Include="warning.h" />
     <ClInclude Include="weapon_UI.h" />

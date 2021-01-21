@@ -1,8 +1,10 @@
 ﻿  Background.cpp
+  bg.cpp
   bg_game.cpp
   boss.cpp
   boss_anime.cpp
   bullet.cpp
+  button p.cpp
   button.cpp
   clear.cpp
   effect.cpp
@@ -11,14 +13,13 @@
   fade.cpp
   game.cpp
   homing.cpp
-  inihkeyboard.cpp
-  input.cpp
-  inputmouse.cpp
   laser.cpp
+  life button.cpp
+  life ui.cpp
   life.cpp
   main.cpp
-  manager.cpp
   コンパイル中...
+  manager.cpp
   mouse pointer.cpp
   number.cpp
   player.cpp
@@ -29,20 +30,26 @@
   scene2d.cpp
   score.cpp
   select.cpp
-  selectbg.cpp
+  select bg.cpp
   sound.cpp
+  start button.cpp
   telop_bar.cpp
   telop_text.cpp
   text.cpp
+  title bg.cpp
   title.cpp
+  tutorial bg.cpp
+  コンパイル中...
   tutorial.cpp
+  ui count.cpp
   ui.cpp
   warning.cpp
   weapon_UI.cpp
-  コンパイル中...
   window.cpp
   コード生成しています。
-  All 475 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  211 of 530 functions (39.8%) were compiled, the rest were copied from previous compilation.
+    89 functions were new in current compilation
+    119 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
-  Virtual Shooting.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\3 二年シューティングゲーム\バーチャルシューティング\開発環境\Release\Virtual Shooting.exe
-  Virtual Shooting.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\3 二年シューティングゲーム\バーチャルシューティング\開発環境\Release\Virtual Shooting.pdb (Full PDB)
+  Virtual Shooting.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\3_二年シューティングゲーム\0_バーチャルシューティング\開発環境\Release\Virtual Shooting.exe
+  Virtual Shooting.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\3_二年シューティングゲーム\0_バーチャルシューティング\開発環境\Release\Virtual Shooting.pdb (Full PDB)

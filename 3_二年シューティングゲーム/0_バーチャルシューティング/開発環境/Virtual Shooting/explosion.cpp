@@ -43,7 +43,7 @@ HRESULT CExplosion::Init(void)
 	D3DXVECTOR2 Texture[4];
 
 	//サイズ
-	SetSizeition(D3DXVECTOR3(EXPLOSION_SIZE / 2, EXPLOSION_SIZE / 2, 0.0f));
+	SetSize(D3DXVECTOR3(EXPLOSION_SIZE / 2, EXPLOSION_SIZE / 2, 0.0f));
 
 	//初期化処理
 	CScene2d::Init();
@@ -117,7 +117,7 @@ void CExplosion::Draw(void)
 void CExplosion::Set(D3DXVECTOR3 Pos)
 {
 	//セット処理
-	CScene2d::Set(Pos);
+	CScene2d::SetPos(Pos);
 }
 
 //----------------------------------

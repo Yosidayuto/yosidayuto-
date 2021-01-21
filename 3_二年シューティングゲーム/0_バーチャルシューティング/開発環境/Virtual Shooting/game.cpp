@@ -1,26 +1,26 @@
 //----------------------------------------------
 //ヘッダーファイル
 //----------------------------------------------
-#include "game.h"		//ゲームヘッダー
-#include "score.h"		//スコアヘッダー
-#include "life.h"		//ライフヘッダー
-#include "player.h"		//プレイヤーヘッダー
-#include "enemy.h"		//エネミーヘッダー
-#include "Background.h"	//背景ヘッダー
-#include "bullet.h"		//バレットヘッダー
-#include "explosion.h"	//エクスプロージョンヘッダー
-#include "effect.h"		//エフェクトヘッダー
-#include "bg_game.h"	//ゲーム背景
-#include "laser.h"		//レーザー
-#include "boss.h"		//ボス
-#include "boss_anime.h"	//ボスアニメーション
-#include "fade.h"		//フェード	
-#include "manager.h"	//マネージャーヘッダー
-#include "warning.h"	//ワーニングヘッダー
-#include "homing.h"		//ホーミングヘッダー
-#include "result.h"		//リザルト
-#include "sound.h"		//サウンド
-#include "mouse pointer.h"//マウスポインター
+#include "game.h"		
+#include "score.h"		
+#include "life.h"		
+#include "player.h"		
+#include "enemy.h"		
+#include "Background.h"	
+#include "bullet.h"		
+#include "explosion.h"
+#include "effect.h"		
+#include "bg_game.h"	
+#include "laser.h"		
+#include "boss.h"		
+#include "boss_anime.h"	
+#include "fade.h"		
+#include "manager.h"	
+#include "warning.h"	
+#include "homing.h"		
+#include "result.h"		
+#include "sound.h"		
+#include "mouse pointer.h"
 //----------------------------------
 //静的メンバー変数
 //----------------------------------
@@ -51,16 +51,6 @@ CGame::~CGame()
 	}
 }
 
-//---------------------------------
-//生成処理
-//---------------------------------
-CGame * CGame::Create(void)
-{
-	CGame *pGame;
-	pGame = new CGame;
-	pGame->Init();
-	return pGame;
-}
 
 //---------------------------------
 //初期化処理
@@ -75,7 +65,6 @@ HRESULT CGame::Init(void)
 	CBullet::Load();		//バレット
 	CPlayer::Load();		//プレイヤー
 	CExplosion::Load();		//エクスプロージョン
-	CLife::Load();			//ライフ
 	CEffect::Load();		//エフェクト
 	CBgGame::Load();		//背景ゲーム
 	CLaser::Load();			//レーザー
@@ -123,7 +112,6 @@ void CGame::Uninit(void)
 	CBullet::Unload();		//バレット
 	CPlayer::Unload();		//プレイヤー
 	CExplosion::Unload();	//エクスプロージョン
-	CLife::Unload();		//ライフ
 	CEffect::Unload();		//エフェクト
 	CBgGame::Unload();	
 	CLaser::Unload();		//レーザー
@@ -136,8 +124,9 @@ void CGame::Uninit(void)
 		m_Life->Uninit();
 	}
 
+	//シーン破棄
+	CScene::ReleaseAll();
 
-	Release();
 }
 
 //---------------------------------

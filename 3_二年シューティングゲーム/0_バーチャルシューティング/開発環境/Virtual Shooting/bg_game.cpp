@@ -65,9 +65,9 @@ CBgGame * CBgGame::Create(void)
 HRESULT CBgGame::Init(void)
 {
 	////位置
-	SetPosition(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f));
+	SetPos(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f));
 	////サイズ
-	SetSizeition(D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
+	SetSize(D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
 	//テクスチャの設定
 	BindTexture(m_apTexture);
 	//初期化処理

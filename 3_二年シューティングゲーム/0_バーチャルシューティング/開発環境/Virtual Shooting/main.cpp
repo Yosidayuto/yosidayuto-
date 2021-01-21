@@ -1,12 +1,13 @@
 //=============================================================================
 //
 // メイン処理 [main.cpp]
-// Author : 
+// Author : 吉田悠人
 //
 //=============================================================================
-//----------------------------------------------------------------------------------------
+
+//=============================================================================
 // ヘッダファイル
-//----------------------------------------------------------------------------------------
+//=============================================================================
 #include "main.h"
 #include "manager.h"
 #include "renderer.h"
@@ -27,7 +28,6 @@ int GetFPS(void);
 //*****************************************************************************
 // グローバル変数:
 //*****************************************************************************
-//CRenderer *g_pRenderer = NULL;
 #ifdef _DEBUG
 int						g_nCountFPS;			// FPSカウンタ
 #endif
@@ -81,7 +81,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	CManager *pManager = NULL;
 	//マネージャー生成
 	pManager = new CManager;
-	pManager->Init(hInstance, hWnd, false);
+	pManager->Init(hInstance, hWnd, true);
 
 	// 分解能を設定
 	timeBeginPeriod(1);
@@ -187,5 +187,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 }
 int GetFPS(void)
 {
-	//return g_nCountFPS;
+#ifdef _DEBUG
+	return g_nCountFPS;
+#endif
 }

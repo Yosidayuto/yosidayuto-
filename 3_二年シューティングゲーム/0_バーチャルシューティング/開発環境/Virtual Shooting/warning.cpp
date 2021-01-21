@@ -1,4 +1,4 @@
-
+//åxçê
 #include "renderer.h"
 #include "manager.h"
 #include "warning.h"
@@ -39,7 +39,7 @@ CWarning * CWarning::Create(D3DXVECTOR3 Pos, D3DXVECTOR3 size)
 	CWarning *pWarning;
 
 	pWarning = new CWarning;
-	pWarning->Set(Pos);
+	pWarning->SetPos(Pos);
 	pWarning->Init(size);
 
 	return pWarning;
@@ -80,7 +80,7 @@ HRESULT CWarning::Init(D3DXVECTOR3 size)
 
 	D3DXVECTOR2 Texture[4];
 	//ÉTÉCÉY
-	SetSizeition(D3DXVECTOR3(size.x, size.y, 0.0f));
+	SetSize(D3DXVECTOR3(size.x, size.y, 0.0f));
 
 	//èâä˙âªèàóù
 	CScene2d::Init();

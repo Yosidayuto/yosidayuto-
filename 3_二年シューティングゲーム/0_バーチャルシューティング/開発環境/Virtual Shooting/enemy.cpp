@@ -31,12 +31,12 @@ CEnemy::CEnemy(int nPriorit):CScene2d(nPriorit)
 		m_bBullet[nConut] = false;
 		nConutBullet[nConut] = 0;
 		m_rot[nConut] = D3DXVECTOR3(0, 0, 0);//エネミーの向き
-
+		memset(m_rot, NULL, sizeof(m_rot));
 	}
-	CScene::SetObjType(CScene::OBJ_TYPE_ENEMY);		//タイプ処理
-	m_Stats = STATS_MODE_NORMAL;					//エネミーの状態
-	m_PatternCount = 0;								//パターンカウント
-	m_move= D3DXVECTOR3(0, 0, 0);					//向き
+	SetObjType(OBJ_TYPE_ENEMY);				//タイプ処理
+	m_Stats = STATS_MODE_NORMAL;			//エネミーの状態
+	m_PatternCount = 0;						//パターンカウント
+	memset(m_move, NULL, sizeof(m_move));	//移動量
 
 }
 
@@ -59,7 +59,7 @@ CEnemy * CEnemy::Create(D3DXVECTOR3 Pos, ENEMY_TYPE nType, PATTERN_MODE nPattern
 	pEnemy->m_size = size;
 	pEnemy->m_BulletMode = BulletMode;
 	pEnemy->SetPos(Pos);
-	pEnemy->SetSizeition(size);
+	pEnemy->SetSize(size);
 	pEnemy->SetTexture(nType);
 	
 	pEnemy->Init();
@@ -104,8 +104,6 @@ void CEnemy::Unload(void)
 //----------------------------------
 HRESULT CEnemy::Init(void)
 {
-	//位置
-	SetPosition(D3DXVECTOR3(m_pos.x, m_pos.y, 0.0f));
 	switch (m_Type)
 	{
 	case ENEMY_TYPE_1:
@@ -153,33 +151,27 @@ void CEnemy::Uninit(void)
 void CEnemy::Update(void)
 {	
 	CScene2d::Update();
-	m_pos = GetPosition();	//エネミー位置
+	m_pos = GetPos();	//エネミー位置
 	switch (m_Type)
 	{
 	case ENEMY_TYPE_1:
 		Hit(m_pos);		//当たり判定
 		Move(m_pos);			//動き
-
 		break;
 	case ENEMY_TYPE_2:
 		Hit(m_pos);		//当たり判定
 		Rotate();				//回転
 		Move(m_pos);			//動き
-
 		break;
 	case ENEMY_TYPE_3:
 		Hit(m_pos);		//当たり判定
 		Move(m_pos);			//動き
-
 		break;
 	case ENEMY_TYPE_4:
 		Hit(m_pos);		//当たり判定
 		//Bullet(10, m_pos, Tracking(5.0f));	//攻撃
-
 		Move(m_pos);			//動き
-
 		break;
-
 	}
 	Bullet(m_BulletMode);
 	StatasManage();
@@ -195,13 +187,6 @@ void CEnemy::Draw(void)
 	CScene2d::Draw();
 }
 
-//----------------------------------
-//位置セット
-//----------------------------------
-void CEnemy::SetPos(D3DXVECTOR3 Pos)
-{
-	m_pos = Pos;
-}
 
 //----------------------------------
 //テクスチャセット
@@ -242,12 +227,12 @@ void CEnemy::StatasManage(void)
 	{
 	case STATS_MODE_NORMAL:
 		//ダメージカラー処理
-		//ColChange(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		//SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 		break;
 	case STATS_MODE_DAMAGE:
 		//ダメージカラー処理
-		//ColChange(D3DXCOLOR(1.0f, 0.5f, 0.5f, 0.0f));
+		//SetCol(D3DXCOLOR(1.0f, 0.5f, 0.5f, 0.0f));
 
 		m_Stats = STATS_MODE_NORMAL;
 
@@ -282,7 +267,14 @@ void CEnemy::StatasManage(void)
 //----------------------------------
 void CEnemy::Rotate(void)
 {
-	SetRotate();
+	static float fRot = 0;
+	//向きセット
+	SetRot(fRot);
+	fRot++;
+	if (fRot>360.0f)
+	{
+		fRot = 0;
+	}
 }
 //----------------------------------
 //バレット処理
@@ -375,27 +367,40 @@ void CEnemy::Bullet(BULLET_PATTERN BulletMode)
 D3DXVECTOR3 CEnemy::Tracking(float fSpeed)
 {
 	D3DXVECTOR3 rot;
-	//プレイヤーの方向
-	for (int nCut = 0; nCut < MAX_DRAW; nCut++)
+	//シーン取得用
+	CScene* pTop[PRIORITY_MAX] = {};
+	//次チェックするシーンポインタ
+	CScene* pNext = NULL;
+
+	//topのアドレスを取得
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 	{
-		for (int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+		pTop[nCount] = *(CScene::GetTop() + nCount);
+	}
+
+
+	//プレイヤーの方向
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
+	{
+		if (pTop[nCount] != NULL)
 		{
-			CScene *pScene = GetScene(nCut, nCntScene);
-			if (pScene != NULL)
+			pNext = pTop[nCount];
+			//その描画優先度のオブジェクトがなくなるまでループ
+			while (pNext != NULL)
 			{
-				//タイプ取得
-				OBJTYPE objType = pScene->GetObjType();
-				if (objType == OBJ_TYPE_PLAYER)
+				//オブジェクトのタイプがエネミーなら
+				if (pNext->GetObjType() == OBJ_TYPE_PLAYER)
 				{
-					D3DXVECTOR3 Playerpos = ((CScene2d*)pScene)->GetPosition();
+					D3DXVECTOR3 Playerpos = ((CScene2d*)pNext)->GetPos();
 					float fAngle = atan2f((-m_pos.x + Playerpos.x), (-m_pos.y + Playerpos.y));
 					rot.x = sinf(fAngle)*fSpeed;
 					rot.y = cosf(fAngle)*fSpeed;
 					return rot;
 				}
+				//次のオブジェクトのポインタを更新
+				pNext = pNext->GetNext();
 			}
 		}
-
 	}
 	return rot;
 }
@@ -405,25 +410,40 @@ D3DXVECTOR3 CEnemy::Tracking(float fSpeed)
 D3DXVECTOR3 CEnemy::Random(float fSpeed)
 {
 	D3DXVECTOR3 rot= D3DXVECTOR3(0.0f,0.0f,0.0f);
-	//プレイヤーの方向
-	for (int nCut = 0; nCut < MAX_DRAW; nCut++)
+
+	//シーン取得用
+	CScene* pTop[PRIORITY_MAX] = {};
+	//次チェックするシーンポインタ
+	CScene* pNext = NULL;
+
+	//topのアドレスを取得
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 	{
-		for (int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+		pTop[nCount] = *(CScene::GetTop() + nCount);
+	}
+
+	//プレイヤーの方向
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
+	{
+		if (pTop[nCount] != NULL)
 		{
-			CScene *pScene = GetScene(nCut, nCntScene);
-			if (pScene != NULL)
+			pNext = pTop[nCount];
+			//その優先度のオブジェクトがなくなるまでループ
+			while (pNext != NULL)
 			{
-				//タイプ取得
-				OBJTYPE objType = pScene->GetObjType();
-				if (objType == OBJ_TYPE_PLAYER)
+				//オブジェクトのタイプがプレイヤーなら
+				if (pNext->GetObjType() == OBJ_TYPE_PLAYER)
 				{
-					D3DXVECTOR3 Playerpos = ((CScene2d*)pScene)->GetPosition();
+					D3DXVECTOR3 Playerpos = ((CScene2d*)pNext)->GetPos();
 					int nRandom =	rand() % 1500 + 1;
 					float fAngle = atan2f((-m_pos.x + Playerpos.x), (-m_pos.y + Playerpos.y)) + (float)nRandom / 1000.0f - 0.75f;
 					rot.x = sinf(fAngle)*fSpeed;
 					rot.y = cosf(fAngle)*fSpeed;
 					return rot;
 				}
+				//次のオブジェクトのポインタを更新
+				pNext = pNext->GetNext();
+
 			}
 		}
 	}
@@ -437,22 +457,36 @@ float CEnemy::Spiral(void)
 {
 	D3DXVECTOR3 rot;
 	float fAngle = 0;
-	//プレイヤーの方向
-	for (int nCut = 0; nCut < MAX_DRAW; nCut++)
+
+	//オブジェクト取得用
+	CScene* pTop[PRIORITY_MAX] = {};
+	//次チェックするオブジェクトのポインタ
+	CScene* pNext = NULL;
+
+	//topのアドレスを取得
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 	{
-		for (int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+		pTop[nCount] = *(CScene::GetTop() + nCount);
+	}
+
+	//オブジェクト探査
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
+	{
+		if (pTop[nCount] != NULL)
 		{
-			CScene *pScene = GetScene(nCut, nCntScene);
-			if (pScene != NULL)
+			pNext = pTop[nCount];
+			//その描画優先度のオブジェクトがなくなるまでループ
+			while (pNext != NULL)
 			{
-				//タイプ取得
-				OBJTYPE objType = pScene->GetObjType();
-				if (objType == OBJ_TYPE_PLAYER)
+				if (pNext->GetObjType() == OBJ_TYPE_PLAYER)
 				{
-					D3DXVECTOR3 Playerpos = ((CScene2d*)pScene)->GetPosition();
+					D3DXVECTOR3 Playerpos = ((CScene2d*)pNext)->GetPos();
 					fAngle = atan2f((-m_pos.x + Playerpos.x), (-m_pos.y + Playerpos.y));
 					return fAngle;
 				}
+				//次のオブジェクトのポインタを更新
+				pNext = pNext->GetNext();
+
 			}
 		}
 	}
@@ -472,7 +506,7 @@ void CEnemy::Move(D3DXVECTOR3 pos)
 	{
 	case PATTERN_MODE_STRAIGHT:	//直進処理
 		Pos += m_move;
-		SetPosition(Pos);
+		SetPos(Pos);
 		//画面外処理
 		if (m_pos.y > 825)
 		{
@@ -503,7 +537,7 @@ void CEnemy::Move(D3DXVECTOR3 pos)
 
 		Pos += m_move;
 
-		SetPosition(Pos);
+		SetPos(Pos);
 
 		//画面外処理
 		if (m_pos.y > 825 || Pos.x > 1180 + (m_size.x / 2) || Pos.x < 380 - (m_size.x / 2))
@@ -529,7 +563,7 @@ void CEnemy::Move(D3DXVECTOR3 pos)
 		}
 		Pos += m_move;
 
-		SetPosition(Pos);
+		SetPos(Pos);
 
 		//画面外処理
 		if (m_pos.y > 825 || Pos.x > 1180 + (m_size.x / 2) || Pos.x < 380 - (m_size.x / 2))
@@ -557,7 +591,7 @@ void CEnemy::Move(D3DXVECTOR3 pos)
 		}
 		Pos += m_move;
 
-		SetPosition(Pos);
+		SetPos(Pos);
 
 		//画面外処理
 		if (m_pos.y > 825 || Pos.x > 1180 + (m_size.x / 2) || Pos.x < 380 - (m_size.x / 2))
@@ -581,7 +615,7 @@ void CEnemy::Move(D3DXVECTOR3 pos)
 		}
 		Pos += m_move;
 
-		SetPosition(Pos);
+		SetPos(Pos);
 
 		break;
 	case PATTERN_MODE_STOP:
@@ -593,7 +627,7 @@ void CEnemy::Move(D3DXVECTOR3 pos)
 			}
 		}
 		Pos += m_move;
-		SetPosition(Pos);
+		SetPos(Pos);
 		break;
 
 	case PATTERN_MODE_ROUND_TRIP:	//往復処理
@@ -611,7 +645,7 @@ void CEnemy::Move(D3DXVECTOR3 pos)
 		}
 		Pos += m_move;
 
-		SetPosition(Pos);
+		SetPos(Pos);
 		break;
 	}
 }
@@ -621,29 +655,43 @@ void CEnemy::Move(D3DXVECTOR3 pos)
 //----------------------------------
 void CEnemy::Hit(D3DXVECTOR3 Pos)
 {
-	//プレイヤーとの当たり判定
-	for (int nCut = 0; nCut < MAX_DRAW; nCut++)
+	//オブジェクト取得用
+	CScene* pTop[PRIORITY_MAX] = {};
+	//次チェックするオブジェクトのポインタ
+	CScene* pNext = NULL;
+
+	//topのアドレスを取得
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 	{
-		for (int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+		pTop[nCount] = *(CScene::GetTop() + nCount);
+	}
+
+
+	//プレイヤーとの当たり判定
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
+	{
+		if (pTop[nCount] != NULL)
 		{
-			CScene *pScene = GetScene(nCut, nCntScene);
-			if (pScene != NULL)
+			pNext = pTop[nCount];
+			//その描画優先度のオブジェクトがなくなるまでループ
+			while (pNext != NULL)
 			{
-				//タイプ取得
-				OBJTYPE objType = pScene->GetObjType();
-				if (objType == OBJ_TYPE_PLAYER)
+				//オブジェクトのタイプがプレイヤーなら
+				if (pNext->GetObjType() == OBJ_TYPE_PLAYER)
 				{
-					D3DXVECTOR3 Playerpos = ((CScene2d*)pScene)->GetPosition();
+					D3DXVECTOR3 Playerpos = ((CScene2d*)pNext)->GetPos();
 					//当たり判定
 					if (Playerpos.x > Pos.x- m_size.x/2
 						&& Playerpos.x  < Pos.x+ m_size.x/2
 						&&Playerpos.y > Pos.y- m_size.y/2
 						&&Playerpos.y < Pos.y+ m_size.y/2)
 					{
-						((CPlayer*)pScene)->Damage(1);
+						((CPlayer*)pNext)->Damage(1);
 					}
-
 				}
+				//次のオブジェクトのポインタを更新
+				pNext = pNext->GetNext();
+
 			}
 		}
 

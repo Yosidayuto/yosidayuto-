@@ -1,22 +1,23 @@
 //----------------------------------------------
 //ヘッダーファイル
 //----------------------------------------------
-#include "button.h"			//ボタンヘッダー
-#include "manager.h"		//マネージャーヘッダー
-#include "renderer.h"		//レンダリングヘッダー
-#include "input.h"			//インプットヘッダー
-#include "inputmouse.h"		//インプットマウスヘッダー
-#include "text.h"			//テキストヘッダー
-#include "select.h"			//セレクトヘッダー
-#include "ui.h"				//UIヘッダー
-#include "number.h"			//ナンバー
-#include "player.h"			//プレイヤーヘッダー
-#include "fade.h"			//フェイドヘッダー
-#include "score.h"			//スコアヘッダー
-#include "weapon_UI.h"		//ウェポンUIフッター
-#include "game.h"			//ゲームヘッダー
-#include "telop_text.h"		//テロップテキストヘッダー
-#include "sound.h"			//サウンド
+#include "button.h"			
+#include "manager.h"		
+#include "renderer.h"		
+#include "input.h"			
+#include "inputmouse.h"		
+#include "text.h"			
+#include "select.h"			
+#include "ui.h"				
+#include "number.h"			
+#include "player.h"			
+#include "fade.h"			
+#include "score.h"			
+#include "weapon_UI.h"		
+#include "game.h"			
+#include "telop_text.h"		
+#include "sound.h"			
+#include "ui count.h"
 //----------------------------------
 //静的メンバー変数
 //----------------------------------
@@ -66,8 +67,8 @@ CButton * CButton::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, int Type)
 	pButton->m_pos = pos;	//位置設定
 	pButton->m_size = size;	//サイズ設定
 	pButton->m_Type = (BUTTON_TYPE)Type;
-	pButton->SetPosition(pButton->m_pos);	//位置取得
-	pButton->SetSizeition(pButton->m_size);	//サイズ取得
+	pButton->SetPos(pButton->m_pos);	//位置取得
+	pButton->SetSize(pButton->m_size);	//サイズ取得
 	pButton->BindTexture(ButtonData[TypeTextureData[pButton->m_Type]].m_Texture);//テクスチャ設定
 
 	pButton->Init();
@@ -200,7 +201,7 @@ void CButton::Update(void)
 	CInihMouse *pMouse = CManager::GetMouse();			//マウス取得
 	int nPlayerLife= CManager::GetPlayer(0);			//プレイヤー情報取得
 	int nPlayerSpeed= CManager::GetPlayer(1);			//プレイヤー情報取得
-	CPlayer::WEAPON_MODE nPlayerWeapon[MAX_WEAPON];
+	WEAPON_MODE nPlayerWeapon[MAX_WEAPON];
 	for (int nCount = 0; nCount < 2; nCount++)
 	{
 		nPlayerWeapon[nCount] = CManager::GetWeapon(nCount);
@@ -209,7 +210,7 @@ void CButton::Update(void)
 	CScore *pScore= CSelect::GetScore();
 	CScore *pMinusScore = CSelect::GetMinusScore();
 	int nScore= pScore->GetScore();
-	CNumber *pNumber;
+	CUiCount *pNumber;
 	CWeapon_Ui *WeaponUi;
 	CFade *pFade = CManager::GetFade();
 
@@ -243,15 +244,13 @@ void CButton::Update(void)
 			if (pMouse->GetClickTrigger(0) == true)
 			{
 				//武装がどちらも装備しているか
-				if (nPlayerWeapon[0] != CPlayer::WEAPONS_MODE_NONE
-					|| nPlayerWeapon[1] != CPlayer::WEAPONS_MODE_NONE)
+				if (nPlayerWeapon[0] != WEAPONS_MODE_NONE
+					|| nPlayerWeapon[1] != WEAPONS_MODE_NONE)
 				{
+					//SE音
+					pSound->Play(CSound::LABEL_SE_START);
 					//フェイドアウト判定
-					if (pFade->Set(CManager::GAME_MODE_STAGE) == true)
-					{
-						//SE音
-						pSound->Play(CSound::LABEL_SE_START);
-					}
+					pFade->SetFade(GAME_MODE_STAGE);
 				}
 			}
 			break;
@@ -274,12 +273,8 @@ void CButton::Update(void)
 
 					nPlayerLife++;
 					CManager::SetPlayer(nPlayerLife, nPlayerSpeed);
-					pNumber->SetNumber(nPlayerLife);
+					pNumber->SetCount(nPlayerLife);
 					pScore->AddScore(-(nPlayerLife + 1) * 1000);
-				}
-				else
-				{
-					//エラー音
 				}
 			}
 			else if (pMouse->GetClickTrigger(1) == true)
@@ -291,11 +286,7 @@ void CButton::Update(void)
 					pScore->AddScore((nPlayerLife + 1) * 1000);
 					nPlayerLife--;
 					CManager::SetPlayer(nPlayerLife, nPlayerSpeed);
-					pNumber->SetNumber(nPlayerLife);
-				}
-				else
-				{
-					//エラー音
+					pNumber->SetCount(nPlayerLife);
 				}
 
 			}
@@ -322,7 +313,7 @@ void CButton::Update(void)
 
 					nPlayerSpeed++;
 					CManager::SetPlayer(nPlayerLife, nPlayerSpeed);
-					pNumber->SetNumber(nPlayerSpeed);
+					pNumber->SetCount(nPlayerSpeed);
 					pScore->AddScore(-(nPlayerSpeed + 1) * 1000);
 				}
 				else
@@ -341,7 +332,7 @@ void CButton::Update(void)
 
 					nPlayerSpeed--;
 					CManager::SetPlayer(nPlayerLife, nPlayerSpeed);
-					pNumber->SetNumber(nPlayerSpeed);
+					pNumber->SetCount(nPlayerSpeed);
 				}
 				else
 				{
@@ -362,7 +353,7 @@ void CButton::Update(void)
 					for (int nCount = 0; nCount < MAX_WEAPON; nCount++)
 					{
 
-						if (nPlayerWeapon[nCount] == CPlayer::WEAPONS_MODE_NONE)
+						if (nPlayerWeapon[nCount] == WEAPONS_MODE_NONE)
 						{
 							//クリック音SE
 							pSound->Play(CSound::LABEL_SE_CLICK);
@@ -371,9 +362,9 @@ void CButton::Update(void)
 							//UI取得
 							WeaponUi = CSelect::GetWeaponUi(nCount);
 							//UI変更
-							WeaponUi->SetUI(CPlayer::WEAPONS_MODE_BUTTOL);
+							WeaponUi->SetUI(WEAPONS_MODE_BUTTOL);
 							//武装変更
-							nPlayerWeapon[nCount] = CPlayer::WEAPONS_MODE_BUTTOL;
+							nPlayerWeapon[nCount] = WEAPONS_MODE_BUTTOL;
 							CManager::SetWeapon(nPlayerWeapon[0], nPlayerWeapon[1]);
 							return;
 						}
@@ -384,7 +375,7 @@ void CButton::Update(void)
 			{
 				for (int nCount = 0; nCount < MAX_WEAPON; nCount++)
 				{
-					if (nPlayerWeapon[nCount] == CPlayer::WEAPONS_MODE_BUTTOL)
+					if (nPlayerWeapon[nCount] == WEAPONS_MODE_BUTTOL)
 					{
 						//キャンセル音SE
 						pSound->Play(CSound::LABEL_SE_CANCEL);
@@ -392,8 +383,8 @@ void CButton::Update(void)
 						pScore->AddScore(5000);
 						WeaponUi = CSelect::GetWeaponUi(nCount);
 
-						WeaponUi->SetUI(CPlayer::WEAPONS_MODE_NONE);
-						nPlayerWeapon[nCount] = CPlayer::WEAPONS_MODE_NONE;
+						WeaponUi->SetUI(WEAPONS_MODE_NONE);
+						nPlayerWeapon[nCount] = WEAPONS_MODE_NONE;
 						CManager::SetWeapon(nPlayerWeapon[0], nPlayerWeapon[1]);
 						return;
 					}
@@ -412,7 +403,7 @@ void CButton::Update(void)
 					for (int nCount = 0; nCount < MAX_WEAPON; nCount++)
 					{
 
-						if (nPlayerWeapon[nCount] == CPlayer::WEAPONS_MODE_NONE)
+						if (nPlayerWeapon[nCount] == WEAPONS_MODE_NONE)
 						{
 							//クリック音SE
 							pSound->Play(CSound::LABEL_SE_CLICK);
@@ -422,8 +413,8 @@ void CButton::Update(void)
 							//UI取得
 							WeaponUi = CSelect::GetWeaponUi(nCount);
 
-							WeaponUi->SetUI(CPlayer::WEAPONS_MODE_LASER);
-							nPlayerWeapon[nCount] = CPlayer::WEAPONS_MODE_LASER;
+							WeaponUi->SetUI(WEAPONS_MODE_LASER);
+							nPlayerWeapon[nCount] = WEAPONS_MODE_LASER;
 							CManager::SetWeapon(nPlayerWeapon[0], nPlayerWeapon[1]);
 							return;
 						}
@@ -434,7 +425,7 @@ void CButton::Update(void)
 			{
 				for (int nCount = 0; nCount < MAX_WEAPON; nCount++)
 				{
-					if (nPlayerWeapon[nCount] == CPlayer::WEAPONS_MODE_LASER)
+					if (nPlayerWeapon[nCount] == WEAPONS_MODE_LASER)
 					{
 						//キャンセル音SE
 						pSound->Play(CSound::LABEL_SE_CANCEL);
@@ -442,8 +433,8 @@ void CButton::Update(void)
 						pScore->AddScore(10000);
 						WeaponUi = CSelect::GetWeaponUi(nCount);
 
-						WeaponUi->SetUI(CPlayer::WEAPONS_MODE_NONE);
-						nPlayerWeapon[nCount] = CPlayer::WEAPONS_MODE_NONE;
+						WeaponUi->SetUI(WEAPONS_MODE_NONE);
+						nPlayerWeapon[nCount] = WEAPONS_MODE_NONE;
 						CManager::SetWeapon(nPlayerWeapon[0], nPlayerWeapon[1]);
 						return;
 					}
@@ -460,7 +451,7 @@ void CButton::Update(void)
 				{
 					for (int nCount = 0; nCount < MAX_WEAPON; nCount++)
 					{
-						if (nPlayerWeapon[nCount] == CPlayer::WEAPONS_MODE_NONE)
+						if (nPlayerWeapon[nCount] == WEAPONS_MODE_NONE)
 						{
 							//クリック音SE
 							pSound->Play(CSound::LABEL_SE_CLICK);
@@ -470,8 +461,8 @@ void CButton::Update(void)
 							//UI取得
 							WeaponUi = CSelect::GetWeaponUi(nCount);
 
-							WeaponUi->SetUI(CPlayer::WEAPONS_MODE_HOMING);
-							nPlayerWeapon[nCount] = CPlayer::WEAPONS_MODE_HOMING;
+							WeaponUi->SetUI(WEAPONS_MODE_HOMING);
+							nPlayerWeapon[nCount] = WEAPONS_MODE_HOMING;
 							CManager::SetWeapon(nPlayerWeapon[0], nPlayerWeapon[1]);
 							return;
 						}
@@ -482,7 +473,7 @@ void CButton::Update(void)
 			{
 				for (int nCount = 0; nCount < MAX_WEAPON; nCount++)
 				{
-					if (nPlayerWeapon[nCount] == CPlayer::WEAPONS_MODE_HOMING)
+					if (nPlayerWeapon[nCount] == WEAPONS_MODE_HOMING)
 					{
 						//キャンセル音SE
 						pSound->Play(CSound::LABEL_SE_CANCEL);
@@ -490,8 +481,8 @@ void CButton::Update(void)
 						pScore->AddScore(15000);
 						WeaponUi = CSelect::GetWeaponUi(nCount);
 
-						WeaponUi->SetUI(CPlayer::WEAPONS_MODE_NONE);
-						nPlayerWeapon[nCount] = CPlayer::WEAPONS_MODE_NONE;
+						WeaponUi->SetUI(WEAPONS_MODE_NONE);
+						nPlayerWeapon[nCount] = WEAPONS_MODE_NONE;
 						CManager::SetWeapon(nPlayerWeapon[0], nPlayerWeapon[1]);
 						return;
 					}

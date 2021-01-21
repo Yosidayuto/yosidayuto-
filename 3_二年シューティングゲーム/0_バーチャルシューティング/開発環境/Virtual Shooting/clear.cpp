@@ -1,11 +1,11 @@
 //----------------------------------------------
 //ヘッダーファイル
 //----------------------------------------------
-#include "scene2d.h"	//シーン２D（2Dポリゴン）ファイル
-#include "manager.h"	//マネージャーファイル
-#include "renderer.h"	//レンダリングファイル	
-#include "inputmouse.h"	//マウス入力ファイル
-#include "fade.h"		//フェードアウトファイル
+#include "scene2d.h"	
+#include "manager.h"	
+#include "renderer.h"	
+#include "inputmouse.h"	
+#include "fade.h"		
 #include "clear.h"
 //----------------------------------------------
 //静的メンバー変数
@@ -87,9 +87,9 @@ HRESULT CClear::Init(void)
 		//メモリ確保
 		m_apScene2D[nCount] = new CScene2d;
 		//位置
-		m_apScene2D[nCount]->SetPosition(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f));
+		m_apScene2D[nCount]->SetPos(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f));
 		//サイズ
-		m_apScene2D[nCount]->SetSizeition(D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
+		m_apScene2D[nCount]->SetSize(D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
 		//初期化処理
 		m_apScene2D[nCount]->CScene2d::Init();
 		//テクスチャの設定
@@ -120,7 +120,7 @@ void CClear::Update(void)
 	CFade *pFade = CManager::GetFade();
 	if (pMouse->GetClickTrigger(0) == true)
 	{
-		pFade->Set(CManager::GAME_MODE_TITLE);
+		pFade->SetFade(GAME_MODE_TITLE);
 	}
 	for (int nCount = 0; nCount < MAX_ClEAR; nCount++)
 	{

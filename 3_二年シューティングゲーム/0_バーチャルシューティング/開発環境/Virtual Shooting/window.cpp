@@ -1,12 +1,13 @@
+//いる？
 //----------------------------------------------
 //ヘッダーファイル
 //----------------------------------------------
-#include "window.h"		//ウィンドウヘッダー
-#include "manager.h"	//マネージャーヘッダー
-#include "renderer.h"	//レンダリングヘッダー
-#include "inputmouse.h"	//インプットマウスヘッダー
-#include "button.h"		//ボタンヘッダー
-#include "score.h"		//スコアヘッダー
+#include "window.h"		
+#include "manager.h"	
+#include "renderer.h"	
+#include "inputmouse.h"	
+#include "button.h"		
+#include "score.h"		
 //----------------------------------
 //静的メンバー変数
 //----------------------------------
@@ -47,9 +48,9 @@ CWindow * CWindow::Create(D3DXVECTOR3 Pos, D3DXVECTOR3 size, WINDOW_TYPE Type)
 		pWindow->m_pos = Pos;
 		pWindow->m_size = size;
 		//位置
-		pWindow->SetPosition(pWindow->m_pos);
+		pWindow->SetPos(pWindow->m_pos);
 		//サイズ
-		pWindow->SetSizeition(pWindow->m_size);
+		pWindow->SetSize(pWindow->m_size);
 		pWindow->BindTexture(m_Texture[Type]);
 		pWindow->Init();
 		m_Window[Type] = true;

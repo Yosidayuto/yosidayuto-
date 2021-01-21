@@ -78,7 +78,7 @@ CPointer * CPointer::Create(POINTER_TYPE Type)
 	{
 		pPointer->Init(Type);
 	}
-	pPointer->Set(D3DXVECTOR3(0.0f,0.0f,0.0f));
+	pPointer->SetPos(D3DXVECTOR3(0.0f,0.0f,0.0f));
 	return pPointer;
 }
 
@@ -90,7 +90,7 @@ HRESULT CPointer::Init(POINTER_TYPE Type)
 	//テクスチャ設定
 	BindTexture(m_pTexture[Type]);
 	//サイズ
-	SetSizeition(D3DXVECTOR3(MAX_SIZE, MAX_SIZE, 0.0f));
+	SetSize(D3DXVECTOR3(MAX_SIZE, MAX_SIZE, 0.0f));
 
 	//初期化処理
 	CScene2d::Init();
@@ -115,7 +115,7 @@ void CPointer::Update(void)
 	
 
 	D3DXVECTOR3 MousePos = D3DXVECTOR3((float)pMouse->GetMousePos().x, (float)pMouse->GetMousePos().y, 0.0f);
-	SetPosition(MousePos);
+	SetPos(MousePos);
 	CScene2d::Update();
 }
 

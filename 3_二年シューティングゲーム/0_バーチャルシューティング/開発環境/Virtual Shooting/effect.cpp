@@ -40,7 +40,7 @@ CEffect * CEffect::Create(D3DXVECTOR3 Pos, D3DXCOLOR col, D3DXVECTOR3 size ,EFFE
 {
 	CEffect *pEffect;
 	pEffect = new CEffect;
-	pEffect->Set(Pos);
+	pEffect->SetPos(Pos);
 	pEffect->m_Type=type;
 	pEffect->Init(size, col);
 
@@ -81,7 +81,7 @@ HRESULT CEffect::Init(D3DXVECTOR3 size, D3DXCOLOR col)
 	//カラー
 	m_col = col;
 	//サイズ
-	SetSizeition(D3DXVECTOR3(size.x, size.y, 0.0f));
+	SetSize(D3DXVECTOR3(size.x, size.y, 0.0f));
 	//テクスチャの設定
 	BindTexture(m_pTexture[m_Type]);
 	//初期化処理
@@ -106,16 +106,16 @@ void CEffect::Update(void)
 	{
 	case EFFECT_TYPE_BULLET:
 		//大きさの取得
-		m_size = GetSizeition();
+		m_size = GetSize();
 		//大きさの処理
 		m_size -= D3DXVECTOR3(1.0f, 1.0f, 0.0f);
 		//ポリゴンの大きさを渡す
-		SetSizeition(m_size);
+		SetSize(m_size);
 		break;
 	}
 	m_col = D3DXCOLOR(m_col.r - 0.05f, m_col.g - 0.05f, m_col.b - 0.05f, m_col.a-0.05f);
 	//カラーセット
-	ColChange(m_col);
+	SetCol(m_col);
 
 	//更新処理
 	CScene2d::Update();

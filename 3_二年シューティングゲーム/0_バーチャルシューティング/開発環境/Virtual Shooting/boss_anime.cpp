@@ -49,7 +49,7 @@ CBossAnime * CBossAnime::Create(D3DXVECTOR3 Pos, D3DXVECTOR3 size, BOSS_ANIME Ty
 
 	pBossAnime = new CBossAnime;
 	pBossAnime->m_Type = Type;
-	pBossAnime->Set(Pos);
+	pBossAnime->SetPos(Pos);
 	pBossAnime->Init(size);
 	
 	return pBossAnime;
@@ -96,7 +96,7 @@ HRESULT CBossAnime::Init(D3DXVECTOR3 size)
 {
 	D3DXVECTOR2 Texture[4];
 	//ÉTÉCÉY
-	SetSizeition(D3DXVECTOR3(size.x, size.y, 0.0f));
+	SetSize(D3DXVECTOR3(size.x, size.y, 0.0f));
 
 	//èâä˙âªèàóù
 	CScene2d::Init();

@@ -108,9 +108,9 @@ HRESULT CBg::Init(void)
 		//メモリ確保
 		m_apScene2D[nCountBg] = new CScene2d (0);
 		//位置
-		m_apScene2D[nCountBg]->SetPosition(m_Data[nCountBg].m_Pos);
+		m_apScene2D[nCountBg]->SetPos(m_Data[nCountBg].m_Pos);
 		//サイズ
-		m_apScene2D[nCountBg]->SetSizeition(m_Data[nCountBg].m_Size);
+		m_apScene2D[nCountBg]->SetSize(m_Data[nCountBg].m_Size);
 		//初期化処理
 		m_apScene2D[nCountBg]->CScene2d::Init();
 		//テクスチャの設定
@@ -125,13 +125,6 @@ HRESULT CBg::Init(void)
 //------------------------------------
 void CBg::Uninit(void)
 {
-	for (int nCountBg = 0; nCountBg < MAX_BG; nCountBg++)
-	{
-		if (m_apScene2D[nCountBg] != NULL)
-		{
-			m_apScene2D[nCountBg]->CScene2d::Uninit();
-		}
-	}
 	Release();
 }
 

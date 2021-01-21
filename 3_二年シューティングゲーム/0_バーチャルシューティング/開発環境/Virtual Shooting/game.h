@@ -7,7 +7,6 @@
 //マクロ定義
 //------------------------------------
 #define MAX_STAGE 1		//ステージ数
-#define MAX_ENEMY 10	//画面に映るエネミー数
 //------------------------------------
 //前置処理
 //------------------------------------
@@ -19,7 +18,7 @@ class CScore;
 //------------------------------------
 //クラス処理
 //------------------------------------
-class CGame :public CScene
+class CGame 
 {
 public:
 	CGame();	//コンストラクタ
@@ -33,7 +32,6 @@ public:
 	}STAGE_TYPE;
 
 
-	static CGame*	Create(void);	//生成処理
 
 	HRESULT			Init(void);		//初期化処理
 	void			Uninit(void);	//終了処理

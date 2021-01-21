@@ -15,6 +15,15 @@
 //前置処理
 //------------------------------------
 class CLife;
+typedef enum	//プレイヤーの武装
+{
+	WEAPONS_MODE_NONE = 0,	//NULL
+	WEAPONS_MODE_BUTTOL,	//バレット
+	WEAPONS_MODE_LASER,		//レーザー
+	WEAPONS_MODE_HOMING,	//ホーミング
+	WEAPONS_MODE_MAX
+}WEAPON_MODE;
+
 //----------------------------------------------
 //クラス
 //----------------------------------------------
@@ -23,14 +32,6 @@ class CPlayer :public CScene2d
 public:
 	CPlayer(int nPriorit = 4);			//コンストラクタ
 	~CPlayer();			//デストラクタ	
-	typedef enum	//プレイヤーの武装
-	{
-		WEAPONS_MODE_NONE = 0,	//NULL
-		WEAPONS_MODE_BUTTOL,	//バレット
-		WEAPONS_MODE_LASER,		//レーザー
-		WEAPONS_MODE_HOMING,	//ホーミング
-		WEAPONS_MODE_MAX
-	}WEAPON_MODE;
 
 	static CPlayer*	Create(D3DXVECTOR3 Pos);	//生成処理
 	static void		Unload(void);		//テクスチャの破棄

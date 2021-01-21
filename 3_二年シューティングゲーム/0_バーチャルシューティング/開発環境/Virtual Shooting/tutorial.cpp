@@ -1,150 +1,125 @@
+//=============================================================================
+//
+// チュートリアル処理 [tutorial.cpp]
+// Author : 吉田悠人
+//
+//=============================================================================
+//=============================================================================
+//インクルードファイル
+//=============================================================================
 #include "tutorial.h"
-#include "manager.h"
-#include "renderer.h"
-#include "inputmouse.h"
-#include "fade.h"
 #include "sound.h"
-//----------------------------------------------
-//マクロ定義
-//----------------------------------------------
-#define TEXTURE_X 0.25f
-
-//----------------------------------
-//静的メンバー変数
-//----------------------------------
-LPDIRECT3DTEXTURE9 CTutorial::m_Texture = NULL;
-char * CTutorial::pTexture = "data/TEXTURE/tutorial.png";
-
-//----------------------------------
-//コンストラクタ
-//----------------------------------
-CTutorial::CTutorial(int nPriorit)
+#include "fade.h"
+#include "inputmouse.h"
+#include "tutorial bg.h"
+//=============================================================================
+// コンストラクタ
+//=============================================================================
+CTutorial::CTutorial()
 {
-	m_nCountTexture = 0;
+	m_pTutorialBg = NULL;
 }
 
-//----------------------------------
-//デストラクタ
-//----------------------------------
+//=============================================================================
+// デストラクタ
+//=============================================================================
 CTutorial::~CTutorial()
 {
 }
 
-//----------------------------------
-//生成処理
-//----------------------------------
-HRESULT CTutorial::Load(void)
-{
-	//デバイス取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetObjects();
-	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice, pTexture, &m_Texture);
-
-	return S_OK;
-}
-
-//----------------------------------
-//テクスチャ読み込み処理
-//----------------------------------
-void CTutorial::Unload(void)
-{
-	if (m_Texture != NULL)
-	{
-		m_Texture->Release();
-		m_Texture = NULL;
-	}
-
-}
-
-//----------------------------------
-//テクスチャ破棄処理
-//----------------------------------
-CTutorial * CTutorial::Create(void)
-{
-	CTutorial *pTutorial;
-	pTutorial = new CTutorial;
-	pTutorial->SetPosition(D3DXVECTOR3(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0.0f));
-	pTutorial->SetSizeition(D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT,0.0f));
-	
-	pTutorial->Init();
-
-	return pTutorial;
-}
-
-//----------------------------------
-//初期化処理
-//----------------------------------
+//=============================================================================
+// 初期化処理
+//=============================================================================
 HRESULT CTutorial::Init(void)
 {
-	D3DXVECTOR2 Texture[4];
-	//テクスチャ処理
-	Texture[0] = D3DXVECTOR2(0.0f, 0.0f);
-	Texture[1] = D3DXVECTOR2(TEXTURE_X, 0.0f);
-	Texture[2] = D3DXVECTOR2(0.0f, 1.0f);
-	Texture[3] = D3DXVECTOR2(TEXTURE_X, 1.0f);
+	CSound*	pSound = CManager::GetSound();	//サウンド取得
 
-	BindTexture(m_Texture);
-	//初期化処理
-	CScene2d::Init();
+	//チュートリアル生成
+	m_pTutorialBg = CTutorialBg::Create();
 
-
-	TextureAnim(&Texture[0]);
-
+	//ここまで
 	return S_OK;
 }
 
-//----------------------------------
-//終了処理
-//----------------------------------
+//=============================================================================
+// 終了処理
+//=============================================================================
 void CTutorial::Uninit(void)
 {
-	CScene2d::Uninit();
+	//サウンド取得
+	CSound*	pSound = CManager::GetSound();
+	//サウンド停止
+	pSound->Stop();
+	//シーン破棄
+	CScene::ReleaseAll();
 }
 
-//----------------------------------
-//更新処理
-//----------------------------------
+//=============================================================================
+// 更新処理
+//=============================================================================
 void CTutorial::Update(void)
 {
-	CSound *pSound = CManager::GetSound();				//サウンド取得
-	CInihMouse *pMouse = CManager::GetMouse();			//マウス取得
-	CFade *pFade = CManager::GetFade();					//フェード取得	
-	D3DXVECTOR2 Texture[4];								//テクスチャ
-
+	CSound*		pSound	= CManager::GetSound();	//サウンド取得
+	CInihMouse*	pMouse	= CManager::GetMouse();	//マウス取得
+	CFade*		pFade	= CManager::GetFade();	//フェード取得	
+	static int	nCount	= 0;					//クリックカウント
+			
+	//マウスを左クリック
 	if (pMouse->GetClickTrigger(0) == true)
 	{
-		if (m_nCountTexture < 3)
+		nCount++;
+		if (nCount>3)
 		{
-			m_nCountTexture++;
-			pSound->Play(CSound::LABEL_SE_CLICK);
+			pFade->SetFade(GAME_MODE_SELECT);
+			nCount = 0;
 		}
 		else
 		{
-			if (pFade->Set(CManager::GAME_MODE_SELECT) == true)
+			//NULLチェック
+			if (pSound != NULL)
 			{
+				//SE再生
 				pSound->Play(CSound::LABEL_SE_CLICK);
+			}
+			//NULLチェック
+			if (m_pTutorialBg != NULL)
+			{
+				m_pTutorialBg->TextureMove(true);
 			}
 
 		}
-
 	}
-	if (pMouse->GetClickTrigger(1) == true && m_nCountTexture>0)
+	//マウスを右クリック
+	else if (pMouse->GetClickTrigger(1) == true)
 	{
-		m_nCountTexture--;
+		//クリックカウント
+		nCount--;
+		if (nCount<0)
+		{
+			nCount=0;
+		}
+		else
+		{
+			//NULLチェック
+			if (pSound != NULL)
+			{
+				//SE再生
+				pSound->Play(CSound::LABEL_SE_CLICK);
+			}
+			//NULLチェック
+			if (m_pTutorialBg != NULL)
+			{
+				m_pTutorialBg->TextureMove(false);
+			}
+
+		}
 	}
-	Texture[0] = D3DXVECTOR2(TEXTURE_X*m_nCountTexture, 0.0f);
-	Texture[1] = D3DXVECTOR2(TEXTURE_X*m_nCountTexture + TEXTURE_X, 0.0f);
-	Texture[2] = D3DXVECTOR2(TEXTURE_X*m_nCountTexture, 1.0f);
-	Texture[3] = D3DXVECTOR2(TEXTURE_X*m_nCountTexture + TEXTURE_X, 1.0f);
-	TextureAnim(&Texture[0]);
-	
-	CScene2d::Update();
+
 }
 
-//----------------------------------
-//描画処理
-//----------------------------------
+//=============================================================================
+// 描画関数
+//=============================================================================
 void CTutorial::Draw(void)
 {
-	CScene2d::Draw();
 }

@@ -29,15 +29,15 @@ CWeapon_Ui::~CWeapon_Ui()
 //------------------------------------
 //生成処理
 //------------------------------------
-CWeapon_Ui * CWeapon_Ui::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, CPlayer::WEAPON_MODE Type)
+CWeapon_Ui * CWeapon_Ui::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, WEAPON_MODE Type)
 {
 	CWeapon_Ui *pWeaponUi;
 	pWeaponUi = new CWeapon_Ui;	
 	pWeaponUi->m_pos = pos;		//位置設定
 	pWeaponUi->m_size = size;	//サイズ設定
 	pWeaponUi->m_Type = Type;
-	pWeaponUi->SetPosition(pWeaponUi->m_pos);		//位置取得
-	pWeaponUi->SetSizeition(pWeaponUi->m_size);		//サイズ取得
+	pWeaponUi->SetPos(pWeaponUi->m_pos);		//位置取得
+	pWeaponUi->SetSize(pWeaponUi->m_size);		//サイズ取得
 	pWeaponUi->BindTexture(pWeaponUi->m_Texture);	//テクスチャ設定
 	pWeaponUi->Init();
 	return pWeaponUi;
@@ -77,13 +77,13 @@ HRESULT CWeapon_Ui::Init(void)
 
 	switch (m_Type)
 	{
-	case CPlayer::WEAPONS_MODE_BUTTOL:
+	case WEAPONS_MODE_BUTTOL:
 		m_pUi = CUi::Create(m_pos, m_size, CUi::TEXTURE_TYPE_BULLET);
 		break;
-	case CPlayer::WEAPONS_MODE_LASER:
+	case WEAPONS_MODE_LASER:
 		m_pUi = CUi::Create(m_pos, m_size, CUi::TEXTURE_TYPE_LASER);
 		break;
-	case CPlayer::WEAPONS_MODE_HOMING:
+	case WEAPONS_MODE_HOMING:
 		m_pUi = CUi::Create(m_pos, m_size, CUi::TEXTURE_TYPE_HOMING);
 		break;
 
@@ -118,14 +118,14 @@ void CWeapon_Ui::Update(void)
 
 	switch (m_Type)
 	{
-	case CPlayer::WEAPONS_MODE_NONE:
+	case WEAPONS_MODE_NONE:
 		if (m_pUi != NULL)
 		{
 			m_pUi->Uninit();
 			m_pUi = NULL;
 		}
 		break;
-	case CPlayer::WEAPONS_MODE_BUTTOL:
+	case WEAPONS_MODE_BUTTOL:
 		if (m_pUi != NULL)
 		{
 			return;
@@ -133,14 +133,14 @@ void CWeapon_Ui::Update(void)
 		m_pUi = CUi::Create(m_pos, m_size, CUi::TEXTURE_TYPE_BULLET);
 
 		break;
-	case CPlayer::WEAPONS_MODE_LASER:
+	case WEAPONS_MODE_LASER:
 		if (m_pUi != NULL)
 		{
 			return;
 		}
 		m_pUi = CUi::Create(m_pos, m_size, CUi::TEXTURE_TYPE_LASER);
 		break;
-	case CPlayer::WEAPONS_MODE_HOMING:
+	case WEAPONS_MODE_HOMING:
 		if (m_pUi != NULL)
 		{
 			return;
@@ -166,7 +166,7 @@ void CWeapon_Ui::Draw(void)
 	}
 }
 
-void CWeapon_Ui::SetUI(CPlayer::WEAPON_MODE Type)
+void CWeapon_Ui::SetUI(WEAPON_MODE Type)
 {
 	m_Type = Type;
 }

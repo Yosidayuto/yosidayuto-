@@ -13,26 +13,30 @@
 //=============================================================================
 //静的メンバー変数宣言
 //=============================================================================
-CScene * CScene::m_apScene[MAX_DRAW][MAX_SCENE] = {};
-int CScene::m_nNumAll = 0;
-bool CScene::bPause = true;
-//CPause * CScene::m_pPause = NULL;
+CScene* CScene::m_pTop[PRIORITY_MAX] = {};
+CScene* CScene::m_pCur[PRIORITY_MAX] = {};
+
+
 //=============================================================================
 //コンストラクト
 //=============================================================================
-CScene::CScene(int nPriorit)
+CScene::CScene(int nPriority)
 {
-	for (int nCutScene = 0; nCutScene < MAX_SCENE; nCutScene++)
+	//初期化処理
+	m_bDestroy = false;
+	//リスト構造に追加
+	m_nPriority = nPriority;
+	if (m_pTop[nPriority] != NULL)
 	{
-		if (m_apScene[nPriorit][nCutScene] == NULL)
-		{
-			m_nID = nCutScene;
-			m_apScene[nPriorit][nCutScene] = this;
-			m_nPiority= nPriorit;
-			m_nNumAll++;
-			break;
-		}
+		m_pCur[nPriority]->m_pNext = this;
 	}
+	else
+	{
+		m_pTop[nPriority] = this;
+	}
+	this->m_pPrev		= m_pCur[nPriority];
+	this->m_pNext		= NULL;
+	m_pCur[nPriority]	= this;
 
 }
 //=============================================================================
@@ -48,48 +52,92 @@ CScene::~CScene()
 //=============================================================================
 void CScene::UpdateAll(void)
 {
-	for (int nCut = 0; nCut < MAX_DRAW; nCut++)
+	CScene* pNext = NULL;
+	CScene* pNextBuff = NULL;
+	int ObjectCount = 0;
+	//リストに含まれるオブジェクトを更新
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 	{
-		for (int nCutScene = 0; nCutScene < MAX_SCENE; nCutScene++)
+		//NULLチェック
+		if (m_pTop[nCount] != NULL)
 		{
-			if (m_apScene[nCut][nCutScene] != NULL && typeid(*m_apScene[nCut][nCutScene]) != typeid(CScene2d))
+			pNext = m_pTop[nCount];
+			//NULLチェック
+			while (pNext != NULL && !pNext->m_bDestroy)
 			{
-				m_apScene[nCut][nCutScene]->Update();
+				pNextBuff = pNext->m_pNext;
+				pNext->Update();
+				pNext = pNextBuff;
+				ObjectCount++;
 			}
 		}
 	}
-}
-//=============================================================================
-//描画処理
-//=============================================================================
-void CScene::DrawAll(void)
-{
-	for (int nCut = 0; nCut < MAX_DRAW; nCut++)
+
+	//死亡フラグ立ってるやつを殺す
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 	{
-		for (int nCutScene = 0; nCutScene < MAX_SCENE; nCutScene++)
+		//NULLチェック
+		if (m_pTop[nCount] != NULL)
 		{
-			if (m_apScene[nCut][nCutScene] != NULL && typeid(*m_apScene[nCut][nCutScene]) != typeid(CScene2d))
+			pNext = m_pTop[nCount];
+			//NULLチェック
+			while (pNext != NULL)
 			{
-				m_apScene[nCut][nCutScene]->Draw();
+				pNextBuff = pNext->m_pNext;
+				if (pNext->m_bDestroy == true)
+				{
+					pNext->Death();
+				}
+				pNext = pNextBuff;
 			}
 		}
 	}
 }
 
 //=============================================================================
-//終了処理
+//描画処理
+//=============================================================================
+void CScene::DrawAll(void)
+{
+	CScene* pNext = NULL;
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
+	{
+		//NULLチェック
+		if (m_pTop[nCount] != NULL)
+		{
+			pNext = m_pTop[nCount];
+			while (pNext != NULL)
+			{
+				pNext->Draw();
+				pNext = pNext->m_pNext;
+			}
+		}
+	}
+}
+
+//=============================================================================
+//全開放処理
 //=============================================================================
 void CScene::ReleaseAll(void)
 {
-	for (int nCut = 0; nCut < MAX_DRAW; nCut++)
+	CScene* pNext = NULL;
+	CScene* pNextBuff = NULL;
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 	{
-		for (int nCutScene = 0; nCutScene < MAX_SCENE; nCutScene++)
+		//NULLチェック
+		if (m_pTop[nCount] != NULL)
 		{
-			if (m_apScene[nCut][nCutScene] != NULL)
+			pNext = m_pTop[nCount];
+			while (pNext != NULL)
 			{
-				m_apScene[nCut][nCutScene]->Uninit();	
+				pNextBuff = pNext->m_pNext;
+				pNext->Uninit();
+				delete pNext;
+				pNext = pNextBuff;
 			}
 		}
+		m_pTop[nCount] = NULL;
+		m_pCur[nCount] = NULL;
 	}
 }
 
@@ -98,23 +146,38 @@ void CScene::ReleaseAll(void)
 //=============================================================================
 void CScene::SetObjType(OBJTYPE objType)
 {
-	m_nType = objType;
+	m_objType = objType;
 }
-
 //=============================================================================
 //タイプゲット処理
 //=============================================================================
 CScene::OBJTYPE CScene::GetObjType(void)
 {
-	return m_nType;
+	return m_objType;
 }
 
 //=============================================================================
-//シーンゲット処理
+//オブジェクトトップゲッター
 //=============================================================================
-CScene * CScene::GetScene(int nPriorty, int nCntScene)
+CScene** CScene::GetTop(void)
 {
-	return m_apScene[nPriorty][nCntScene];
+	return m_pTop;
+}
+
+//=============================================================================
+// 次のオブジェクトゲッター
+//=============================================================================
+CScene* CScene::GetNext(void)
+{
+	return m_pNext;
+}
+
+//=============================================================================
+// 前のオブジェクトゲッター
+//=============================================================================
+CScene* CScene::GetPrev(void)
+{
+	return m_pPrev;
 }
 
 //=============================================================================
@@ -122,13 +185,33 @@ CScene * CScene::GetScene(int nPriorty, int nCntScene)
 //=============================================================================
 void CScene::Release(void)
 {
-		if (m_apScene[m_nPiority][m_nID] != NULL)
-		{
-			int nID = m_nID;
-			int nPiority = m_nPiority;
-			delete m_apScene[nPiority][nID];
-			m_apScene[nPiority][nID] = NULL;
-			m_nNumAll--;
-		}
-
+	//死亡フラグを立てる
+	m_bDestroy = true;
 }
+
+//=============================================================================
+//リストから消去して自身も消える処理
+//=============================================================================
+void CScene::Death(void)
+{
+	//消えるときの処理
+	if (this == m_pTop[m_nPriority])
+	{
+		m_pTop[m_nPriority] = m_pNext;
+	}
+	if (this == m_pCur[m_nPriority])
+	{
+		m_pCur[m_nPriority] = m_pPrev;
+	}
+	if (m_pNext != NULL)
+	{
+		m_pNext->m_pPrev = m_pPrev;
+	}
+	if (m_pPrev != NULL)
+	{
+		m_pPrev->m_pNext = m_pNext;
+	}
+	delete this;
+}
+
+

@@ -1,3 +1,10 @@
+//=============================================================================
+//
+// レーザー処理 [laser.cpp]
+// Author : 吉田悠人
+//
+//=============================================================================
+
 //----------------------------------------------
 //ヘッダーファイル
 //----------------------------------------------
@@ -31,10 +38,9 @@ CLaser::CLaser(int nPriorit)
 	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	//タイプ処理
 	CScene::SetObjType(CScene::OBJ_TYPE_BULLET);
-	for (int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+	for (int nCntScene = 0; nCntScene < MAX_ENEMY; nCntScene++)
 	{
 		m_Hit[nCntScene] = false;
-
 	}
 }
 
@@ -78,7 +84,7 @@ CLaser * CLaser::Create(D3DXVECTOR3 Pos, D3DXVECTOR3 move, LASER_TYPE Type)
 {
 	CLaser *pLaser;
 	pLaser = new CLaser;
-	pLaser->Set(Pos);
+	pLaser->SetPos(Pos);
 	pLaser->Init(move, Type);
 	return pLaser;
 }
@@ -102,7 +108,7 @@ HRESULT CLaser::Init(D3DXVECTOR3 move, LASER_TYPE Type)
 
 	}
 	//サイズ
-	SetSizeition(D3DXVECTOR3(LASER_SIZE_X / 2, LASER_SIZE_Y / 2, 0.0f));
+	SetSize(D3DXVECTOR3(LASER_SIZE_X / 2, LASER_SIZE_Y / 2, 0.0f));
 	//テクスチャの設定
 	BindTexture(m_pTexture);
 
@@ -126,8 +132,21 @@ void CLaser::Uninit(void)
 //----------------------------------
 void CLaser::Update(void)
 {
+	//オブジェクト取得用
+	CScene* pTop[PRIORITY_MAX] = {};
+	//次チェックするオブジェクトのポインタ
+	CScene* pNext = NULL;
+	//エネミーカウント
+	int nEnemy = 0;
+	//topのアドレスを取得
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
+	{
+		pTop[nCount] = *(CScene::GetTop() + nCount);
+	}
+
+
 	//ポリゴンの位置取得
-	D3DXVECTOR3 pos = GetPosition();
+	D3DXVECTOR3 pos = GetPos();
 	//位置更新
 	pos += m_move;
 	//球の射程距離
@@ -135,7 +154,7 @@ void CLaser::Update(void)
 	//更新処理
 	CScene2d::Update();
 	//ポリゴンの位置を渡す
-	SetPosition(pos);
+	SetPos(pos);
 
 	//エフェクト生成
 	CEffect::Create(pos, D3DXCOLOR(0.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(LASER_SIZE_X / 2, LASER_SIZE_Y / 2, 0.0f),CEffect::EFFECT_TYPE_LASER);
@@ -146,63 +165,57 @@ void CLaser::Update(void)
 		CExplosion::Create(pos);
 		Uninit();	//終了処理
 		return;
-
 	}
 	//画面外に出た時
 	else if (pos.y < 0 || pos.y>SCREEN_HEIGHT || pos.x<0 || pos.x>SCREEN_WIDTH)
 	{
 		Uninit();	//終了処理
 		return;
-
 	}
 	if (nLife > 0)		//射程距離内
 	{
 		//レーザー効果処理
-		for (int nCut = 0; nCut < MAX_DRAW; nCut++)
+		for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 		{
-			for (int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+			if (pTop[nCount] != NULL)
 			{
-				
-				CScene *pScene = GetScene(nCut, nCntScene);
-				if (pScene != NULL)
+				pNext = pTop[nCount];
+				//その描画優先度のオブジェクトがなくなるまでループ
+				while (pNext != NULL)
 				{
-					OBJTYPE objType;
-					//タイプ取得
-					objType = pScene->GetObjType();
 					switch (m_Type)
 					{
 					case LASER_TYPE_PLAYER:
-						if (objType == OBJ_TYPE_ENEMY)
+						if (pNext->GetObjType() == OBJ_TYPE_ENEMY)
 						{
-							D3DXVECTOR3 EnemeyPos = ((CScene2d*)pScene)->GetPosition();
-							D3DXVECTOR3 EnemeySize = ((CScene2d*)pScene)->GetSizeition();
+							D3DXVECTOR3 EnemeyPos = ((CScene2d*)pNext)->GetPos();
+							D3DXVECTOR3 EnemeySize = ((CScene2d*)pNext)->GetSize();
 							//当たり判定
 							
 							if (EnemeyPos.x + EnemeySize.x > pos.x
 								&& EnemeyPos.x - EnemeySize.x < pos.x
 								&&EnemeyPos.y + EnemeySize.y > pos.y
 								&&EnemeyPos.y - EnemeySize.y < pos.y
-								&&m_Hit[nCntScene]!=true)
+								&&m_Hit[nEnemy]!=true)
 							{
-			
-								m_Hit[nCntScene] = true;
-
+								m_Hit[nEnemy] = true;
 								
 								//エネミーダメージ処理
-								if (typeid(*pScene) == typeid(CEnemy))
+								if (typeid(*pNext) == typeid(CEnemy))
 								{
 									//エクスプロージョン生成
 									CExplosion::Create(EnemeyPos);
 
-									((CEnemy*)pScene)->Damage(1);
+									((CEnemy*)pNext)->Damage(1);
 								}
-								else if (typeid(*pScene) == typeid(CBoss))
+								else if (typeid(*pNext) == typeid(CBoss))
 								{
 									//エクスプロージョン生成
 									CExplosion::Create(pos);
 
-									((CBoss*)pScene)->Damage(1);
+									((CBoss*)pNext)->Damage(1);
 								}
+								nEnemy++;
 							}
 						}
 						break;
@@ -211,7 +224,8 @@ void CLaser::Update(void)
 						break;
 
 					}
-
+					//次のオブジェクトのポインタを更新
+					pNext = pNext->GetNext();
 				}
 			}
 		}

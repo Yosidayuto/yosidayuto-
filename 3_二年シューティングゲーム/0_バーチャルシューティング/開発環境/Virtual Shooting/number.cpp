@@ -13,7 +13,7 @@ LPDIRECT3DTEXTURE9 CNumber::m_pTexture = NULL;
 //------------------------------------
 //コンストラクタ
 //------------------------------------
-CNumber::CNumber()
+CNumber::CNumber() 
 {
 	m_pVtxBuff = NULL;
 }
@@ -56,14 +56,16 @@ CNumber * CNumber::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
 	CNumber *pNumber;
 	pNumber = new CNumber;
-	pNumber->Init(pos, size);
+	pNumber->pos = pos;
+	pNumber->size = size;
+	pNumber->Init();
 	return pNumber;
 }
 
 //------------------------------------
 //初期化処理
 //------------------------------------
-HRESULT CNumber::Init(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+HRESULT CNumber::Init(void)
 {
 	//デバイス取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetObjects();

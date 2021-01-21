@@ -131,11 +131,11 @@ void CResult::Update(void)
 	{
 		if(CGame::SetStage() == CGame::STAGE_TYPE_MAX)
 		{
-			pFade->Set(CManager::GAME_MODE_CLEAR);
+			pFade->SetFade(GAME_MODE_CLEAR);
 		}
 		else	
 		{
-			pFade->Set(CManager::GAME_MODE_SELECT);
+			pFade->SetFade(GAME_MODE_SELECT);
 		}
 
 	}
@@ -163,7 +163,7 @@ void CResult::ReadFile(CGame::STAGE_TYPE Stage)
 	fopen_s(&pFile, pTexture[Stage], "r");	//テキストファイル読み込み
 	if (pFile != NULL)
 	{
-		for (int nCount = 0; nCount < MAX_DRAW; nCount++)
+		for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 		{
 			fscanf_s(pFile, "%d", &nScoreData[nCount]);
 		}
@@ -184,7 +184,7 @@ void CResult::WriteFile(CGame::STAGE_TYPE Stage)
 
 	if (pFile != NULL)
 	{
-		for (int nCount = 0; nCount < MAX_DRAW; nCount++)
+		for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 		{
 			fprintf(pFile, "%d\n", nScoreData[nCount]);
 		}
@@ -205,7 +205,7 @@ int CResult::SetRanking(int nScore, CGame::STAGE_TYPE Stage)
 		if (nScoreData[nCount] < nScore)
 		{
 			//以前のランキングデータを後ろに移動
-			for (int nCntMove = MAX_DRAW - 1; nCntMove > nCount; nCntMove--)
+			for (int nCntMove = PRIORITY_MAX - 1; nCntMove > nCount; nCntMove--)
 			{
 				//ずらす
 				nScoreData[nCntMove] = nScoreData[nCntMove - 1];

@@ -92,9 +92,9 @@ CBoss * CBoss::Create(D3DXVECTOR3 Pos, BOSS_TYPE nType, D3DXVECTOR3 size)
 	pBoss->m_Type = nType;
 	pBoss->m_size = size/2;
 	pBoss->m_pos = Pos;
-	pBoss->SetSizeition(size/2);
+	pBoss->SetSize(size/2);
 	pBoss->BindTexture(m_Texture[nType]);
-	pBoss->SetPosition(Pos);
+	pBoss->SetPos(Pos);
 	pBoss->Init();
 
 	return pBoss;
@@ -201,12 +201,12 @@ void CBoss::StatasManage(void)
 	{
 	case STATS_MODE_NORMAL:
 		//ダメージカラー処理
-		ColChange(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 		break;
 	case STATS_MODE_DAMAGE:
 		//ダメージカラー処理
-		ColChange(D3DXCOLOR(1.0f, 0.5f, 0.5f, 0.0f));
+		SetCol(D3DXCOLOR(1.0f, 0.5f, 0.5f, 0.0f));
 		m_Stats = STATS_MODE_NORMAL;
 
 		break;
@@ -261,7 +261,14 @@ void CBoss::StatasManage(void)
 //----------------------------------
 void CBoss::Rotate(void)
 {
-	SetRotate();
+	static float fRot = 0;
+	//向きセット
+	SetRot(fRot);
+	fRot++;
+	if (fRot>360.0f)
+	{
+		fRot = 0;
+	}
 }
 
 //----------------------------------
@@ -473,7 +480,7 @@ void CBoss::Bullet(BOSS_PATTERN_BULLET BulletMode, D3DXVECTOR3 Pos)
 					}
 
 					//バレット発射（発射場所と撃つ方向とバレットタイプ）
-					CBullet::Create(m_pBullet->GetPosition(), m_rot[nNumberBullet], CBullet::BULLET_TYPE_ENEMY);
+					CBullet::Create(m_pBullet->GetPos(), m_rot[nNumberBullet], CBullet::BULLET_TYPE_ENEMY);
 					//バレットを使用状態にする
 					m_bBullet[nNumberBullet] = true;
 
@@ -541,7 +548,7 @@ D3DXVECTOR3 CBoss::Tracking(float fSpeed, D3DXVECTOR3 Pos)
 	//プレイヤーの方向
 	if (CGame::GetPlayer() != NULL)
 	{
-		D3DXVECTOR3 Playerpos = (CGame::GetPlayer())->GetPosition();
+		D3DXVECTOR3 Playerpos = (CGame::GetPlayer())->GetPos();
 		float fAngle = atan2f((-Pos.x + Playerpos.x), (-Pos.y + Playerpos.y));
 		rot.x = sinf(fAngle)*fSpeed;
 		rot.y = cosf(fAngle)*fSpeed;
@@ -559,7 +566,7 @@ D3DXVECTOR3 CBoss::Random(float fSpeed)
 	//プレイヤーの方向
 	if (CGame::GetPlayer() != NULL)
 	{
-		D3DXVECTOR3 Playerpos = CGame::GetPlayer()->GetPosition();
+		D3DXVECTOR3 Playerpos = CGame::GetPlayer()->GetPos();
 		int nRandom = rand() % 1500 + 1;
 		float fAngle = atan2f((-m_pos.x + Playerpos.x), (-m_pos.y + Playerpos.y)) + (float)nRandom / 1000.0f - 0.75f;
 		rot.x = sinf(fAngle)*fSpeed;
@@ -577,7 +584,7 @@ float CBoss::Spiral(void)
 	//プレイヤーの方向
 	if (CGame::GetPlayer()!=NULL)
 	{
-		D3DXVECTOR3 Playerpos = CGame::GetPlayer()->GetPosition();
+		D3DXVECTOR3 Playerpos = CGame::GetPlayer()->GetPos();
 		float fAngle = atan2f((-m_pos.x + Playerpos.x), (-m_pos.y + Playerpos.y));
 		return fAngle;
 	}
@@ -589,29 +596,44 @@ float CBoss::Spiral(void)
 //----------------------------------
 void CBoss::Hit(D3DXVECTOR3 Pos)
 {
-	//プレイヤーとの当たり判定
-	for (int nCut = 0; nCut < MAX_DRAW; nCut++)
+	//シーン取得用
+	CScene* pTop[PRIORITY_MAX] = {};
+	//次チェックするシーンポインタ
+	CScene* pNext = NULL;
+
+	//topのアドレスを取得
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 	{
-		for (int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+		pTop[nCount] = *(CScene::GetTop() + nCount);
+	}
+
+
+	//プレイヤーとの当たり判定
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
+	{
+		if (pTop[nCount] != NULL)
 		{
-			CScene *pScene = GetScene(nCut, nCntScene);
-			if (pScene != NULL)
+			pNext = pTop[nCount];
+			//その描画優先度のオブジェクトがなくなるまでループ
+			while (pNext != NULL)
 			{
-				//タイプ取得
-				OBJTYPE objType = pScene->GetObjType();
-				if (objType == OBJ_TYPE_PLAYER)
+				//オブジェクトのタイプがプレイヤーなら
+				if (pNext->GetObjType() == OBJ_TYPE_PLAYER)
 				{
-					D3DXVECTOR3 Playerpos = ((CScene2d*)pScene)->GetPosition();
+					D3DXVECTOR3 Playerpos = ((CScene2d*)pNext)->GetPos();
 					//当たり判定
 					if (Playerpos.x > Pos.x - m_size.x / 2
 						&& Playerpos.x  < Pos.x + m_size.x / 2
 						&& Playerpos.y > Pos.y - m_size.y / 2
 						&& Playerpos.y < Pos.y + m_size.y / 2)
 					{
-						((CPlayer*)pScene)->Damage(1);
+						((CPlayer*)pNext)->Damage(1);
 					}
 
 				}
+				//次のオブジェクトのポインタを更新
+				pNext = pNext->GetNext();
+
 			}
 		}
 

@@ -1,65 +1,80 @@
-//----------------------------------------------
-//ヘッダーファイル
-//----------------------------------------------
-#include "manager.h"		//マネージャーファイル
-#include "renderer.h"		//レンダリングファイル	
-#include "scene2d.h"		//シーン２D（2Dポリゴン）ファイル
-#include "scene.h"			//シーン（ポリゴンの親）ファイル
-#include "input.h"			//入力処理ファイル
-#include "inihkeyboard.h"	//キーボード入力処理ファイル
-#include "inputmouse.h"		//マウス入力処理ファイル
-#include "sound.h"			//音楽ファイル
-#include "title.h"			//タイトルファイル
-#include "score.h"			//スコアファイル
-#include "number.h"			//ナンバーファイル
-#include "fade.h"			//フェードアウトファイル
-#include "ui.h"				//UIファイル
-#include "game.h"			//ゲームヘッダー
-#include "select.h"			//セレクトヘッダー
-#include "text.h"			//テキストヘッダー
-#include "window.h"			//ウィンドウヘッダー
-#include "player.h"			//プレイヤーヘッダー
-#include "button.h"			//ボタンヘッダー
-#include "clear.h"			//ゲームクリアヘッダー
-#include "telop_bar.h"		//テロップバーヘッダー
-#include "mouse pointer.h"	//マウスポインター
-#include "telop_text.h"		//テロップテキストヘッダー
-#include "tutorial.h"		//チュートリアルヘッダー
-//----------------------------------------------
-//静的メンバー変数
-//----------------------------------------------
-CRenderer *CManager::m_pRenderer = NULL;
-CInihKeyboard *CManager::m_pInput = NULL;
-CInihMouse *CManager::m_pInihMouse = NULL;
-CSound *CManager::m_pSound = NULL;
-CManager::GAME_MODE CManager::m_Mode= GAME_MODE_TITLE;
-CScene *CManager::m_pScene = NULL;
-CTitle *CManager::m_pTitle = NULL;
-CFade *CManager::m_pFade = NULL;
-CGame *CManager::m_pGame = NULL;
-CSelect *CManager::m_pSelect = NULL;
-int CManager::m_nScore = 10000;
-CManager::PLAYER_DATA CManager::m_Player = { 0,0,{ CPlayer::WEAPONS_MODE_BUTTOL , CPlayer::WEAPONS_MODE_NONE } };
-CTutorial *CManager::m_pTutorial = NULL;
+//=============================================================================
+//
+// マネージャー処理 [manager.cpp]
+// Author : 吉田悠人
+//
+//=============================================================================
 
-//---------------------------------
+//=============================================================================
+//インクルードファイル
+//=============================================================================
+#include "manager.h"		
+#include "renderer.h"		
+#include "scene2d.h"		
+#include "scene.h"			
+#include "input.h"			
+#include "inihkeyboard.h"	
+#include "inputmouse.h"		
+#include "sound.h"			
+#include "score.h"			
+#include "number.h"			
+#include "fade.h"			
+#include "ui.h"				
+#include "game.h"			
+#include "select.h"			
+#include "text.h"			
+#include "window.h"			
+#include "player.h"			
+#include "button.h"			
+#include "clear.h"			
+#include "telop_bar.h"		
+#include "mouse pointer.h"	
+#include "telop_text.h"		
+#include "title bg.h"
+#include "title.h"
+#include "tutorial bg.h"
+#include "tutorial.h"
+#include "select bg.h"
+#include "weapon_UI.h"
+#include "start button.h"
+#include "button p.h"
+#include "life button.h"
+#include "life ui.h"
+//=============================================================================
+//静的メンバ変数宣言
+//=============================================================================
+CRenderer *CManager::m_pRenderer	= NULL;
+CInihKeyboard *CManager::m_pInput	= NULL;
+CInihMouse *CManager::m_pInihMouse	= NULL;
+CSound *CManager::m_pSound			= NULL;
+GAME_MODE CManager::m_Mode			= GAME_MODE_TITLE;
+CScene *CManager::m_pScene			= NULL;
+CFade *CManager::m_pFade			= NULL;
+CGame *CManager::m_pGame			= NULL;
+CSelect *CManager::m_pSelect		= NULL;
+int CManager::m_nScore				= 10000;
+CManager::PLAYER_DATA CManager::m_Player =
+{ 0,0,{ WEAPONS_MODE_BUTTOL , WEAPONS_MODE_NONE } };
+CTitle *CManager::m_pTitle			= NULL;
+CTutorial *CManager::m_pTutorial	= NULL;
+//=============================================================================
 //コンストラクタ
-//---------------------------------
+//=============================================================================
 CManager::CManager()
 {
 
 }
 
-//---------------------------------
+//=============================================================================
 //デストラクタ
-//---------------------------------
+//=============================================================================
 CManager::~CManager()
 {
 }
 
-//---------------------------------
-//初期化処理
-//---------------------------------
+//=============================================================================
+//初期化関数
+//=============================================================================
 HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 {
 	//インプット(キーボード)生成
@@ -81,29 +96,30 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	//サウンド生成
 	m_pSound = new CSound;
 	m_pSound->Init(hWnd);
+	//タイトル処理
+	m_pTitle	= new CTitle;
+	//チュートリアル処理
+	m_pTutorial	= new CTutorial;
+	//セレクト処理
+	m_pSelect	= new CSelect;
+	//ゲーム処理
+	m_pGame		= new CGame;
+	//ファイルロード
+	LoadFile();
 
-	//テクスチャの読み込み
-	CClear::Load();			//クリア
-	CTitle::Load();			//タイトル
-	CNumber::Load();		//ナンバー
-	CUi::Load();			//UI
-	CText::Load();			//テキスト
-	CWindow::Load();		//ウィンドウ
-	CButton::Load();		//ボタン
-	CTelopBer::Load();		//テロップバー
-	CTelopText::Load();		//テロップテキスト
-	CPointer::Load();		//マウスポインター
-	CTutorial::Load();		//チュートリアル
 	//オブジェクトクラス生成
-	SetMode(m_Mode);
+	m_pFade->SetFade(m_Mode);
 	return S_OK;
 }
 
-//---------------------------------
-//終了処理
-//---------------------------------
+//=============================================================================
+//終了関数
+//=============================================================================
 void CManager::Uninit(void)
 {
+	//シーンの終了
+	CScene::ReleaseAll();
+
 	//キーボード破棄
 	if (m_pInput != NULL)
 	{
@@ -134,19 +150,6 @@ void CManager::Uninit(void)
 		delete m_pFade;
 		m_pFade = NULL;
 	}
-	
-	//テクスチャの破棄
-	CClear::Unload();			//クリア
-	CButton::Unload();			//ボタン
-	CTitle::Unload();			//タイトル
-	CNumber::Unload();			//ナンバー
-	CUi::Unload();				//UI
-	CText::Unload();			//テキスト
-	CWindow::Unload();			//ウィンドウ
-	CTelopBer::Unload();		//テロップバー
-	CTelopText::Unload();		//テロップテキスト
-	CPointer::Unload();			//マウスポインター
-	CTutorial::Unload();			//チュートリアル
 
 	//レンダリングクラスの破棄
 	if (m_pRenderer != NULL)	//メモリが確保されているか
@@ -157,106 +160,172 @@ void CManager::Uninit(void)
 		m_pRenderer = NULL;
 	}
 
+	//ファイルアンロード処理
+	UnLoadFile();
 }
 
-//---------------------------------
-//更新処理
-//---------------------------------
+//=============================================================================
+//更新関数
+//=============================================================================
 void CManager::Update()
 {
-	m_pInihMouse->Update();		//マウス更新
-	m_pInput->Update();			//キーボード更新 (最初に行う)
-	m_pRenderer->Update();		//レンダリング更新処理
-	m_pFade->Update();			//フェードアウト更新処理
+	// キーボード更新 (最初に行う)
+	if (m_pInput != NULL)
+	{
+		m_pInput->Update();
+	}
+
+	// マウス更新
+	if (m_pInihMouse != NULL)
+	{
+		m_pInihMouse->Update();		
+	}
+
+	// レンダリング更新処理
+	if (m_pRenderer != NULL)
+	{
+		m_pRenderer->Update();		
+	}
+
+	// フェードアウト更新処理
+	if (m_pFade != NULL)
+	{
+		m_pFade->Update();			
+	}
 
 	switch (m_Mode)
 	{
 	case GAME_MODE_TITLE:
+		if (m_pTitle != NULL)
+		{
+			m_pTitle->Update();
+		}
+		break;
+	case GAME_MODE_TUTORIAL:
+		if (m_pTitle != NULL)
+		{
+			m_pTutorial->Update();
+		}
 		break;
 	case GAME_MODE_SELECT:
-		m_pSelect->Update();
+		if (m_pSelect != NULL)
+		{
+			m_pSelect->Update();
+		}
 		break;
 	case GAME_MODE_STAGE:
-		m_pGame->Update();
+		if (m_pSelect != NULL)
+		{
+			m_pGame->Update();
+		}
 		break;
 	}
 
 }
 
-//---------------------------------
+//=============================================================================
 //描画処理
-//---------------------------------
+//=============================================================================
 void CManager::Draw(void)
 {
-	m_pRenderer->Draw();				// レンダリング描画処理
+
+	//レンダラの描画
+	if (m_pRenderer != NULL)
+	{
+		m_pRenderer->Draw();
+	}
 }
 
-//---------------------------------
+//=============================================================================
 //ゲームモードセット処理
-//---------------------------------
+//=============================================================================
 void CManager::SetMode(GAME_MODE mode)
 {
-	m_Mode = mode;
-	//初期化処理
+	//終了処理
 	switch (m_Mode)
 	{
 	case GAME_MODE_TITLE:
-		//シーン破棄
-		CScene::ReleaseAll();
-		//サウンド停止
-		m_pSound->Stop();
+		if (m_pTitle != NULL)
+		{
+			//タイトルシーン破棄
+			m_pTitle->Uninit();
+		}
 
-		//タイトル生成
-		m_pTitle = CTitle::Create();
-		//サウンド再生
-		m_pSound->Play(CSound::LABEL_BGM_TITLE);
 		break;
 	case GAME_MODE_TUTORIAL:
-		//シーン破棄
-		CScene::ReleaseAll();
-		//チュートリアル制作
-		m_pTutorial= CTutorial::Create();
-
+		if (m_pTutorial != NULL)
+		{
+			m_pTutorial->Uninit();
+		}
 		break;
 	case GAME_MODE_SELECT:
-		//シーン破棄
-		CScene::ReleaseAll();
-		//サウンド停止
-		m_pSound->Stop();
-
-		//セレクト生成処理
-		m_pSelect = CSelect::Create();
-		//サウンド再生
-		m_pSound->Play(CSound::LABEL_BGM_SELECT);
+		if (m_pSelect != NULL)
+		{
+			//セレクトシーン破棄
+			m_pSelect->Uninit();
+		}
 
 		break;
 	case GAME_MODE_STAGE:
+		if (m_pGame != NULL)
+		{
+			m_pGame->Uninit();
+		}
 		//シーン破棄
 		CScene::ReleaseAll();
 		//サウンド停止
 		m_pSound->Stop();
-
-		//ゲーム生成処理
-		m_pGame = CGame::Create();
-
 		break;
 	case GAME_MODE_CLEAR:
-		m_Player = { 0,0,{ CPlayer::WEAPONS_MODE_BUTTOL , CPlayer::WEAPONS_MODE_NONE } };
+		m_Player = { 0,0,{ WEAPONS_MODE_BUTTOL , WEAPONS_MODE_NONE } };
 		m_nScore = 10000;
 		//シーン破棄
 		CScene::ReleaseAll();
 		//サウンド停止
 		m_pSound->Stop();
+		break;
+	}
 
+	m_Mode = mode;
+
+	//初期化処理
+	switch (m_Mode)
+	{
+	case GAME_MODE_TITLE:
+		if (m_pTitle != NULL)
+		{
+			//タイトル初期化処理
+			m_pTitle->Init();
+		}
+		break;
+	case GAME_MODE_TUTORIAL:
+		if (m_pTutorial != NULL)
+		{
+			//チュートリアル初期化処理
+			m_pTutorial->Init();
+		}
+		break;
+	case GAME_MODE_SELECT:
+		if (m_pSelect != NULL)
+		{
+			//セレクト初期化処理
+			m_pSelect->Init();
+		}
+		break;
+	case GAME_MODE_STAGE:
+		if (m_pGame != NULL)
+		{
+			//ゲーム生成処理
+			m_pGame->Init();
+		}
+		break;
+	case GAME_MODE_CLEAR:
 		//ゲームクリア
 		CClear::Create();
 		//サウンド再生
 		m_pSound->Play(CSound::LABEL_SE_RESULT);
-
 		break;
-
 	}
-
 }
 
 CRenderer * CManager::GetRenderer(void)
@@ -301,13 +370,64 @@ int CManager::GetPlayer(int nPlayerData)
 	}
 }
 
+//=============================================================================
+// ファイルロード関数
+//=============================================================================
+void CManager::LoadFile(void)
+{
+	//テクスチャの読み込み
+	CClear::Load();			
+	CNumber::Load();		
+	CUi::Load();			
+	CText::Load();			
+	CWindow::Load();		
+	CButton::Load();		
+	CTelopBer::Load();		
+	CTelopText::Load();		
+	CPointer::Load();		
+	CTitleBg::Load();
+	CTutorialBg::Load();
+	CSelectBg::Load();		
+	CWeapon_Ui::Load();
+	CStartButton::Load();
+	CButtonp::Load();
+	CLifeButton::Load();
+	CLifeUi::Load();
+}
+
+//=============================================================================
+// ファイルアンロード関数
+//=============================================================================
+void CManager::UnLoadFile(void)
+{
+	//テクスチャの破棄
+	CClear::Unload();			
+	CButton::Unload();			
+	CNumber::Unload();			
+	CUi::Unload();				
+	CText::Unload();			
+	CWindow::Unload();			
+	CTelopBer::Unload();		
+	CTelopText::Unload();		
+	CPointer::Unload();			
+	CTitleBg::Unload();
+	CTutorialBg::Unload();
+	CSelectBg::Unload();
+	CWeapon_Ui::Unload();
+	CStartButton::Unload();
+	CButtonp::Unload();
+	CLifeButton::Unload();
+	CLifeUi::Unload();
+
+}
+
 void CManager::SetPlayer(int nLife, int nSpeed)
 {
 	m_Player.m_nLife = nLife;
 	m_Player.m_nSpeed = nSpeed;
 }
 
-void CManager::SetWeapon(CPlayer::WEAPON_MODE nWeaponData1, CPlayer::WEAPON_MODE nWeaponData2)
+void CManager::SetWeapon(WEAPON_MODE nWeaponData1, WEAPON_MODE nWeaponData2)
 {
 	m_Player.m_nWeapon[0] = nWeaponData1;
 	m_Player.m_nWeapon[1] = nWeaponData2;

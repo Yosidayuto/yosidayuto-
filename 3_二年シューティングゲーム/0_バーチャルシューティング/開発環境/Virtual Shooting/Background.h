@@ -1,5 +1,5 @@
-#ifndef _BG_H_
-#define _BG_H_
+#ifndef _Bakground_H_
+#define _Bakground_H_
 //----------------------------------------------
 //ヘッダーファイル
 //----------------------------------------------
@@ -22,7 +22,7 @@ class CScene2d;
 class CBg :public CScene
 {
 public:
-	CBg(int nPriorit = 0);			//コンストラクタ
+	CBg(int nPriorit = 1);			//コンストラクタ
 	~CBg();							//デストラクタ
 
 	static HRESULT	Load(void);		//テクスチャ読み込み

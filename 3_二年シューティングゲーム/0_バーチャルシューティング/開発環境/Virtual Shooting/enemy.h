@@ -17,7 +17,7 @@ class CEnemy:public CScene2d
 {
 public:
 
-	CEnemy(int nPriorit=2);			//コンストラクタ
+	CEnemy(int nPriorit=3);			//コンストラクタ
 	~CEnemy();						//デストラクタ	
 	typedef enum  //エネミー種類
 	{
@@ -63,7 +63,6 @@ public:
 	void			Uninit(void);					//終了処理
 	void			Update(void);					//更新処理
 	void			Draw(void);						//描画処理
-	void			SetPos(D3DXVECTOR3 Pos);		//設置位置
 	void			SetTexture(ENEMY_TYPE nType);	//テクスチャの設定
 	void			Damage(int nDamage);			//ダメージ処理
 private:

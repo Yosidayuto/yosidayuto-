@@ -57,7 +57,7 @@ CHoming * CHoming::Create(D3DXVECTOR3 Pos, int nSpeed, HOMING_TYPE Type)
 {
 	CHoming *pHoming;
 	pHoming = new CHoming;
-	pHoming->Set(Pos);
+	pHoming->SetPos(Pos);
 	pHoming->Init(nSpeed, Type);
 	return pHoming;
 }
@@ -77,7 +77,7 @@ HRESULT CHoming::Init(int nSpeed, HOMING_TYPE Type)
 		pSound->Play(CSound::LABEL_SE_SHOTS);
 	}
 	//サイズ
-	SetSizeition(D3DXVECTOR3(HOMING_SIZE / 2, HOMING_SIZE / 2, 0.0f));
+	SetSize(D3DXVECTOR3(HOMING_SIZE / 2, HOMING_SIZE / 2, 0.0f));
 	//テクスチャの設定
 	BindTexture(m_pTexture);
 
@@ -96,47 +96,53 @@ void CHoming::Uninit(void)
 void CHoming::Update(void)
 {
 	//ポリゴンの位置取得
-	D3DXVECTOR3 pos = GetPosition();
-		//エフェクト生成
-		CEffect::Create(pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(HOMING_SIZE / 2, HOMING_SIZE, 0.0f), CEffect::EFFECT_TYPE_BULLET);
+	D3DXVECTOR3 pos = GetPos();
+	//オブジェクト取得用
+	CScene* pTop[PRIORITY_MAX] = {};
+	//次チェックするオブジェクトのポインタ
+	CScene* pNext = NULL;
 
+	//topのアドレスを取得
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
+	{
+		pTop[nCount] = *(CScene::GetTop() + nCount);
+	}
+
+	//エフェクト生成
+	CEffect::Create(pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(HOMING_SIZE / 2, HOMING_SIZE, 0.0f), CEffect::EFFECT_TYPE_BULLET);
 
 	int nRange =780;
 	float fAngle;
-	for (int nCut = 0; nCut < MAX_DRAW; nCut++)
+	//オブジェクト探査
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 	{
-		for (int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+		if (pTop[nCount] != NULL)
 		{
-			CScene *pScene = GetScene(nCut, nCntScene);
-			if (pScene != NULL)
+			pNext = pTop[nCount];
+			//その描画優先度のオブジェクトがなくなるまでループ
+			while (pNext != NULL)
 			{
-				OBJTYPE objType;
-				//タイプ取得
-				objType = pScene->GetObjType();
 				switch (m_Type)
 				{
 				case HOMING_TYPE_PLAYER:
-					if (objType == OBJ_TYPE_ENEMY)
+					if (pNext->GetObjType() == OBJ_TYPE_ENEMY)
 					{
-						D3DXVECTOR3 EnemeyPos = ((CScene2d*)pScene)->GetPosition();
+						D3DXVECTOR3 EnemeyPos = ((CScene2d*)pNext)->GetPos();
 						if (TargetGet(pos, EnemeyPos)<nRange)
 						{
 							nRange = TargetGet(pos, EnemeyPos);
 							fAngle = atan2f((-pos.x + EnemeyPos.x), (-pos.y + EnemeyPos.y));
 							m_move.x = sinf(fAngle)*m_nSpeed;
 							m_move.y = cosf(fAngle)*m_nSpeed;
-
-
 						}
 					}
 					break;
-
 				}
+				//次のオブジェクトのポインタを更新
+				pNext = pNext->GetNext();
 			}
-
 		}
 	}
-
 
 	//位置更新
 	pos += m_move;
@@ -144,7 +150,7 @@ void CHoming::Update(void)
 	nLife--;
 
 	//ポリゴンの位置を渡す
-	SetPosition(pos);
+	SetPos(pos);
 	//更新処理
 	CScene2d::Update();
 
@@ -164,24 +170,28 @@ void CHoming::Update(void)
 	}
 	if (nLife > 0)		//射程距離内
 	{
-		//ホーミング効果処理
-		for (int nCut = 0; nCut < MAX_DRAW; nCut++)
+		//topのアドレスを取得
+		for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 		{
-			for (int nCntScene = 0; nCntScene < MAX_SCENE; nCntScene++)
+			pTop[nCount] = *(CScene::GetTop() + nCount);
+		}
+
+		//ホーミング効果処理
+		for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
+		{
+			if (pTop[nCount] != NULL)
 			{
-				CScene *pScene = GetScene(nCut, nCntScene);
-				if (pScene != NULL)
+				pNext = pTop[nCount];
+				//その描画優先度のオブジェクトがなくなるまでループ
+				while (pNext != NULL)
 				{
-					OBJTYPE objType;
-					//タイプ取得
-					objType = pScene->GetObjType();
 					switch (m_Type)
 					{
 					case HOMING_TYPE_PLAYER:
-						if (objType == OBJ_TYPE_ENEMY)
+						if (pNext->GetObjType() == OBJ_TYPE_ENEMY)
 						{
-							D3DXVECTOR3 EnemeyPos = ((CScene2d*)pScene)->GetPosition();
-							D3DXVECTOR3 EnemeySize = ((CScene2d*)pScene)->GetSizeition();					
+							D3DXVECTOR3 EnemeyPos = ((CScene2d*)pNext)->GetPos();
+							D3DXVECTOR3 EnemeySize = ((CScene2d*)pNext)->GetSize();
 							//当たり判定
 							if (EnemeyPos.x + EnemeySize.x / 2 > pos.x
 								&& EnemeyPos.x - EnemeySize.x / 2 < pos.x
@@ -189,30 +199,29 @@ void CHoming::Update(void)
 								&&EnemeyPos.y - EnemeySize.y / 2 < pos.y)
 							{
 								//エネミーダメージ処理
-								if (typeid(*pScene) == typeid(CEnemy))
+								if (typeid(*pNext) == typeid(CEnemy))
 								{
 									//エクスプロージョン生成
 									CExplosion::Create(EnemeyPos);
 
-									((CEnemy*)pScene)->Damage(1);
+									((CEnemy*)pNext)->Damage(1);
 								}
-								else if (typeid(*pScene) == typeid(CBoss))
+								else if (typeid(*pNext) == typeid(CBoss))
 								{
 									//エクスプロージョン生成
 									CExplosion::Create(pos);
 
-									((CBoss*)pScene)->Damage(1);
+									((CBoss*)pNext)->Damage(1);
 								}
 								Uninit();
 								break;
-
 							}
 						}
 						break;
-					case HOMING_TYPE_ENEMY:
-
-						break;
 					}
+					//次のオブジェクトのポインタを更新
+					pNext = pNext->GetNext();
+
 				}
 			}
 		}

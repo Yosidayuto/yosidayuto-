@@ -2,18 +2,18 @@
 //ヘッダーファイル
 //----------------------------------------------
 #include "result.h"
-#include "resultBg.h"
+#include "result bg.h"
 #include "inputmouse.h"
 #include "fade.h"
 #include "score.h"
-#include "number.h"
+#include "ui count.h"
 #include "sound.h"
 #include "manager.h"
 #include<thread>
 //----------------------------------
 //静的メンバー変数
 //----------------------------------
-char * CResult::pTexture[CGame::STAGE_TYPE_MAX]=
+char * CResult::pTexture[STAGE_TYPE_MAX]=
 {
 	"data/TEXT/ranking1.txt",
 	"data/TEXT/ranking2.txt",
@@ -28,7 +28,7 @@ CResult::CResult(int nPriorit) :CScene(nPriorit)
 	{
 		nScoreData[nCount]=NULL;
 		m_Score[nCount] = NULL;
-		m_pNumber[nCount] = NULL;
+		m_pUiCount[nCount] = NULL;
 	}
 	nScore = 0;
 }
@@ -43,10 +43,12 @@ CResult::~CResult()
 //---------------------------------
 //生成処理
 //---------------------------------
-CResult * CResult::Create(void)
+CResult * CResult::Create(STAGE_TYPE stage)
 {
+	//メモリ確保
 	CResult *pResult;
 	pResult = new CResult;
+	pResult->m_Stage = stage;
 	pResult->Init();
 	return pResult;
 }
@@ -68,42 +70,41 @@ HRESULT CResult::Init(void)
 	//スコアを受け取る
 	nScore = CManager::GetScore();
 	//データ読み込み
-	ReadFile(CGame::SetStage());
+	ReadFile(m_Stage);
 	//データ追加
-	int nRanking = SetRanking(nScore, CGame::SetStage());
-
-	//テクスチャの読み込み
-	CResultBg::Load();	//背景
-
-						
+	int nRanking = SetRanking(nScore, m_Stage);
 	//クリエイト処理
+
+	//背景
+	CResultBg::Create();
 	//スコア生成
 	for (int nCount = 0; nCount < MAX_RANKING; nCount++)
 	{
 		if (nCount<=4)
 		{
-			m_pNumber[nCount] = CNumber::Create(D3DXVECTOR3(180.0f, 235.0f + ((float)(nCount) * 100.0f), 0.0f), D3DXVECTOR3(40.0f, 80.0f, 0.0f));
-			m_Score[nCount] = CScore::Create(D3DXVECTOR3(220.0f,200.0f+((float)(nCount)*100.0f),0.0f), D3DXVECTOR3(40.0f,80.0f,0.0f), false);
+			m_pUiCount[nCount] = CUiCount::Create(D3DXVECTOR3(180.0f, 235.0f + ((float)(nCount) * 100.0f), 0.0f), D3DXVECTOR3(40.0f, 80.0f, 0.0f), PRIORITY_RESULT);
+			m_Score[nCount] = CScore::Create(D3DXVECTOR3(220.0f,200.0f+((float)(nCount)*100.0f),0.0f), D3DXVECTOR3(40.0f,80.0f,0.0f), false, PRIORITY_RESULT);
 		}
 		else
 		{
-			m_pNumber[nCount] = CNumber::Create(D3DXVECTOR3(700.0f, 235.0f + (((float)(nCount)-5.0f) * 100.0f), 0.0f), D3DXVECTOR3(40.0f, 80.0f, 0.0f));
-			m_Score[nCount] = CScore::Create(D3DXVECTOR3(740.0f, 200.0f + (((float)(nCount)-5.0f) * 100.0f), 0.0f), D3DXVECTOR3(40.0f, 80.0f, 0.0f), false);
+			m_pUiCount[nCount] = CUiCount::Create(D3DXVECTOR3(700.0f, 235.0f + (((float)(nCount)-5.0f) * 100.0f), 0.0f), D3DXVECTOR3(40.0f, 80.0f, 0.0f), PRIORITY_RESULT);
+			m_Score[nCount] = CScore::Create(D3DXVECTOR3(740.0f, 200.0f + (((float)(nCount)-5.0f) * 100.0f), 0.0f), D3DXVECTOR3(40.0f, 80.0f, 0.0f), false, PRIORITY_RESULT);
 		}
 
+		//スコアセット
 		m_Score[nCount]->SetScore(nScoreData[nCount]);
-		m_pNumber[nCount]->SetNumber(nCount + 1);
+		//ランキング順位セット
+		m_pUiCount[nCount]->SetCount(nCount + 1);
+		
+		//ランクインしたら
 		if (nCount== (nRanking - 1))
 		{
+			//赤くする
 			m_Score[(nRanking - 1)]->ColChange(D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
-			m_pNumber[(nRanking - 1)]->ColChange(D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
+			m_pUiCount[(nRanking - 1)]->SetCol(D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
 
 		}
 	}
-	
-
-
-	CResultBg::Create();//背景
 	return S_OK;
 }
 
@@ -112,11 +113,11 @@ HRESULT CResult::Init(void)
 //---------------------------------
 void CResult::Uninit(void)
 {
-	CResultBg::Unload();//背景
 	for (int nCount = 0; nCount < MAX_RANKING; nCount++)
 	{
-		m_pNumber[nCount]->Uninit();
+		m_pUiCount[nCount]->Uninit();
 	}
+	//シーン破棄
 	Release();
 }
 
@@ -127,9 +128,10 @@ void CResult::Update(void)
 {
 	CInihMouse *pMouse = CManager::GetMouse();		//マウス取得
 	CFade *pFade = CManager::GetFade();				//フェード取得	
-	if (pMouse->GetClickTrigger(0) == true  )
+	
+	if (pMouse->GetClickTrigger(CLICK_LEFT) == true  )
 	{
-		if(CGame::SetStage() == CGame::STAGE_TYPE_MAX)
+		if(m_Stage == STAGE_TYPE_MAX)
 		{
 			pFade->SetFade(GAME_MODE_CLEAR);
 		}
@@ -148,15 +150,14 @@ void CResult::Draw(void)
 {
 	for (int nCount = 0; nCount < MAX_RANKING; nCount++)
 	{
-		m_pNumber[nCount]->Draw();
+		m_pUiCount[nCount]->Draw();
 	}
-
 }
 
 //---------------------------------
 //ランキングデータ読み込み関数
 //---------------------------------
-void CResult::ReadFile(CGame::STAGE_TYPE Stage)
+void CResult::ReadFile(STAGE_TYPE Stage)
 {
 	FILE *pFile;
 
@@ -176,7 +177,7 @@ void CResult::ReadFile(CGame::STAGE_TYPE Stage)
 //---------------------------------
 //ランキングデータ書き込み関数
 //---------------------------------
-void CResult::WriteFile(CGame::STAGE_TYPE Stage)
+void CResult::WriteFile(STAGE_TYPE Stage)
 {
 	FILE *pFile;
 
@@ -198,7 +199,7 @@ void CResult::WriteFile(CGame::STAGE_TYPE Stage)
 //---------------------------------
 //ランキングデータの追加
 //---------------------------------
-int CResult::SetRanking(int nScore, CGame::STAGE_TYPE Stage)
+int CResult::SetRanking(int nScore, STAGE_TYPE Stage)
 {
 	for (int nCount = 0; nCount < MAX_RANKING; nCount++)
 	{

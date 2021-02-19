@@ -24,7 +24,9 @@ public:
 	void	Uninit(void);
 	void	Update(void);
 	void	Draw(void);
-	LPDIRECT3DDEVICE9 GetObjects(void) {return m_pD3DDevice;}
+
+	
+	LPDIRECT3DDEVICE9 GetObjects(void) {return m_pD3DDevice;}	//オブジェクトゲッター
 private:
 	void DrawFPS();
 	LPDIRECT3D9				m_pD3D;			// Direct3Dオブジェクト

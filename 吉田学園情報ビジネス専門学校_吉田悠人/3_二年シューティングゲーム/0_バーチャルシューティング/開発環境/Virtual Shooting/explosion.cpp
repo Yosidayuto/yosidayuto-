@@ -12,7 +12,7 @@
 //----------------------------------
 //静的メンバー変数
 //----------------------------------
-LPDIRECT3DTEXTURE9 CExplosion::m_pTexture = NULL;
+TEXTURE_DATA CExplosion::m_TextureData = {NULL,"data/TEXTURE/Explosion.png" };
 //----------------------------------
 //コンストラクタ
 //----------------------------------
@@ -54,7 +54,7 @@ HRESULT CExplosion::Init(void)
 	TextureAnim(Texture);
 
 	//テクスチャの設定
-	BindTexture(m_pTexture);
+	BindTexture(m_TextureData.m_Texture);
 
 	return S_OK;
 }
@@ -140,7 +140,7 @@ HRESULT CExplosion::Load(void)
 	//デバイス取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetObjects();
 	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice, "data/TEXTURE/Explosion.png", &m_pTexture);
+	D3DXCreateTextureFromFile(pDevice, m_TextureData.m_cFileName, &m_TextureData.m_Texture);
 	return S_OK;
 }
 
@@ -150,10 +150,10 @@ HRESULT CExplosion::Load(void)
 void CExplosion::Unload(void)
 {
 	//テクスチャの破棄
-	if (m_pTexture != NULL)
+	if (m_TextureData.m_Texture!= NULL)
 	{
-		m_pTexture->Release();
-		m_pTexture = NULL;
+		m_TextureData.m_Texture->Release();
+		m_TextureData.m_Texture = NULL;
 	}
 }
 

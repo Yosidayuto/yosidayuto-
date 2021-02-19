@@ -1,72 +1,62 @@
+//=============================================================================
+//
+// ゲーム処理 [game.h]
+// Author : 吉田悠人
+//
+//=============================================================================
 #ifndef _GAME_H_
 #define _GAME_H_
-
+//=============================================================================
+//マクロ定義
+//=============================================================================
+#define STAGE_POS (780)		//ステージ中心
+#define STAGE_SIZE (800)	//ステージのサイズ
+//=============================================================================
+// ヘッダファイルのインクルード
+//=============================================================================
 #include "main.h"
 #include "scene.h"
-//------------------------------------
-//マクロ定義
-//------------------------------------
-#define MAX_STAGE 1		//ステージ数
-//------------------------------------
-//前置処理
-//------------------------------------
-class CLife;
+#include "scene.h"
+//=============================================================================
+//前方宣言
+//=============================================================================
 class CPlayer;
 class CEnemy;
 class CBg;
 class CScore;
-//------------------------------------
-//クラス処理
-//------------------------------------
+class CStage;
+typedef enum //ステージタイプ
+{
+	STAGE_TYPE_1 = 0,	//1ステージ
+	STAGE_TYPE_2,		//2ステージ
+	STAGE_TYPE_3,		//3ステージ
+	STAGE_TYPE_MAX
+}STAGE_TYPE;
+
+//=============================================================================
+// クラス定義
+//=============================================================================
 class CGame 
 {
 public:
 	CGame();	//コンストラクタ
 	~CGame();	//デストラクタ
-	typedef enum
-	{
-		STAGE_TYPE_1 = 0,
-		STAGE_TYPE_2,
-		STAGE_TYPE_3,
-		STAGE_TYPE_MAX
-	}STAGE_TYPE;
 
+	static HRESULT	Load(void);		// テクスチャ読み込み
+	static void		Unload(void);	// テクスチャの破棄
 
-
-	HRESULT			Init(void);		//初期化処理
-	void			Uninit(void);	//終了処理
-	void			Update(void);	//更新処理
-	void			Draw(void);		//描画処理
-	static CLife	*GetLife(void);	//ライフ取得
-	static CScore	*GetScore(void);//ゲットスコア
-	static STAGE_TYPE SetStage(void) { return m_StageType; }
-	static CPlayer *GetPlayer(void) { return m_pPlayer; }
+	HRESULT			Init(void);		// 初期化処理
+	void			Uninit(void);	// 終了処理
+	void			Update(void);	// 更新処理
+	void			Draw(void);		// 描画処理
+	static CScore*		GetScore(void);		// スコアゲッター
+	//static STAGE_TYPE	GetStageType(void);	// ステージタイプゲッター
+	static CPlayer*		GetPlayer(void);
 private:
-	void			EnemeyCreate(void);	//エネミークリエイト
-	void			StageMode(void);
-	typedef enum	//エネミーの出現モード
-	{
-		ENEMY_CREATE_NONE = 0,
-		ENEMY_CREATE_1,		//フェーズ１
-		ENEMY_CREATE_2,		//フェーズ２
-		ENEMY_CREATE_3,		//フェーズ３
-		ENEMY_CREATE_4,		//フェーズ４
-		ENEMY_CREATE_5,		//フェーズ5
-		ENEMY_CREATE_6,		//フェーズ6
-		ENEMY_CREATE_7,		//フェーズ7
-		ENEMY_CREATE_8,		//フェーズ8
-		ENEMY_CREATE_9,		//フェーズ9
-		ENEMY_CREATE_MAX,	//フェーズ
-	}ENEMY_CREATE;
-	ENEMY_CREATE	m_EnemyCreate;	//エネミーの出現モード
-	int				m_nCountEnemy;	//エネミー出現までのカウント
-
-
-	static CLife	*m_Life;				//ライフクラス
-	static	CPlayer			*m_pPlayer;				//プレイヤークラス
-	CBg				*m_pBg;					//背景クラス
-	static CScore	*m_Score;				//スコアクラス
-	static STAGE_TYPE m_StageType;
+	CStage*				m_pStage;			// ステージポインタ
+	static CPlayer*		m_pPlayer;			// プレイヤーポインタ
+	static CScore*		m_Score;			// スコアポインタ
+	static STAGE_TYPE	m_StageType;		// ステージタイプ
 };
 
 

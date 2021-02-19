@@ -25,13 +25,14 @@ CUiCount::~CUiCount()
 //=============================================================================
 // 生成処理
 //=============================================================================
-CUiCount * CUiCount::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+CUiCount * CUiCount::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, PRIORITY priority)
 {
 	CUiCount *pUiCount;
-	pUiCount = new CUiCount;
+	pUiCount = new CUiCount(priority);
 	pUiCount->m_pos = pos;
 	pUiCount->m_size = size;
 	pUiCount->Init();
+
 	return pUiCount;
 }
 
@@ -83,10 +84,17 @@ void CUiCount::Draw(void)
 }
 
 //=============================================================================
-// カウント関数
+//カウントセッター
 //=============================================================================
 void CUiCount::SetCount(int nCount)
 {
-	m_nCount = nCount;
-	m_apNumber->SetNumber(m_nCount);
+	m_apNumber->SetNumber(nCount);
+}
+
+//=============================================================================
+//　カラーセッター
+//=============================================================================
+void CUiCount::SetCol(D3DXCOLOR col)
+{
+	m_apNumber->ColChange(col);
 }

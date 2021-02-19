@@ -1,6 +1,6 @@
 #include "enemy.h"
 #include "manager.h"
-#include "bullet.h"
+#include "enemy bullet.h"
 #include "renderer.h"
 #include "sound.h"
 #include "player.h"
@@ -126,9 +126,6 @@ HRESULT CEnemy::Init(void)
 		m_nScore = 400;
 		m_move = D3DXVECTOR3(0.0f, 5.0f, 0.0f);
 		break;
-
-
-
 	}
 
 	//èâä˙âªèàóù
@@ -293,13 +290,11 @@ void CEnemy::Bullet(BULLET_PATTERN BulletMode)
 	
 		for (int nNumberBullet = 0; nNumberBullet < 10; nNumberBullet++)
 		{
-			
-			
 			if (nConutBullet[nNumberBullet] >=20 * (nNumberBullet+1)
 				&& m_bBullet[nNumberBullet]== false)
 			{
 				m_rot[nNumberBullet] = Tracking(7);
-				CBullet::Create(m_pos, m_rot[0], CBullet::BULLET_TYPE_ENEMY);
+				CEnemyBullet::Create(m_pos, m_rot[0]);
 				m_bBullet[nNumberBullet] = true;
 			}
 		}
@@ -312,7 +307,7 @@ void CEnemy::Bullet(BULLET_PATTERN BulletMode)
 				&& m_bBullet[nNumberBullet] == false)
 			{
 				m_rot[nNumberBullet] = Tracking(7);
-				CBullet::Create(m_pos, m_rot[nNumberBullet], CBullet::BULLET_TYPE_ENEMY);
+				CEnemyBullet::Create(m_pos, m_rot[nNumberBullet]);
 				m_bBullet[nNumberBullet] = true;
 			}
 		}
@@ -326,7 +321,7 @@ void CEnemy::Bullet(BULLET_PATTERN BulletMode)
 				&&m_bBullet[nNumberBullet] == false)
 			{
 				m_rot[nNumberBullet] = Random(5);
-				CBullet::Create(m_pos, m_rot[nNumberBullet], CBullet::BULLET_TYPE_ENEMY);
+				CEnemyBullet::Create(m_pos, m_rot[nNumberBullet]);
 				m_bBullet[nNumberBullet] = true;
 			}
 		}
@@ -340,7 +335,7 @@ void CEnemy::Bullet(BULLET_PATTERN BulletMode)
 				m_rot[nNumberBullet].x = sinf(Spiral() + (0.2f*nNumberBullet))*7.0f;
 				m_rot[nNumberBullet].y = cosf(Spiral() + (0.2f*nNumberBullet))*7.0f;
 
-				CBullet::Create(m_pos, m_rot[nNumberBullet], CBullet::BULLET_TYPE_ENEMY);
+				CEnemyBullet::Create(m_pos, m_rot[nNumberBullet]);
 			}
 		}
 		break;
@@ -353,7 +348,7 @@ void CEnemy::Bullet(BULLET_PATTERN BulletMode)
 				{
 						m_rot[nNumberBullet].x = sinf(Spiral() + (2.0f*nNumberBullet))*4.0f;
 						m_rot[nNumberBullet].y = cosf(Spiral() + (2.0f*nNumberBullet))*4.0f;
-						CBullet::Create(m_pos, m_rot[nNumberBullet], CBullet::BULLET_TYPE_ENEMY);
+						CEnemyBullet::Create(m_pos, m_rot[nNumberBullet]);
 				}
 			}
 		}
@@ -665,7 +660,6 @@ void CEnemy::Hit(D3DXVECTOR3 Pos)
 	{
 		pTop[nCount] = *(CScene::GetTop() + nCount);
 	}
-
 
 	//ÉvÉåÉCÉÑÅ[Ç∆ÇÃìñÇΩÇËîªíË
 	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)

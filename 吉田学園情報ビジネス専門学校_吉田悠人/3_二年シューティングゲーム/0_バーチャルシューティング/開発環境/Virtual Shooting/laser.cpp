@@ -4,240 +4,186 @@
 // Author : 吉田悠人
 //
 //=============================================================================
-
-//----------------------------------------------
-//ヘッダーファイル
-//----------------------------------------------
-#include "laser.h"
-#include "manager.h"
-#include "renderer.h"
-#include "effect.h"
-#include "explosion.h"
-#include "enemy.h"
-#include "boss.h"
-#include "sound.h"
+//=============================================================================
+//インクルードファイル
+//=============================================================================
+#include "laser.h"			
+#include "manager.h"		
+#include "renderer.h"		
+#include "explosion.h"		
+#include "sound.h"			
+#include "effect.h"			
+#include "enemy.h"			
+#include "boss.h"			
 #include <typeinfo.h>
-//----------------------------------
+//=============================================================================
 //マクロ定義
-//----------------------------------
-#define LASER_SIZE_X 10		//レーザーの大きさ
-#define LASER_SIZE_Y 100	//レーザーの大きさ
-
-#define LASER_LIFE 50		//レーザーの射程距離
-//----------------------------------
+//=============================================================================
+#define LASER_X_SIZE	(10)	//レーザーの横大きさ
+#define LASER_Y_SIZE	(100)	//レーザーの縦大きさ
+#define LASER_LIFE		(1000)	//レーザーの射程距離
+#define LASER_ATTACK	(2)		//レーザーの攻撃力
+//=============================================================================
 //静的メンバー変数
-//----------------------------------
-LPDIRECT3DTEXTURE9 CLaser::m_pTexture = NULL;
+//=============================================================================
+TEXTURE_DATA CLaser::m_TextureData = { NULL,"data/TEXTURE/Laser.png" };
 
-//----------------------------------
+//=============================================================================
 //コンストラクタ
-//----------------------------------
-CLaser::CLaser(int nPriorit)
+//=============================================================================
+CLaser::CLaser()
 {
-	nLife = 0;
-	m_move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	memset(m_bHit,false,sizeof(m_bHit));
+	m_nHitCount = 0;
 	//タイプ処理
 	CScene::SetObjType(CScene::OBJ_TYPE_BULLET);
-	for (int nCntScene = 0; nCntScene < MAX_ENEMY; nCntScene++)
-	{
-		m_Hit[nCntScene] = false;
-	}
 }
 
-//----------------------------------
+//=============================================================================
 //デストラクタ
-//----------------------------------
+//=============================================================================
 CLaser::~CLaser()
 {
 }
 
-//----------------------------------
-//テクスチャ読み込み処理
-//----------------------------------
+//=============================================================================
+// テクスチャロード
+//=============================================================================
 HRESULT CLaser::Load(void)
 {
 	//デバイス取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetObjects();
 	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice, "data/TEXTURE/Laser.png", &m_pTexture);
+	D3DXCreateTextureFromFile(pDevice, m_TextureData.m_cFileName, &m_TextureData.m_Texture);
 	return S_OK;
 }
 
-//----------------------------------
-//テクスチャ破棄処理
-//----------------------------------
+//=============================================================================
+// テクスチャアンロード
+//=============================================================================
 void CLaser::Unload(void)
 {
 	//テクスチャの破棄
-	if (m_pTexture != NULL)
+	if (m_TextureData.m_Texture != NULL)
 	{
-		m_pTexture->Release();
-		m_pTexture = NULL;
+		m_TextureData.m_Texture->Release();
+		m_TextureData.m_Texture = NULL;
 	}
-
 }
 
-//----------------------------------
-//生成処理
-//----------------------------------
-CLaser * CLaser::Create(D3DXVECTOR3 Pos, D3DXVECTOR3 move, LASER_TYPE Type)
+//=============================================================================
+// 生成処理
+//=============================================================================
+CLaser * CLaser::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move)
 {
+	//メモリ確保
 	CLaser *pLaser;
 	pLaser = new CLaser;
-	pLaser->SetPos(Pos);
-	pLaser->Init(move, Type);
+	//位置設定
+	pLaser->SetPos(pos);
+	//サイズ設定
+	pLaser->SetSize(D3DXVECTOR3(LASER_X_SIZE / 2.0f, LASER_Y_SIZE / 2.0f, 0.0f));
+	//移動量設定
+	pLaser->SetMove(move);
+	//射程距離設定
+	pLaser->SetLife(LASER_LIFE);
+	//初期化
+	pLaser->Init();
 	return pLaser;
 }
 
-//----------------------------------
+//=============================================================================
 //初期化処理
-//----------------------------------
-HRESULT CLaser::Init(D3DXVECTOR3 move, LASER_TYPE Type)
+//=============================================================================
+HRESULT CLaser::Init(void)
 {
-	CSound *pSound = CManager::GetSound();	//サウンド取得
-
-	//射程距離
-	nLife = LASER_LIFE;
-	//移動量
-	m_move = move;
-	//タイプ
-	m_Type = Type;
-	if (m_Type== LASER_TYPE_PLAYER)
-	{
-		pSound->Play(CSound::LABEL_SE_LASER);
-
-	}
-	//サイズ
-	SetSize(D3DXVECTOR3(LASER_SIZE_X / 2, LASER_SIZE_Y / 2, 0.0f));
-	//テクスチャの設定
-	BindTexture(m_pTexture);
-
-
+	//サウンド取得
+	CSound *pSound = CManager::GetSound();
+	//サウンド
+	pSound->Play(CSound::LABEL_SE_LASER);
 	//初期化処理
-	CScene2d::Init();
+	CBulletBase::Init();
+	//テクスチャの設定
+	BindTexture(m_TextureData.m_Texture);
+
 	return S_OK;
 }
 
-//----------------------------------
-//終了処理
-//----------------------------------
+//=============================================================================
+// 終了処理
+//=============================================================================
 void CLaser::Uninit(void)
 {
 	//終了処理
-	CScene2d::Uninit();
+	CBulletBase::Uninit();
+	//オブジェクトの破棄
+	Release();
 }
 
-//----------------------------------
-//更新処理
-//----------------------------------
+//=============================================================================
+// 更新処理
+//=============================================================================
 void CLaser::Update(void)
 {
-	//オブジェクト取得用
-	CScene* pTop[PRIORITY_MAX] = {};
-	//次チェックするオブジェクトのポインタ
-	CScene* pNext = NULL;
-	//エネミーカウント
-	int nEnemy = 0;
-	//topのアドレスを取得
-	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
-	{
-		pTop[nCount] = *(CScene::GetTop() + nCount);
-	}
-
-
-	//ポリゴンの位置取得
-	D3DXVECTOR3 pos = GetPos();
-	//位置更新
-	pos += m_move;
-	//球の射程距離
-	nLife--;
-	//更新処理
-	CScene2d::Update();
-	//ポリゴンの位置を渡す
-	SetPos(pos);
-
-	//エフェクト生成
-	CEffect::Create(pos, D3DXCOLOR(0.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(LASER_SIZE_X / 2, LASER_SIZE_Y / 2, 0.0f),CEffect::EFFECT_TYPE_LASER);
-
-	//射程距離
-	if (nLife <= 0)
-	{
-		CExplosion::Create(pos);
-		Uninit();	//終了処理
-		return;
-	}
-	//画面外に出た時
-	else if (pos.y < 0 || pos.y>SCREEN_HEIGHT || pos.x<0 || pos.x>SCREEN_WIDTH)
-	{
-		Uninit();	//終了処理
-		return;
-	}
-	if (nLife > 0)		//射程距離内
-	{
-		//レーザー効果処理
-		for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
-		{
-			if (pTop[nCount] != NULL)
-			{
-				pNext = pTop[nCount];
-				//その描画優先度のオブジェクトがなくなるまでループ
-				while (pNext != NULL)
-				{
-					switch (m_Type)
-					{
-					case LASER_TYPE_PLAYER:
-						if (pNext->GetObjType() == OBJ_TYPE_ENEMY)
-						{
-							D3DXVECTOR3 EnemeyPos = ((CScene2d*)pNext)->GetPos();
-							D3DXVECTOR3 EnemeySize = ((CScene2d*)pNext)->GetSize();
-							//当たり判定
-							
-							if (EnemeyPos.x + EnemeySize.x > pos.x
-								&& EnemeyPos.x - EnemeySize.x < pos.x
-								&&EnemeyPos.y + EnemeySize.y > pos.y
-								&&EnemeyPos.y - EnemeySize.y < pos.y
-								&&m_Hit[nEnemy]!=true)
-							{
-								m_Hit[nEnemy] = true;
-								
-								//エネミーダメージ処理
-								if (typeid(*pNext) == typeid(CEnemy))
-								{
-									//エクスプロージョン生成
-									CExplosion::Create(EnemeyPos);
-
-									((CEnemy*)pNext)->Damage(1);
-								}
-								else if (typeid(*pNext) == typeid(CBoss))
-								{
-									//エクスプロージョン生成
-									CExplosion::Create(pos);
-
-									((CBoss*)pNext)->Damage(1);
-								}
-								nEnemy++;
-							}
-						}
-						break;
-					case LASER_TYPE_ENEMY:
-
-						break;
-
-					}
-					//次のオブジェクトのポインタを更新
-					pNext = pNext->GetNext();
-				}
-			}
-		}
-	}
-
+	//初期化
+	m_nHitCount = 0;
+	CBulletBase::Update();
 }
 
-//----------------------------------
+//=============================================================================
 //描画処理
-//----------------------------------
+//=============================================================================
 void CLaser::Draw(void)
 {
 	//描画処理
-	CScene2d::Draw();
+	CBulletBase::Draw();
+}
+
+//=============================================================================
+// 移動処理
+//=============================================================================
+void CLaser::Move(void)
+{
+	//位置取得
+	D3DXVECTOR3 pos = GetPos();
+	//移動量取得
+	D3DXVECTOR3 move = GetMove();
+	//エフェクト生成
+	CEffect::Create(pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(LASER_X_SIZE / 2.0f, LASER_Y_SIZE / 2.0f, 0.0f), CEffect::EFFECT_TYPE_LASER);
+	//位置更新
+	pos += move;
+	//ポリゴンの位置を渡す
+	SetPos(pos);
+}
+
+//=============================================================================
+// バレット処理
+//=============================================================================
+void CLaser::Bullet(CScene * pObj)
+{
+	//位置取得
+	D3DXVECTOR3 pos = GetPos();
+	if (pObj->GetObjType() == OBJ_TYPE_ENEMY)
+	{
+		D3DXVECTOR3 EnemeyPos = ((CScene2d*)pObj)->GetPos();
+		D3DXVECTOR3 EnemeySize = ((CScene2d*)pObj)->GetSize();
+		//当たり判定
+		if (EnemeyPos.x + EnemeySize.x / 2 > pos.x
+			&&EnemeyPos.x - EnemeySize.x / 2 < pos.x
+			&&EnemeyPos.y + EnemeySize.y / 2 > pos.y
+			&&EnemeyPos.y - EnemeySize.y / 2 < pos.y
+			&&m_bHit[m_nHitCount] != true)
+		{
+			//エクスプロージョン生成
+			CExplosion::Create(pos);
+			//エネミーダメージ処理
+			((CEnemy*)pObj)->Damage(LASER_ATTACK);
+			//当たった状態
+			m_bHit[m_nHitCount] = true;
+			return;
+		}
+		//エネミーカウント
+		m_nHitCount++;
+
+	}
 }

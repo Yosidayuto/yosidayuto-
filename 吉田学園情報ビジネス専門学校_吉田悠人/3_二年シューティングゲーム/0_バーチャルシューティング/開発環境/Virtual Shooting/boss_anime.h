@@ -1,19 +1,27 @@
+//=============================================================================
+//
+// ボスアニメーション処理 [boss_anime.cpp]
+// Author : 吉田悠人
+//
+//=============================================================================
+
 #ifndef _BOSS_ANIME_H_
 #define _BOSS_ANIME_H_
-//----------------------------------------------
-//ヘッダーファイル
-//----------------------------------------------
+//=============================================================================
+//インクルードファイル
+//=============================================================================
 #include"main.h"
 #include"scene2d.h"
 
-//----------------------------------------------
-//クラス
-//----------------------------------------------
+
+//=============================================================================
+// クラス定義
+//=============================================================================
 class CBossAnime :public CScene2d
 {
 public:
-	CBossAnime(int nPriorit = 0);			//コンストラクタ
-	~CBossAnime();			//デストラクタ	
+	CBossAnime(int nPriorit = PRIORITY_OBJECT_1);	//コンストラクタ
+	~CBossAnime();									//デストラクタ	
 	typedef enum  //アニメ種類
 	{
 		BOSS_ANIME_1 = 0,
@@ -31,7 +39,7 @@ public:
 	static void Unload(void);		//テクスチャの破棄
 
 
-	HRESULT Init(D3DXVECTOR3 size);				//初期化処理
+	HRESULT Init(D3DXVECTOR3 size);	//初期化処理
 	void	Uninit(void);			//終了処理
 	void	Update(void);			//更新処理
 	void	Draw(void);				//描画処理
@@ -39,17 +47,16 @@ public:
 private:
 	typedef struct
 	{
-		LPDIRECT3DTEXTURE9	pTexture;			//テクスチャのポインタ
-		char				*pTextName;			//テキスト名
-		int					MaxCount;			//テクスチャの最大コマ数
-		int					nCountAnime;		//
-		bool				bLoop;				//ループするか
+		int					MaxCount;			// テクスチャの最大コマ数
+		int					nCountAnime;		// アニメーションカウント
+		bool				bLoop;				// ループするか
 	}ANIME_DATA;
-	BOSS_ANIME				m_Type;				//タイプ
-	static ANIME_DATA		BossAnim[BOSS_ANIME_MAX];	//ボスアニメ
-	int m_nCounterAnim;							//アニメーションカウンター
-	int m_nPatternAnimX;						//アニメーションパターンNo
-
+	BOSS_ANIME				m_Type;							// タイプ
+	static ANIME_DATA		BossAnim[BOSS_ANIME_MAX];		// ボスアニメ
+	static TEXTURE_DATA		m_TextureData[BOSS_ANIME_MAX];	// テクスチャデータ
+	int						m_nCounterAnim;					// アニメーションカウンター
+	int						m_nPatternAnimX;				// アニメーションパターンNo
+			
 
 };
 #endif

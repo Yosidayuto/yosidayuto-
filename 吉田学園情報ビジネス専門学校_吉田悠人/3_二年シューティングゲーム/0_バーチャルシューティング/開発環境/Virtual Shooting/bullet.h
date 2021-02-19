@@ -1,41 +1,38 @@
+//=============================================================================
+//
+// バレット処理 [bullet.h]
+// Author : 吉田悠人
+//
+//=============================================================================
+
 #ifndef _BULLET_H_
 #define _BULLET_H_
-//----------------------------------------------
-//ヘッダーファイル
-//----------------------------------------------
+
+//=============================================================================
+//インクルードファイル
+//=============================================================================
 #include"main.h"
 #include"scene2d.h"
-
-//----------------------------------------------
-//クラス
-//----------------------------------------------
-class CBullet :public CScene2d
+#include "bullet base.h"
+//=============================================================================
+// クラス定義
+//=============================================================================
+class CBullet :public CBulletBase
 {
 public:
-	CBullet(int nPriorit = 1);			//コンストラクタ
-	~CBullet();			//デストラクタ	
-	typedef enum  //バレット種類
-	{
-		BULLET_TYPE_PLAYER = 0,
-		BULLET_TYPE_ENEMY,
-		BULLET_TYPE_BOSS,
-		BULLET_TYPE_MAX
-	}BULLET_TYPE;
+	CBullet();						//コンストラクタ
+	~CBullet();						//デストラクタ	
+	static HRESULT	Load(void);		//テクスチャ読み込み
+	static void		Unload(void);	//テクスチャの破棄
+	static CBullet* Create(D3DXVECTOR3 pos, D3DXVECTOR3 move);	//生成処理
 
-
-	HRESULT Init(D3DXVECTOR3 move, BULLET_TYPE Type);	//初期化処理
-	void	Uninit(void);			//終了処理
-	void	Update(void);			//更新処理
-	void	Draw(void);				//描画処理
-	static CBullet*
-		Create(D3DXVECTOR3 Pos, D3DXVECTOR3 move, BULLET_TYPE Type);	//生成処理
-	static HRESULT Load(void);		//テクスチャ読み込み
-	static void Unload(void);		//テクスチャの破棄
+	HRESULT Init(void);				// 初期化処理
+	void	Uninit(void);			// 終了処理
+	void	Update(void);			// 更新処理
+	void	Draw(void);				// 描画処理
+	void	Move(void);				// 移動処理
+	void	Bullet(CScene* pObj);	// バレット処理
 private:
-	D3DXVECTOR3 m_size;
-	D3DXVECTOR3 m_move;					//移動量
-	static LPDIRECT3DTEXTURE9 m_pTexture;	//テクスチャのポインタ
-	int	nLife;								//球の射程距離
-	BULLET_TYPE m_Type;						//球の種類
+	static TEXTURE_DATA	m_TextureData;	// テクスチャデータ
 };
 #endif

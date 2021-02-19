@@ -1,116 +1,119 @@
-#include "player.h"			//プレイヤーヘッダー
-#include "input.h"			//インプットヘッダー
-#include "inihkeyboard.h"	//インプットキーボードヘッダー
-#include "inputmouse.h"		//インプットマウスヘッダー
-#include "manager.h"		//マネージャーヘッダー
-#include "bullet.h"			//バレットヘッダー
-#include "renderer.h"		//レンダリングヘッダー
-#include "sound.h"			//サウンドヘッダー
-#include "life.h"			//ライフヘッダー
-#include "game.h"			//ゲームヘッダー
-#include "laser.h"			//レーザーヘッダー
-#include "homing.h"			//ホーミングヘッダー
-#include "fade.h"			//フェード
-#include "explosion.h"		//爆破
-//----------------------------------
-//マクロ定義
-//----------------------------------
-#define PLAYER_MOVE 0
-#define PLAYER_DAMAGE 100
-//----------------------------------
-//静的メンバー変数
-//----------------------------------
-LPDIRECT3DTEXTURE9 CPlayer::m_pTexture = NULL;
-WEAPON_MODE CPlayer::m_Weapon[MAX_WEAPON] =
-{
-	WEAPONS_MODE_BUTTOL,
-	WEAPONS_MODE_NONE
-};
-D3DXVECTOR3 CPlayer::posMove = D3DXVECTOR3(PLAYER_MOVE, PLAYER_MOVE,0.0f);
-int CPlayer::m_nLife = 3;
-float CPlayer::m_fSpeed = 4.0f;
 //=============================================================================
-//コンストラクト
+//
+// プレイヤー処理 [player.cpp]
+// Author : 吉田悠人
+//
+//=============================================================================
+//=============================================================================
+//インクルードファイル
+//=============================================================================
+#include "player.h"		
+#include "player data.h"
+#include "input.h"			
+#include "inihkeyboard.h"	
+#include "inputmouse.h"		
+#include "manager.h"		
+#include "bullet.h"			
+#include "renderer.h"		
+#include "sound.h"			
+#include "life.h"			
+#include "game.h"			
+#include "laser.h"			
+#include "homing.h"			
+#include "fade.h"			
+#include "explosion.h"		
+//=============================================================================
+// マクロ定義
+//=============================================================================
+#define PLAYER_DAMAGE	(100)	//ダメージ状態の最大無敵時間
+//=============================================================================
+// 静的メンバー変数
+//=============================================================================
+TEXTURE_DATA CPlayer::m_TextureData = {NULL,"data/TEXTURE/Player.png" };
+//=============================================================================
+// コンストラクト
 //=============================================================================
 CPlayer::CPlayer(int nPriorit) :CScene2d(nPriorit)
 {
-	CScene::SetObjType(CScene::OBJ_TYPE_PLAYER);	//タイプ処理
-	Stats = STATS_MODE_NORMAL;						//プレイヤーの状態
-	nDamageTime = PLAYER_DAMAGE;					//無敵時間
-	for (int nCount = 0; nCount < MAX_WEAPON; nCount++)
-	{
-		nCountWeapon[nCount] = 0;					//攻撃タイミング
-	}
-	m_nLife = 3;
-	m_fSpeed = 4.0f;
+	//タイプ処理
+	CScene::SetObjType(CScene::OBJ_TYPE_PLAYER);	
+	Stats		= STATS_MODE_NONE;
+	m_nLife		= NULL;
+	m_fSpeed	= NULL;
+	memset(&m_Weapon, NULL, sizeof(m_Weapon));
+	ZeroMemory(m_nAttackCount, sizeof(m_nAttackCount));
 }
 
 //=============================================================================
-//デストラクト
+// デストラクト
 //=============================================================================
 CPlayer::~CPlayer()
 {
 }
 
-//=============================================================================
-//生成処理
-//=============================================================================
-CPlayer * CPlayer::Create(D3DXVECTOR3 Pos)
-{
-	CPlayer *pPlayer;
-	pPlayer = new CPlayer;
-	pPlayer->Set(Pos);
-	pPlayer->m_nLife += CManager::GetPlayer(0);
-	pPlayer->m_fSpeed += (CManager::GetPlayer(1)*0.45f);
-
-	pPlayer->Init();
-	return pPlayer;
-}
 
 //=============================================================================
-//テクスチャロード処理
+// テクスチャロード処理
 //=============================================================================
 HRESULT CPlayer::Load(void)
 {
 	//デバイス取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetObjects();
 	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice, "data/TEXTURE/Player.png", &m_pTexture);
+	D3DXCreateTextureFromFile(pDevice, m_TextureData.m_cFileName, &m_TextureData.m_Texture);
 	return S_OK;
 }
 
 //=============================================================================
-//テクスチャ破棄処理
+// テクスチャ破棄処理
 //=============================================================================
 void CPlayer::Unload(void)
 {
 	//テクスチャの破棄
-	if (m_pTexture != NULL)
+	if (m_TextureData.m_Texture != NULL)
 	{
-		m_pTexture->Release();
-		m_pTexture = NULL;
+		m_TextureData.m_Texture->Release();
+		m_TextureData.m_Texture = NULL;
 	}
-
 }
 
 //=============================================================================
-//初期化処理
+// 生成処理
+//=============================================================================
+CPlayer * CPlayer::Create(D3DXVECTOR3 Pos)
+{
+	CPlayer *pPlayer;
+	pPlayer = new CPlayer;
+
+	//位置設定
+	pPlayer->SetPos(Pos);
+	//サイズ設定
+	pPlayer->SetSize(D3DXVECTOR3(PLAYER_SIZE / 2.0f, PLAYER_SIZE / 2.0f, 0.0f));
+	//ライフ設定
+	pPlayer->SetLife(PLAYER_LIFE + CManager::GetPlayer()->GetLifeData());
+	//スピード設定
+	pPlayer->SetSpeed(PLAYER_SPEED + CManager::GetPlayer()->GetSpeedData());
+	//ウェポン設定
+	pPlayer->SetWeapon (CManager::GetPlayer()->GetWeaponData());
+	//初期化処理
+	pPlayer->Init();
+
+	return pPlayer;
+}
+
+//=============================================================================
+// 初期化処理
 //=============================================================================
 HRESULT CPlayer::Init(void)
 {
-	for (int nCount = 0; nCount < MAX_WEAPON; nCount++)
-	{
-		m_Weapon[nCount]= CManager::GetWeapon(nCount);
-	}
-	
-	//サイズ
-	SetSize(D3DXVECTOR3(PLAYER_SIZE / 2, PLAYER_SIZE / 2, 0.0f));
+	//状態設定
+	Stats = STATS_MODE_NORMAL;
 	//初期化処理
 	CScene2d::Init();
 	//テクスチャの設定
-	BindTexture(m_pTexture);
-	//ライフ取得
-	pLife = CGame::GetLife();
+	BindTexture(m_TextureData.m_Texture);
+	//ライフ表記
+	pLife = CLife::Create(D3DXVECTOR3(100, 100, 0.0f));
 	if (pLife != NULL)
 	{
 		pLife->SetLife(m_nLife);
@@ -120,7 +123,7 @@ HRESULT CPlayer::Init(void)
 }
 
 //=============================================================================
-//終了処理
+// 終了処理
 //=============================================================================
 void CPlayer::Uninit(void)
 {
@@ -128,80 +131,46 @@ void CPlayer::Uninit(void)
 }
 
 //=============================================================================
-//更新処理
+// 更新処理
 //=============================================================================
 void CPlayer::Update(void)
 {
-	CInihKeyboard *pKeyboard = CManager::GetKeyboard();	//キーボード取得
-	CInihMouse *pMouse = CManager::GetMouse();			//マウス取得
-	D3DXVECTOR3 pos;
-	pos = GetPos();
+	// マウス取得
+	CInihMouse *pMouse	= CManager::GetMouse();			
+	// 位置取得
+	D3DXVECTOR3 pos = GetPos();
 
-	if (pMouse->GetClick(0) == true)
+	if (Stats!= STATS_MODE_NONE)
 	{
-		Weapon(pos,0);
+		//攻撃処理
+		Weapon();
+
+		//移動処理
+		Move();
+
+		//アップデート処理
+		CScene2d::Update();
+
+		//状態管理
+		StatasManage();
 	}
-	if (pMouse->GetClick(1) == true)
-	{
-		Weapon(pos, 1);
-	}
-
-
-	//マウスの座標取得
-	float fAngle = atan2f((-pos.x + pMouse->GetMousePos().x), (-pos.y + pMouse->GetMousePos().y));
-	
-	//位置情報の受け渡し
-	posMove.x = sinf(fAngle)*m_fSpeed;
-	posMove.y = cosf(fAngle)*m_fSpeed;
-
-	//位置処理
-	if (pos.x + 5 > pMouse->GetMousePos().x
-		&&pos.x - 5 < pMouse->GetMousePos().x
-		&&pos.y + 5 > pMouse->GetMousePos().y
-		&&pos.y - 5 < pMouse->GetMousePos().y)
-	{
-		//ストップ
-	}
-	else
-	{
-		//位置更新
-		pos += posMove;
-	}
-	
-	////慣性処理
-	posMove.x += (0.0f - posMove.x)*0.2f;
-	posMove.y += (0.0f - posMove.y)*0.2f;
-	
-	pos += MoveLimit(pos, fAngle);
-	//座標更新
-	SetPos(pos);
-
-	CScene2d::Update();
-
-	//状態管理
-	StatasManage();
-
 }
 
 //=============================================================================
-//描画処理
+// 描画処理
 //=============================================================================
 void CPlayer::Draw(void)
 {
-	//描画処理
-	CScene2d::Draw();
+	if (Stats != STATS_MODE_NONE)
+	{
+		//描画処理
+		CScene2d::Draw();
+	}
 }
 
-//=============================================================================
-//生成位置処理
-//=============================================================================
-void CPlayer::Set(D3DXVECTOR3 Pos)
-{
-	CScene2d::SetPos(Pos);
-}
 
 //=============================================================================
-//ダメージ処理
+// ダメージ処理
 //=============================================================================
 void CPlayer::Damage(int nDamage)
 {
@@ -214,33 +183,87 @@ void CPlayer::Damage(int nDamage)
 		//状態変換
 		if (m_nLife > 0)
 		{
+			//ダメージ状態に移行
 			Stats = STATS_MODE_DAMAGE;
 		}
 		else
 		{
+			//死亡状態に移行
 			Stats = STATS_MODE_DEATH;
 		}
 	}
 
 }
 
+//=============================================================================
+// セットライフ
+//=============================================================================
+void CPlayer::SetLife(int nLife)
+{
+	m_nLife = nLife;
+}
 
+//=============================================================================
+// セットライフ
+//=============================================================================
+void CPlayer::SetSpeed(float fSpeed)
+{
+	m_fSpeed = fSpeed;
+}
+
+//=============================================================================
+// セットウェポン
+//=============================================================================
+void CPlayer::SetWeapon(WEAPON_DATA wepon)
+{
+	m_Weapon = wepon;
+}
+
+//=============================================================================
+// ライフゲッター
+//=============================================================================
+int CPlayer::GetLife(void)
+{
+	return m_nLife;
+}
+
+//=============================================================================
+// スピードゲッター
+//=============================================================================
+float	CPlayer::GetSpeed(void)		
+{
+	return m_fSpeed;
+}
+
+//=============================================================================
+// ウェポンゲッター
+//=============================================================================
+WEAPON_DATA CPlayer::GetWeapon(void)
+{
+	return m_Weapon;
+}
 
 //=============================================================================
 //状態管理処理
 //=============================================================================
 void CPlayer::StatasManage(void)
 {
+	//ダメージ状態の無敵時間
+	static int nDamageTime = 0;
+
+	//状態
 	switch (Stats)
 	{
+		//通常状態
 	case STATS_MODE_NORMAL:
-		SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-
 		break;
+		//ダメージ処理
 	case STATS_MODE_DAMAGE:
-		nDamageTime -= 1;
+		
+		//カウントダウン
+		nDamageTime += 1;
 
-		//ダメージカラー
+		//ダメージカラー処理
 		if (nDamageTime % 25)
 		{
 			SetCol(D3DXCOLOR(1.0f, 0.5f, 0.5f, 0.0f));
@@ -250,13 +273,18 @@ void CPlayer::StatasManage(void)
 			SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 		}
 
-		if (nDamageTime <= 0)
+		// ダメージカウントが一定になったら
+		if (nDamageTime >= PLAYER_DAMAGE)
 		{
+			//カラーセット
+			SetCol(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			//プレイヤー状態を通常状態に移行
 			Stats = STATS_MODE_NORMAL;
-			nDamageTime = PLAYER_DAMAGE;
+			//ダメージ初期化
+			nDamageTime = 0;
 		}
-
 		break;
+
 	case STATS_MODE_DEATH:
 		//サウンドクラス受け取り
 		CSound *pSound = CManager::GetSound();
@@ -279,63 +307,151 @@ void CPlayer::StatasManage(void)
 }
 
 //=============================================================================
-//プレイヤーの移動範囲処理
+// 移動処理
 //=============================================================================
-D3DXVECTOR3 CPlayer::MoveLimit(D3DXVECTOR3 pos, float fAngle)
+void CPlayer::Move(void)
 {
-	D3DXVECTOR3 MoveLimit= D3DXVECTOR3(0,0,0);
-	if (pos.x < 420|| pos.x > 1145)
-	{
-		MoveLimit.x = sinf(fAngle)*-m_fSpeed;
+	// 位置取得
+	D3DXVECTOR3 pos			= GetPos();
+	// 移動量
+	D3DXVECTOR3 Move		= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	// 範囲外処理用
+	D3DXVECTOR3 MoveLimit	= D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	// マウス取得
+	CInihMouse *pMouse = CManager::GetMouse();
 
-	}
-	if (pos.y < 25|| pos.y>700)
+	//マウスの座標取得
+	float fAngle = atan2f((-pos.x + pMouse->GetMousePos().x), (-pos.y + pMouse->GetMousePos().y));
+
+	//位置情報の受け渡し
+	Move.x = sinf(fAngle)*m_fSpeed;
+	Move.y = cosf(fAngle)*m_fSpeed;
+
+	//位置処理
+	if (pos.x + 5 > pMouse->GetMousePos().x
+		&&pos.x - 5 < pMouse->GetMousePos().x
+		&&pos.y + 5 > pMouse->GetMousePos().y
+		&&pos.y - 5 < pMouse->GetMousePos().y)
 	{
-		MoveLimit.y = cosf(fAngle)*-m_fSpeed;
+	
 	}
-	return D3DXVECTOR3(MoveLimit);
+	else
+	{
+		//位置更新
+		pos += Move;
+	}
+
+	//範囲外処理
+	if (pos.x < 420 || pos.x > 1145)
+	{
+		MoveLimit.x = sinf(fAngle)*m_fSpeed;
+	}
+	if (pos.y < 25 || pos.y > 700)
+	{
+		MoveLimit.y = cosf(fAngle)*m_fSpeed;
+	}
+
+	//範囲外にいかないように
+	pos -= MoveLimit;
+
+	//座標更新
+	SetPos(pos);
 }
 
 
 //=============================================================================
 //プレイヤーの武器使用
 //=============================================================================
-void CPlayer::Weapon(D3DXVECTOR3 pos, int nWeapon)
+void CPlayer::Weapon(void)
 {
-	nCountWeapon[nWeapon]++;
-	int nPos;
-	switch (nWeapon)
-	{
-	case 0:
-		nPos = -20;
-		break;
-	case 1:
-		nPos = 20;
-		break;
-	}
-	switch (m_Weapon[nWeapon])
-	{
-	case WEAPONS_MODE_BUTTOL:
-		if (nCountWeapon[nWeapon]>=20)
-		{
-			CBullet::Create(D3DXVECTOR3(pos.x + nPos, pos.y, pos.z), D3DXVECTOR3(0, -20, 0.0f), CBullet::BULLET_TYPE_PLAYER);
-			nCountWeapon[nWeapon] = 0;
-		}
-		break;
-	case WEAPONS_MODE_LASER:
-		if (nCountWeapon[nWeapon] >= 40)
-		{
-			CLaser::Create(D3DXVECTOR3(pos.x + nPos, pos.y, pos.z), D3DXVECTOR3(0, -17, 0.0f), CLaser::LASER_TYPE_PLAYER);
-			nCountWeapon[nWeapon] = 0;
-		}
-		break;
-	case WEAPONS_MODE_HOMING:
-		if (nCountWeapon[nWeapon] >= 35)
-		{
-			CHoming::Create(D3DXVECTOR3(pos.x + nPos, pos.y, pos.z), 15, CHoming::HOMING_TYPE_PLAYER);
-			nCountWeapon[nWeapon] = 0;
-		}
-		break;
+	// マウス取得
+	CInihMouse *pMouse	= CManager::GetMouse();
+	// 位置取得
+	D3DXVECTOR3 pos		= GetPos();
 
+	//左クリック処理
+	if (pMouse->GetClick(CLICK_LEFT))
+	{
+		//攻撃までのカウント
+		m_nAttackCount[CLICK_LEFT]++;
+
+		switch (m_Weapon.Left)
+		{
+			//通常弾処理
+		case WEAPONS_MODE_BUTTOL:
+			if (m_nAttackCount[CLICK_LEFT] >= 20)
+			{
+				//バレット生成
+				CBullet::Create(D3DXVECTOR3(pos.x - 20, pos.y, pos.z), D3DXVECTOR3(0, -20, 0.0f));
+				//カウント初期化
+				m_nAttackCount[CLICK_LEFT] = 0;
+			}
+			break;
+			//レーザー処理
+		case WEAPONS_MODE_LASER:
+			if (m_nAttackCount[CLICK_LEFT] >= 40)
+			{
+				//レーザー生成
+				CLaser::Create(D3DXVECTOR3(pos.x - 20, pos.y, pos.z), D3DXVECTOR3(0, -17, 0.0f));
+				//カウント初期化
+				m_nAttackCount[CLICK_LEFT] = 0;
+			}
+			break;
+			//ホーミング弾処理
+		case WEAPONS_MODE_HOMING:
+			if (m_nAttackCount[CLICK_LEFT] >= 35)
+			{
+				//ホーミング生成
+				CHoming::Create(D3DXVECTOR3(pos.x - 20, pos.y, pos.z), D3DXVECTOR3(0, -17, 0.0f));
+				//カウント初期化
+				m_nAttackCount[CLICK_LEFT] = 0;
+			}
+			break;
+		default:
+			break;
+		}
+	}
+
+	//右クリック処理
+	if (pMouse->GetClick(CLICK_RIGHT))
+	{
+		//攻撃までのカウント
+		m_nAttackCount[CLICK_RIGHT]++;
+
+		switch (m_Weapon.Right)
+		{
+			//通常弾処理
+		case WEAPONS_MODE_BUTTOL:
+			if (m_nAttackCount[CLICK_RIGHT] >= 20)
+			{
+				//バレット生成
+				CBullet::Create(D3DXVECTOR3(pos.x + 20, pos.y, pos.z), D3DXVECTOR3(0, -20, 0.0f));
+				//カウント初期化
+				m_nAttackCount[CLICK_RIGHT] = 0;
+			}
+			break;
+			//レーザー処理
+		case WEAPONS_MODE_LASER:
+			if (m_nAttackCount[CLICK_RIGHT] >= 40)
+			{
+				//レーザー生成
+				CLaser::Create(D3DXVECTOR3(pos.x + 20, pos.y, pos.z), D3DXVECTOR3(0, -17, 0.0f));
+				//カウント初期化
+				m_nAttackCount[CLICK_RIGHT] = 0;
+			}
+			break;
+			//ホーミング弾処理
+		case WEAPONS_MODE_HOMING:
+			if (m_nAttackCount[CLICK_RIGHT] >= 35)
+			{
+				//ホーミング生成
+				CHoming::Create(D3DXVECTOR3(pos.x + 20, pos.y, pos.z), D3DXVECTOR3(0, -17, 0.0f));
+				//カウント初期化
+				m_nAttackCount[CLICK_RIGHT] = 0;
+			}
+			break;
+		default:
+			break;
+		}
 	}
 }

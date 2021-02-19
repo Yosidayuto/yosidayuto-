@@ -4,7 +4,7 @@
 #include "score.h"
 #include "game.h"
 #include "sound.h"
-#include "bullet.h"
+#include "enemy bullet.h"
 #include "boss_anime.h"
 #include "player.h"
 #include <time.h>
@@ -12,18 +12,16 @@
 //静的メンバー変数
 //----------------------------------
 bool CBoss::m_bDie = false;
-LPDIRECT3DTEXTURE9 CBoss::m_Texture[BOSS_TYPE_MAX] = {};
-char * CBoss::pTexture[BOSS_TYPE_MAX] =
-{
-	"data/TEXTURE/Boss_1.png",
-	"data/TEXTURE/Boss_2.png",
-	"data/TEXTURE/Boss_3.png",
+TEXTURE_DATA CBoss::m_TextureData[BOSS_TYPE_MAX] = 
+{ { NULL,"data/TEXTURE/Boss_1.png" },
+{ NULL,	"data/TEXTURE/Boss_2.png" },
+{ NULL,	"data/TEXTURE/Boss_3.png" },
 };
 
 //----------------------------------
 //コンストラクタ
 //----------------------------------
-CBoss::CBoss(int nPriorit)
+CBoss::CBoss(int nPriorit):CScene2d(nPriorit)
 {
 	m_bBulletMode = false;
 	m_Stats = STATS_MODE_NORMAL;
@@ -60,7 +58,7 @@ HRESULT CBoss::Load(void)
 	for (int nCount = 0; nCount < BOSS_TYPE_MAX; nCount++)
 	{
 		//テクスチャの読み込み
-		D3DXCreateTextureFromFile(pDevice, pTexture[nCount], &m_Texture[nCount]);
+		D3DXCreateTextureFromFile(pDevice, m_TextureData[nCount].m_cFileName, &m_TextureData[nCount].m_Texture);
 	}
 	return S_OK;
 }
@@ -73,10 +71,10 @@ void CBoss::Unload(void)
 	//テクスチャの破棄
 	for (int nCount = 0; nCount < BOSS_TYPE_MAX; nCount++)
 	{
-		if (m_Texture[nCount] != NULL)
+		if (m_TextureData[nCount].m_Texture != NULL)
 		{
-			m_Texture[nCount]->Release();
-			m_Texture[nCount] = NULL;
+			m_TextureData[nCount].m_Texture->Release();
+			m_TextureData[nCount].m_Texture = NULL;
 		}
 	}
 }
@@ -93,7 +91,7 @@ CBoss * CBoss::Create(D3DXVECTOR3 Pos, BOSS_TYPE nType, D3DXVECTOR3 size)
 	pBoss->m_size = size/2;
 	pBoss->m_pos = Pos;
 	pBoss->SetSize(size/2);
-	pBoss->BindTexture(m_Texture[nType]);
+	pBoss->BindTexture(m_TextureData[nType].m_Texture);
 	pBoss->SetPos(Pos);
 	pBoss->Init();
 
@@ -285,7 +283,7 @@ void CBoss::Bullet(BOSS_PATTERN_BULLET BulletMode, D3DXVECTOR3 Pos)
 	case BULLET_PATTERN_NONE://何もしない
 		//クールタイム
 		m_nBulletCoolTime++;
-				if (m_nBulletCoolTime >= 100)
+		if (m_nBulletCoolTime >= 100)
 		{
 			//前の攻撃が終わっているか
 			if (m_bBulletMode == false)
@@ -331,7 +329,7 @@ void CBoss::Bullet(BOSS_PATTERN_BULLET BulletMode, D3DXVECTOR3 Pos)
 				//向きを相手の向きに処理（速度と場所）
 				m_rot[nNumberBullet] = Tracking(7,m_pos);
 				//バレット発射（発射場所と撃つ方向とバレットタイプ）
-				CBullet::Create(m_pos, m_rot[0], CBullet::BULLET_TYPE_ENEMY);
+				CEnemyBullet::Create(m_pos, m_rot[0]);
 				//バレットの使用状態
 				m_bBullet[nNumberBullet] = true;
 				//攻撃終了処理
@@ -356,7 +354,7 @@ void CBoss::Bullet(BOSS_PATTERN_BULLET BulletMode, D3DXVECTOR3 Pos)
 				//向きを相手の向きに処理（速度と場所）
 				m_rot[nNumberBullet] = Tracking(7, m_pos);
 				//バレット発射（発射場所と撃つ方向とバレットタイプ）
-				CBullet::Create(m_pos, m_rot[nNumberBullet], CBullet::BULLET_TYPE_ENEMY);
+				CEnemyBullet::Create(m_pos, m_rot[nNumberBullet]);
 				//バレットの使用状態
 				m_bBullet[nNumberBullet] = true;
 				//攻撃終了処理
@@ -384,7 +382,7 @@ void CBoss::Bullet(BOSS_PATTERN_BULLET BulletMode, D3DXVECTOR3 Pos)
 				//向きをランダムに処理（速度）
 				m_rot[nNumberBullet] = Random(5);
 				//バレット発射（発射場所と撃つ方向とバレットタイプ）
-				CBullet::Create(m_pos, m_rot[nNumberBullet], CBullet::BULLET_TYPE_ENEMY);
+				CEnemyBullet::Create(m_pos, m_rot[nNumberBullet]);
 				//バレットの使用状態
 				m_bBullet[nNumberBullet] = true;
 				//攻撃終了処理
@@ -410,7 +408,7 @@ void CBoss::Bullet(BOSS_PATTERN_BULLET BulletMode, D3DXVECTOR3 Pos)
 				m_rot[nNumberBullet].x = sinf(Spiral() + (0.2f*nNumberBullet))*7.0f;
 				m_rot[nNumberBullet].y = cosf(Spiral() + (0.2f*nNumberBullet))*7.0f;
 				//バレット発射（発射場所と撃つ方向とバレットタイプ）
-				CBullet::Create(m_pos, m_rot[nNumberBullet], CBullet::BULLET_TYPE_ENEMY);
+				CEnemyBullet::Create(m_pos, m_rot[nNumberBullet]);
 				//バレットの使用状態
 				m_bBullet[nNumberBullet] = true;
 				//攻撃終了処理
@@ -439,7 +437,7 @@ void CBoss::Bullet(BOSS_PATTERN_BULLET BulletMode, D3DXVECTOR3 Pos)
 					m_rot[nNumberBullet].x = sinf(Spiral() + (2.0f*nNumberBullet))*4.0f;
 					m_rot[nNumberBullet].y = cosf(Spiral() + (2.0f*nNumberBullet))*4.0f;
 					//バレット発射（発射場所と撃つ方向とバレットタイプ）
-					CBullet::Create(m_pos, m_rot[nNumberBullet], CBullet::BULLET_TYPE_ENEMY);
+					CEnemyBullet::Create(m_pos, m_rot[nNumberBullet]);
 					
 					//バレットの使用状態
 					m_bBullet[nNumberBullet] = true;
@@ -460,7 +458,7 @@ void CBoss::Bullet(BOSS_PATTERN_BULLET BulletMode, D3DXVECTOR3 Pos)
 		//一発目の発射処理
 		if (nConutBullet[0] == 10)
 		{
-			m_pBullet = CBullet::Create(m_pos, D3DXVECTOR3(0.0f, 3.5f, 0.0f), CBullet::BULLET_TYPE_ENEMY);
+			m_pBullet = CEnemyBullet::Create(m_pos, D3DXVECTOR3(0.0f, 3.5f, 0.0f));
 		}
 	
 		for (int nCount = 0; nCount < 10; nCount++)
@@ -480,7 +478,7 @@ void CBoss::Bullet(BOSS_PATTERN_BULLET BulletMode, D3DXVECTOR3 Pos)
 					}
 
 					//バレット発射（発射場所と撃つ方向とバレットタイプ）
-					CBullet::Create(m_pBullet->GetPos(), m_rot[nNumberBullet], CBullet::BULLET_TYPE_ENEMY);
+					CEnemyBullet::Create(m_pBullet->GetPos(), m_rot[nNumberBullet]);
 					//バレットを使用状態にする
 					m_bBullet[nNumberBullet] = true;
 
@@ -498,7 +496,9 @@ void CBoss::Bullet(BOSS_PATTERN_BULLET BulletMode, D3DXVECTOR3 Pos)
 
 		break;
 	case BULLET_PATTERN_HOMING2://ホーミングショット2
-	
+		int nPosx = 100;
+		int nPosy = 100;
+
 		for (int nCount = 0; nCount<4; nCount++)
 		{
 
@@ -507,8 +507,6 @@ void CBoss::Bullet(BOSS_PATTERN_BULLET BulletMode, D3DXVECTOR3 Pos)
 				if (nConutBullet[(nNumberBullet)+(nCount * 20)] >= 10 * ((nNumberBullet)+(nCount * 20))
 					&& m_bBullet[(nNumberBullet)+(nCount * 20)] == false)
 				{
-					int nPosx = 100;
-					int nPosy = 100;
 					if (nCount % 2 == 0)
 					{
 						nPosy *= -1;
@@ -518,10 +516,10 @@ void CBoss::Bullet(BOSS_PATTERN_BULLET BulletMode, D3DXVECTOR3 Pos)
 						nPosx *= -1;
 					}
 
-					D3DXVECTOR3 pos = D3DXVECTOR3((float)(GAME_WIDTH + nPosx), (float)(SCREEN_HEIGHT / 2) + (float)nPosy, 0.0f);
+					D3DXVECTOR3 pos = D3DXVECTOR3((float)(STAGE_POS + nPosx), (float)(SCREEN_HEIGHT / 2) + (float)nPosy, 0.0f);
 					m_rot[(nNumberBullet)+(nCount * 20)] = Tracking(4, pos);
 
-					CBullet::Create(D3DXVECTOR3((float)(GAME_WIDTH + nPosx), (float)(SCREEN_HEIGHT / 2) + (float)nPosy, 0.0f), m_rot[(nNumberBullet)+(nCount * 20)], CBullet::BULLET_TYPE_ENEMY);
+					CEnemyBullet::Create(D3DXVECTOR3((float)(STAGE_POS + nPosx), (float)(SCREEN_HEIGHT / 2) + (float)nPosy, 0.0f), m_rot[(nNumberBullet)+(nCount * 20)]);
 					m_bBullet[(nNumberBullet)+(nCount * 20)] = true;
 
 				}

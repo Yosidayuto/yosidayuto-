@@ -1,22 +1,23 @@
-//*****************************************************************************
-// マクロ定義
-//*****************************************************************************
-#define MAX_SIZE (100)
+//=============================================================================
+//
+// マウスポインター [mouse pointer.cpp]
+// Author : 吉田悠人
+//
+//=============================================================================
 
-
+//=============================================================================
+// ヘッダファイルのインクルード
+//=============================================================================
 #include "mouse pointer.h"
 #include "inputmouse.h"
 #include "manager.h"
 #include "renderer.h"
+#include "select pointer.h"
+#include "game pointer.h"
 //=============================================================================
-//静的メンバ変数宣言
+// マクロ定義
 //=============================================================================
-LPDIRECT3DTEXTURE9 CPointer::m_pTexture[POINTER_TYPE_MAX] = {};
-char *CPointer::pTexture[POINTER_TYPE_MAX]=
-{
-	"data/TEXTURE/MousePointer_Select.png",
-	"data/TEXTURE/MousePointer_Game.png"
-};
+#define POINTER_SIZE (100.0f)	//マウスポインタのサイズ
 //=============================================================================
 // コンストラクタ
 //=============================================================================
@@ -36,15 +37,8 @@ CPointer::~CPointer()
 //=============================================================================
 HRESULT CPointer::Load(void)
 {
-	//デバイス取得
-	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetObjects();
-
-	// テクスチャの生成
-	for (int nCount = 0; nCount < POINTER_TYPE_MAX; nCount++)
-	{
-		D3DXCreateTextureFromFile(pDevice, pTexture[nCount], &m_pTexture[nCount]);
-	}
-
+	CSelectPointer::Load();
+	CGamePointer::Load();
 	return S_OK;
 }
 
@@ -53,45 +47,18 @@ HRESULT CPointer::Load(void)
 //=============================================================================
 void CPointer::Unload(void)
 {
-	for (int nCount = 0; nCount < POINTER_TYPE_MAX; nCount++)
-	{
-		// テクスチャの破棄
-		if (m_pTexture[nCount] != NULL)
-		{
-			m_pTexture[nCount]->Release();
-			m_pTexture[nCount] = NULL;
-		}
-	}
+	CSelectPointer::Unload();
+	CGamePointer::Unload();
 }
 
-//=============================================================================
-// 作成処理
-//=============================================================================
-CPointer * CPointer::Create(POINTER_TYPE Type)
-{
-	CPointer *pPointer;
-	//インスタンス生成
-	pPointer = new CPointer;
-
-	//初期化処理
-	if (pPointer != NULL)
-	{
-		pPointer->Init(Type);
-	}
-	pPointer->SetPos(D3DXVECTOR3(0.0f,0.0f,0.0f));
-	return pPointer;
-}
 
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CPointer::Init(POINTER_TYPE Type)
+HRESULT CPointer::Init(void)
 {
-	//テクスチャ設定
-	BindTexture(m_pTexture[Type]);
-	//サイズ
-	SetSize(D3DXVECTOR3(MAX_SIZE, MAX_SIZE, 0.0f));
-
+	//サイズセット
+	SetSize(D3DXVECTOR3(POINTER_SIZE, POINTER_SIZE, 0.0f));
 	//初期化処理
 	CScene2d::Init();
 	return S_OK;
@@ -110,12 +77,6 @@ void CPointer::Uninit(void)
 //=============================================================================
 void CPointer::Update(void)
 {
-	//マウス取得
-	CInihMouse *pMouse = CManager::GetMouse();
-	
-
-	D3DXVECTOR3 MousePos = D3DXVECTOR3((float)pMouse->GetMousePos().x, (float)pMouse->GetMousePos().y, 0.0f);
-	SetPos(MousePos);
 	CScene2d::Update();
 }
 
@@ -125,4 +86,18 @@ void CPointer::Update(void)
 void CPointer::Draw(void)
 {
 	CScene2d::Draw();
+}
+
+//=============================================================================
+// マウス追従処理
+//=============================================================================
+void CPointer::MouseMove(void)
+{
+	//マウス取得
+	CInihMouse *pMouse = CManager::GetMouse();
+	
+	//マウスの位置取得
+	D3DXVECTOR3 MousePos = D3DXVECTOR3((float)pMouse->GetMousePos().x, (float)pMouse->GetMousePos().y, 0.0f);
+	//位置セット
+	SetPos(MousePos);
 }

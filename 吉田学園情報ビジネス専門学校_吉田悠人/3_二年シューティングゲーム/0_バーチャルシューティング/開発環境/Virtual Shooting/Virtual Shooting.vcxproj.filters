@@ -25,9 +25,6 @@
     <Filter Include="ソース ファイル\UI">
       <UniqueIdentifier>{1ad8ef21-68f0-4bc4-a9d8-69565a9d0e20}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Stage">
-      <UniqueIdentifier>{baf44730-5bce-47e3-9267-232f06a5534f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Enemy">
       <UniqueIdentifier>{1b4cdb98-2701-49b4-a8ed-b8c7a3620967}</UniqueIdentifier>
     </Filter>
@@ -67,9 +64,6 @@
     <Filter Include="ヘッダー ファイル\Base">
       <UniqueIdentifier>{ada41a5f-93ab-4ad6-a688-57be556137b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Stage">
-      <UniqueIdentifier>{a3cda665-438c-4d42-89b1-b032ac8ddc53}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\UI\Telop">
       <UniqueIdentifier>{ba81d5ed-8559-4dc1-8e8e-d60690f4eac7}</UniqueIdentifier>
     </Filter>
@@ -91,21 +85,78 @@
     <Filter Include="ヘッダー ファイル\UI\life">
       <UniqueIdentifier>{f0415e00-ef56-43da-93f7-d64b4fa3504d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\UI\weapon">
+      <UniqueIdentifier>{10c55cce-c7c3-4379-bf4b-13fbead66dea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\weapon">
+      <UniqueIdentifier>{05d1b68f-2693-43e7-9789-c4c332785bb7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI\weapon\Weapon icon">
+      <UniqueIdentifier>{de31697a-e45a-4eb2-9537-403cd5390e2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\weapon\Weapon icon">
+      <UniqueIdentifier>{3849a89b-f589-4d21-a623-86c0361c66e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI\Telop\Text">
+      <UniqueIdentifier>{42195407-3b40-4e4d-8b47-f00c952b6663}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\Telop\Text">
+      <UniqueIdentifier>{bb8dc039-00cc-4e71-8779-9599ae5b1570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\player">
+      <UniqueIdentifier>{f4e30433-d394-457f-97b9-eebb916770ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\player">
+      <UniqueIdentifier>{9ca29792-23ac-4d09-8625-97fc4309f2e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Bg\game bg">
+      <UniqueIdentifier>{74d4585d-168d-4250-ba33-3cfd773349c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bg\game bg">
+      <UniqueIdentifier>{94bb21f1-e513-4071-8c0a-6463e4717be7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\MousePointer">
+      <UniqueIdentifier>{46595b4a-5c76-4fb6-af96-9113e65e6fef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI\MousePointer">
+      <UniqueIdentifier>{498a3ddf-1a88-48c0-b372-2a00d639df0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Manager\GameStage">
+      <UniqueIdentifier>{54694b53-4690-459a-a389-ce74621fc3de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Manager\GameStage">
+      <UniqueIdentifier>{150c5c4b-0e6c-494b-8fdf-30748bf6f328}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\UI\Score">
+      <UniqueIdentifier>{bc99c0cb-b88a-4b55-9122-f41eb19d85e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\UI\Score">
+      <UniqueIdentifier>{84dca37f-e637-46e6-a377-10c0d746d447}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Bullet\EnemyShots">
+      <UniqueIdentifier>{29071b1a-3c77-49e3-b742-c6591f96d407}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Bullet\EnemyShots">
+      <UniqueIdentifier>{4eb7d7a6-65f8-4489-88e7-6695f69b73ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Enemy\Type">
+      <UniqueIdentifier>{fead9139-6d34-48e5-b45a-f4f5bb183d40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Enemy\Type">
+      <UniqueIdentifier>{249f9f90-10f5-4450-b77e-63ec092fa2e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Enemy\Boss">
+      <UniqueIdentifier>{fd0121fd-1743-40e9-9fda-eef9a688d8b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Enemy\Boss">
+      <UniqueIdentifier>{d483e115-40ad-4f42-bd29-947db057ca01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="fade.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="mouse pointer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="warning.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="window.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="scene.cpp">
@@ -113,12 +164,6 @@
     </ClCompile>
     <ClCompile Include="scene2d.cpp">
       <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Background.cpp">
-      <Filter>ソース ファイル\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="bg_game.cpp">
-      <Filter>ソース ファイル\Stage</Filter>
     </ClCompile>
     <ClCompile Include="boss.cpp">
       <Filter>ソース ファイル\Enemy</Filter>
@@ -138,9 +183,6 @@
     <ClCompile Include="explosion.cpp">
       <Filter>ソース ファイル\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="homing.cpp">
-      <Filter>ソース ファイル\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="input.cpp">
       <Filter>ソース ファイル\Input</Filter>
     </ClCompile>
@@ -150,17 +192,11 @@
     <ClCompile Include="inputmouse.cpp">
       <Filter>ソース ファイル\Input</Filter>
     </ClCompile>
-    <ClCompile Include="laser.cpp">
-      <Filter>ソース ファイル\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="ui.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="effect.cpp">
       <Filter>ソース ファイル\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
     <ClCompile Include="manager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
@@ -174,32 +210,11 @@
     <ClCompile Include="renderer.cpp">
       <Filter>ソース ファイル\Base</Filter>
     </ClCompile>
-    <ClCompile Include="result.cpp">
-      <Filter>ソース ファイル\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="resultBg.cpp">
-      <Filter>ソース ファイル\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="score.cpp">
-      <Filter>ソース ファイル\UI</Filter>
-    </ClCompile>
     <ClCompile Include="select.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
     <ClCompile Include="sound.cpp">
       <Filter>ソース ファイル\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="telop_bar.cpp">
-      <Filter>ソース ファイル\UI\Telop</Filter>
-    </ClCompile>
-    <ClCompile Include="telop_text.cpp">
-      <Filter>ソース ファイル\UI\Telop</Filter>
-    </ClCompile>
-    <ClCompile Include="text.cpp">
-      <Filter>ソース ファイル\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="weapon_UI.cpp">
-      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="bg.cpp">
       <Filter>ソース ファイル\Bg</Filter>
@@ -219,12 +234,6 @@
     <ClCompile Include="select bg.cpp">
       <Filter>ソース ファイル\Bg</Filter>
     </ClCompile>
-    <ClCompile Include="button.cpp">
-      <Filter>ソース ファイル\UI\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="button p.cpp">
-      <Filter>ソース ファイル\UI\Button</Filter>
-    </ClCompile>
     <ClCompile Include="start button.cpp">
       <Filter>ソース ファイル\UI\Button</Filter>
     </ClCompile>
@@ -240,18 +249,174 @@
     <ClCompile Include="life ui.cpp">
       <Filter>ソース ファイル\UI\life</Filter>
     </ClCompile>
+    <ClCompile Include="speed button.cpp">
+      <Filter>ソース ファイル\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet button.cpp">
+      <Filter>ソース ファイル\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="weapon ui.cpp">
+      <Filter>ソース ファイル\UI\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet icon.cpp">
+      <Filter>ソース ファイル\UI\weapon\Weapon icon</Filter>
+    </ClCompile>
+    <ClCompile Include="weapon manager.cpp">
+      <Filter>ソース ファイル\UI\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="laser icon.cpp">
+      <Filter>ソース ファイル\UI\weapon\Weapon icon</Filter>
+    </ClCompile>
+    <ClCompile Include="homing icon.cpp">
+      <Filter>ソース ファイル\UI\weapon\Weapon icon</Filter>
+    </ClCompile>
+    <ClCompile Include="laser button.cpp">
+      <Filter>ソース ファイル\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="homing button.cpp">
+      <Filter>ソース ファイル\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>ソース ファイル\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="telop tutorial.cpp">
+      <Filter>ソース ファイル\UI\Telop\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="telop life.cpp">
+      <Filter>ソース ファイル\UI\Telop\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="telop speed.cpp">
+      <Filter>ソース ファイル\UI\Telop\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="telop bullet.cpp">
+      <Filter>ソース ファイル\UI\Telop\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="telop laser.cpp">
+      <Filter>ソース ファイル\UI\Telop\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="telop homing.cpp">
+      <Filter>ソース ファイル\UI\Telop\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="telop.cpp">
+      <Filter>ソース ファイル\UI\Telop</Filter>
+    </ClCompile>
+    <ClCompile Include="button manager.cpp">
+      <Filter>ソース ファイル\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>ソース ファイル\player</Filter>
+    </ClCompile>
+    <ClCompile Include="player data.cpp">
+      <Filter>ソース ファイル\player</Filter>
+    </ClCompile>
+    <ClCompile Include="game bg.cpp">
+      <Filter>ソース ファイル\Bg\game bg</Filter>
+    </ClCompile>
+    <ClCompile Include="game scroll bg.cpp">
+      <Filter>ソース ファイル\Bg\game bg</Filter>
+    </ClCompile>
+    <ClCompile Include="game bg manager.cpp">
+      <Filter>ソース ファイル\Bg\game bg</Filter>
+    </ClCompile>
+    <ClCompile Include="result bg.cpp">
+      <Filter>ソース ファイル\Bg</Filter>
+    </ClCompile>
+    <ClCompile Include="result.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="mouse pointer.cpp">
+      <Filter>ソース ファイル\UI\MousePointer</Filter>
+    </ClCompile>
+    <ClCompile Include="select pointer.cpp">
+      <Filter>ソース ファイル\UI\MousePointer</Filter>
+    </ClCompile>
+    <ClCompile Include="game pointer.cpp">
+      <Filter>ソース ファイル\UI\MousePointer</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>ソース ファイル\Manager\GameStage</Filter>
+    </ClCompile>
+    <ClCompile Include="stage_1.cpp">
+      <Filter>ソース ファイル\Manager\GameStage</Filter>
+    </ClCompile>
+    <ClCompile Include="stage_2.cpp">
+      <Filter>ソース ファイル\Manager\GameStage</Filter>
+    </ClCompile>
+    <ClCompile Include="stage_3.cpp">
+      <Filter>ソース ファイル\Manager\GameStage</Filter>
+    </ClCompile>
+    <ClCompile Include="stage.cpp">
+      <Filter>ソース ファイル\Manager\GameStage</Filter>
+    </ClCompile>
+    <ClCompile Include="score.cpp">
+      <Filter>ソース ファイル\UI\Score</Filter>
+    </ClCompile>
+    <ClCompile Include="score bar.cpp">
+      <Filter>ソース ファイル\UI\Score</Filter>
+    </ClCompile>
+    <ClCompile Include="bullet base.cpp">
+      <Filter>ソース ファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy bullet.cpp">
+      <Filter>ソース ファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="shots base.cpp">
+      <Filter>ソース ファイル\Bullet\EnemyShots</Filter>
+    </ClCompile>
+    <ClCompile Include="shots.cpp">
+      <Filter>ソース ファイル\Bullet\EnemyShots</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy base.cpp">
+      <Filter>ソース ファイル\Enemy\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy type1.cpp">
+      <Filter>ソース ファイル\Enemy\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy type2.cpp">
+      <Filter>ソース ファイル\Enemy\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy type3.cpp">
+      <Filter>ソース ファイル\Enemy\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy type4.cpp">
+      <Filter>ソース ファイル\Enemy\Type</Filter>
+    </ClCompile>
+    <ClCompile Include="spiral.cpp">
+      <Filter>ソース ファイル\Bullet\EnemyShots</Filter>
+    </ClCompile>
+    <ClCompile Include="laser.cpp">
+      <Filter>ソース ファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="homing.cpp">
+      <Filter>ソース ファイル\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="boss type1.cpp">
+      <Filter>ソース ファイル\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="boss base.cpp">
+      <Filter>ソース ファイル\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="boss type2.cpp">
+      <Filter>ソース ファイル\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="boss type3.cpp">
+      <Filter>ソース ファイル\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="buckshot.cpp">
+      <Filter>ソース ファイル\Bullet\EnemyShots</Filter>
+    </ClCompile>
+    <ClCompile Include="full range shots.cpp">
+      <Filter>ソース ファイル\Bullet\EnemyShots</Filter>
+    </ClCompile>
+    <ClCompile Include="split shots.cpp">
+      <Filter>ソース ファイル\Bullet\EnemyShots</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="window.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="fade.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="mouse pointer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="player.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="warning.h">
@@ -272,12 +437,6 @@
     <ClInclude Include="boss_anime.h">
       <Filter>ヘッダー ファイル\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Background.h">
-      <Filter>ヘッダー ファイル\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="bg_game.h">
-      <Filter>ヘッダー ファイル\Stage</Filter>
-    </ClInclude>
     <ClInclude Include="bullet.h">
       <Filter>ヘッダー ファイル\Bullet</Filter>
     </ClInclude>
@@ -290,12 +449,6 @@
     <ClInclude Include="explosion.h">
       <Filter>ヘッダー ファイル\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>ヘッダー ファイル\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="homing.h">
-      <Filter>ヘッダー ファイル\Bullet</Filter>
-    </ClInclude>
     <ClInclude Include="inihkeyboard.h">
       <Filter>ヘッダー ファイル\Input</Filter>
     </ClInclude>
@@ -304,9 +457,6 @@
     </ClInclude>
     <ClInclude Include="inputmouse.h">
       <Filter>ヘッダー ファイル\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="laser.h">
-      <Filter>ヘッダー ファイル\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="manager.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
@@ -323,29 +473,11 @@
     <ClInclude Include="number.h">
       <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
-    <ClInclude Include="resultBg.h">
-      <Filter>ヘッダー ファイル\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="score.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
     <ClInclude Include="select.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
     <ClInclude Include="ui.h">
       <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="weapon_UI.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="text.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="telop_bar.h">
-      <Filter>ヘッダー ファイル\UI\Telop</Filter>
-    </ClInclude>
-    <ClInclude Include="telop_text.h">
-      <Filter>ヘッダー ファイル\UI\Telop</Filter>
     </ClInclude>
     <ClInclude Include="sound.h">
       <Filter>ヘッダー ファイル\Base</Filter>
@@ -368,12 +500,6 @@
     <ClInclude Include="select bg.h">
       <Filter>ヘッダー ファイル\Bg</Filter>
     </ClInclude>
-    <ClInclude Include="button.h">
-      <Filter>ヘッダー ファイル\UI\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="button p.h">
-      <Filter>ヘッダー ファイル\UI\Button</Filter>
-    </ClInclude>
     <ClInclude Include="start button.h">
       <Filter>ヘッダー ファイル\UI\Button</Filter>
     </ClInclude>
@@ -389,5 +515,175 @@
     <ClInclude Include="life ui.h">
       <Filter>ヘッダー ファイル\UI\life</Filter>
     </ClInclude>
+    <ClInclude Include="speed button.h">
+      <Filter>ヘッダー ファイル\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet button.h">
+      <Filter>ヘッダー ファイル\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet icon.h">
+      <Filter>ヘッダー ファイル\UI\weapon\Weapon icon</Filter>
+    </ClInclude>
+    <ClInclude Include="weapon manager.h">
+      <Filter>ヘッダー ファイル\UI\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="laser icon.h">
+      <Filter>ヘッダー ファイル\UI\weapon\Weapon icon</Filter>
+    </ClInclude>
+    <ClInclude Include="homing icon.h">
+      <Filter>ヘッダー ファイル\UI\weapon\Weapon icon</Filter>
+    </ClInclude>
+    <ClInclude Include="laser button.h">
+      <Filter>ヘッダー ファイル\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="homing button.h">
+      <Filter>ヘッダー ファイル\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>ヘッダー ファイル\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="weapon ui.h">
+      <Filter>ヘッダー ファイル\UI\weapon\Weapon icon</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="telop tutorial.h">
+      <Filter>ヘッダー ファイル\UI\Telop\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="telop life.h">
+      <Filter>ヘッダー ファイル\UI\Telop\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="telop speed.h">
+      <Filter>ヘッダー ファイル\UI\Telop\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="telop bullet.h">
+      <Filter>ヘッダー ファイル\UI\Telop\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="telop laser.h">
+      <Filter>ヘッダー ファイル\UI\Telop\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="telop homing.h">
+      <Filter>ヘッダー ファイル\UI\Telop\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="telop.h">
+      <Filter>ヘッダー ファイル\UI\Telop</Filter>
+    </ClInclude>
+    <ClInclude Include="button manager.h">
+      <Filter>ヘッダー ファイル\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>ヘッダー ファイル\player</Filter>
+    </ClInclude>
+    <ClInclude Include="player data.h">
+      <Filter>ヘッダー ファイル\player</Filter>
+    </ClInclude>
+    <ClInclude Include="game bg.h">
+      <Filter>ヘッダー ファイル\Bg\game bg</Filter>
+    </ClInclude>
+    <ClInclude Include="game scroll bg.h">
+      <Filter>ヘッダー ファイル\Bg\game bg</Filter>
+    </ClInclude>
+    <ClInclude Include="game bg manager.h">
+      <Filter>ヘッダー ファイル\Bg\game bg</Filter>
+    </ClInclude>
+    <ClInclude Include="result bg.h">
+      <Filter>ヘッダー ファイル\Bg</Filter>
+    </ClInclude>
+    <ClInclude Include="mouse pointer.h">
+      <Filter>ヘッダー ファイル\UI\MousePointer</Filter>
+    </ClInclude>
+    <ClInclude Include="select pointer.h">
+      <Filter>ヘッダー ファイル\UI\MousePointer</Filter>
+    </ClInclude>
+    <ClInclude Include="game pointer.h">
+      <Filter>ヘッダー ファイル\UI\MousePointer</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>ヘッダー ファイル\Manager\GameStage</Filter>
+    </ClInclude>
+    <ClInclude Include="stage_1.h">
+      <Filter>ヘッダー ファイル\Manager\GameStage</Filter>
+    </ClInclude>
+    <ClInclude Include="stage_2.h">
+      <Filter>ヘッダー ファイル\Manager\GameStage</Filter>
+    </ClInclude>
+    <ClInclude Include="stage_3.h">
+      <Filter>ヘッダー ファイル\Manager\GameStage</Filter>
+    </ClInclude>
+    <ClInclude Include="stage.h">
+      <Filter>ヘッダー ファイル\Manager\GameStage</Filter>
+    </ClInclude>
+    <ClInclude Include="score.h">
+      <Filter>ヘッダー ファイル\UI\Score</Filter>
+    </ClInclude>
+    <ClInclude Include="score bar.h">
+      <Filter>ヘッダー ファイル\UI\Score</Filter>
+    </ClInclude>
+    <ClInclude Include="bullet base.h">
+      <Filter>ヘッダー ファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy bullet.h">
+      <Filter>ヘッダー ファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="shots base.h">
+      <Filter>ヘッダー ファイル\Bullet\EnemyShots</Filter>
+    </ClInclude>
+    <ClInclude Include="shots.h">
+      <Filter>ヘッダー ファイル\Bullet\EnemyShots</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy base.h">
+      <Filter>ヘッダー ファイル\Enemy\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy type1.h">
+      <Filter>ヘッダー ファイル\Enemy\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy type2.h">
+      <Filter>ヘッダー ファイル\Enemy\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy type3.h">
+      <Filter>ヘッダー ファイル\Enemy\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy type4.h">
+      <Filter>ヘッダー ファイル\Enemy\Type</Filter>
+    </ClInclude>
+    <ClInclude Include="spiral.h">
+      <Filter>ヘッダー ファイル\Bullet\EnemyShots</Filter>
+    </ClInclude>
+    <ClInclude Include="laser.h">
+      <Filter>ヘッダー ファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="homing.h">
+      <Filter>ヘッダー ファイル\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="boss type1.h">
+      <Filter>ヘッダー ファイル\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="boss base.h">
+      <Filter>ヘッダー ファイル\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="boss type2.h">
+      <Filter>ヘッダー ファイル\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="boss type3.h">
+      <Filter>ヘッダー ファイル\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>リソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="buckshot.h">
+      <Filter>ヘッダー ファイル\Bullet\EnemyShots</Filter>
+    </ClInclude>
+    <ClInclude Include="full range shots.h">
+      <Filter>ヘッダー ファイル\Bullet\EnemyShots</Filter>
+    </ClInclude>
+    <ClInclude Include="split shots.h">
+      <Filter>ヘッダー ファイル\Bullet\EnemyShots</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Virtual Shooting.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

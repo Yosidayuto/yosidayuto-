@@ -17,7 +17,7 @@
 //=============================================================================
 typedef struct
 {
-	LPDIRECT3DTEXTURE9	m_pTexture;	// テクスチャへのポインタ
+	LPDIRECT3DTEXTURE9	m_Texture;	// テクスチャへのポインタ
 	char*				m_cFileName;// ファイルの名前
 } TEXTURE_DATA;
 
@@ -45,11 +45,12 @@ public:
 	D3DXVECTOR3 GetPos(void);			//位置取得
 	D3DXVECTOR3 GetSize(void);			//サイズ取得
 	float		GetRot(void);			//向き取得
+	D3DXCOLOR	GetCol(void);			//カラー取得
 
 	void	BindTexture(LPDIRECT3DTEXTURE9 pTexture);	//テクスチャの読み込み処理
 	void	TextureAnim(D3DXVECTOR2 *Texture);			//テクスチャアニメーション
 private:
-	LPDIRECT3DTEXTURE9		m_pTexture;		// テクスチャへのポインタ
+	LPDIRECT3DTEXTURE9		m_Texture;		// テクスチャへのポインタ
 	LPDIRECT3DVERTEXBUFFER9 m_pVtxBuff;		// 頂点バッファへのポインタ
 	D3DXVECTOR3				m_pos;			// ポリゴンの位置
 	D3DXVECTOR3				m_size;			// ポリゴンの大きさ

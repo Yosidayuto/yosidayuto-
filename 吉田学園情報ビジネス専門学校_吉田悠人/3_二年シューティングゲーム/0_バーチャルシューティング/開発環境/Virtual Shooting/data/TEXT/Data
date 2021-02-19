@@ -1,0 +1,48 @@
+STAGE_DATA
+
+	PHASE_START
+
+	    ENEMY_DATA
+
+	       ENEMY_TYPE = 1
+
+	        STATUS_DATA
+			   //エネミーの何番目の移動位置か
+	           ENEMY_MOVE_NUMBER = 2
+				
+			   //エネミーのスピード
+	           ENEMY_SPEED = 3
+			   //エネミーの目的位置
+	           ENEMY_POS = 20 20
+			
+			//移動情報の終了
+	        STATUS_EMD
+	    ENEMY_END
+
+	    ENEMY_DATA
+
+	       ENEMY_NUMBER = 1
+
+	       ENEMY_TYPE = 3
+
+	    ENEMY_END
+
+	    ENEMY_DATA
+
+	       ENEMY_NUMBER = 2
+
+	       ENEMY_TYPE = 4
+
+	    ENEMY_END
+
+	    ENEMY_DATA
+
+	       ENEMY_NUMBER = 3
+
+	       ENEMY_TYPE = 2
+
+	    ENEMY_END
+
+	PHASE_END
+
+STAGE_END

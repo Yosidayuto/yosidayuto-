@@ -41,7 +41,7 @@ HRESULT CTitleBg::Load(void)
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
 							m_TextureData.m_cFileName, 
-							&m_TextureData.m_pTexture);
+							&m_TextureData.m_Texture);
 
 	return S_OK;
 }
@@ -52,10 +52,10 @@ HRESULT CTitleBg::Load(void)
 void CTitleBg::Unload(void)
 {
 	//テクスチャの破棄
-	if (m_TextureData.m_pTexture != NULL)
+	if (m_TextureData.m_Texture != NULL)
 	{
-		m_TextureData.m_pTexture->Release();
-		m_TextureData.m_pTexture = NULL;
+		m_TextureData.m_Texture->Release();
+		m_TextureData.m_Texture = NULL;
 	}
 
 }
@@ -73,7 +73,7 @@ CTitleBg * CTitleBg::Create(void)
 	//サイズ設定
 	pTitleBg->SetSize(D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
 	//テクスチャ設定
-	pTitleBg->BindTexture(m_TextureData.m_pTexture);
+	pTitleBg->BindTexture(m_TextureData.m_Texture);
 	//初期化処理
 	pTitleBg->Init();
 	return pTitleBg;

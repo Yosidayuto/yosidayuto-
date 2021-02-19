@@ -18,7 +18,7 @@
 class CSelectBg :public CBgc
 {
 public:
-	CSelectBg(int nPriorit = 0);			//コンストラクタ
+	CSelectBg(int nPriorit = PRIORITY_BG_0);			//コンストラクタ
 	~CSelectBg();							//デストラクタ
 
 	static HRESULT		Load(void);		//テクスチャ読み込み

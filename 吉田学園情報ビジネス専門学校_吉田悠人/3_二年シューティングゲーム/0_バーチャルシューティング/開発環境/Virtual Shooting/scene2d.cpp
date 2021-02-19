@@ -8,7 +8,7 @@
 //=============================================================================
 CScene2d::CScene2d(int nPriorit):CScene(nPriorit)
 {
-	m_pTexture	= NULL;					// テクスチャへのポインタ
+	m_Texture	= NULL;					// テクスチャへのポインタ
 	m_pVtxBuff	= NULL;					// 頂点バッファへのポインタ
 	m_pos		= D3DXVECTOR3(0, 0, 0); // ポリゴンの位置
 	m_fRot		= 0.0f;					// ポリゴンの向き
@@ -173,7 +173,7 @@ void CScene2d::Draw(void)
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	// テクスチャの設定
-	pDevice->SetTexture(0, m_pTexture);
+	pDevice->SetTexture(0, m_Texture);
 
 	// ポリゴンの描画
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, 2);
@@ -236,12 +236,20 @@ float CScene2d::GetRot(void)
 }
 
 //=============================================================================
+// カラーゲッター関数
+//=============================================================================
+D3DXCOLOR CScene2d::GetCol(void)
+{
+	return m_col;
+}
+
+//=============================================================================
 //テクスチャのセット関数
 //=============================================================================
 void CScene2d::BindTexture(LPDIRECT3DTEXTURE9 pTexture)
 {
 	//テクスチャの割り当て
-	m_pTexture = pTexture;
+	m_Texture = pTexture;
 }
 
 //=============================================================================

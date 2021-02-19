@@ -43,7 +43,7 @@ HRESULT CSelectBg::Load(void)
 	//テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,
 		m_TextureData.m_cFileName,
-		&m_TextureData.m_pTexture);
+		&m_TextureData.m_Texture);
 
 	return S_OK;
 }
@@ -54,10 +54,10 @@ HRESULT CSelectBg::Load(void)
 void CSelectBg::Unload(void)
 {
 	//テクスチャの破棄
-	if (m_TextureData.m_pTexture != NULL)
+	if (m_TextureData.m_Texture != NULL)
 	{
-		m_TextureData.m_pTexture->Release();
-		m_TextureData.m_pTexture = NULL;
+		m_TextureData.m_Texture->Release();
+		m_TextureData.m_Texture = NULL;
 	}
 }
 
@@ -74,7 +74,7 @@ CSelectBg * CSelectBg::Create(void)
 	//サイズ設定
 	pSelectBg->SetSize(D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
 	//テクスチャ設定
-	pSelectBg->BindTexture(m_TextureData.m_pTexture);
+	pSelectBg->BindTexture(m_TextureData.m_Texture);
 	//初期化処理
 	pSelectBg->Init();
 

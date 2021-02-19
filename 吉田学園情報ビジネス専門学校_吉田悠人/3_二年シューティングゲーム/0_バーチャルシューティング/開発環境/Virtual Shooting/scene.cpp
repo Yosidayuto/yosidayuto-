@@ -73,7 +73,7 @@ void CScene::UpdateAll(void)
 		}
 	}
 
-	//死亡フラグ立ってるやつを殺す
+	//死亡フラグ立ってるやつを消す
 	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
 	{
 		//NULLチェック

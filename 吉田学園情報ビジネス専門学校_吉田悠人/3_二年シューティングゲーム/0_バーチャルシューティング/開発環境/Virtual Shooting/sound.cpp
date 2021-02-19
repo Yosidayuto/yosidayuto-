@@ -8,27 +8,27 @@
 CSound::PARAM CSound::m_aParam[LABEL_MAX] =
 {
 	//BGM
-	{ "data/BGM/Title.wav", 0 },		//タイトル
+	{ "data/BGM/Title.wav", 0 },	//タイトル
 	{ "data/BGM/Select.wav", 0 },	//セレクト
 	{ "data/BGM/Stage_1.wav", 0 },	//ステージ１
 	{ "data/BGM/Stage_2.wav", 0 },	//ステージ２
 	{ "data/BGM/Stage_3.wav", 0 },	//ステージ３
-	{ "data/BGM/Boss1.wav", 0 },		//ボス１
-	{ "data/BGM/Boss2.wav", 0 },		//ボス２
-	{ "data/BGM/Boss3.wav", 0 },		//ボス３
+	{ "data/BGM/Boss1.wav", 0 },	//ボス１
+	{ "data/BGM/Boss2.wav", 0 },	//ボス２
+	{ "data/BGM/Boss3.wav", 0 },	//ボス３
 	{ "data/BGM/Ranking.wav", 0 },	//ランキング
 	//SE
-	{ "data/SE/SE_Button.wav", 0 },//クリック
-	{ "data/SE/SE_Cancel.wav", 0 },//キャンセル
-	{ "data/SE/SE_Start.wav", 0 },//スタート
-	{ "data/SE/SE_Shots.wav", 0 },//ショット
-	{ "data/SE/SE_Laser.wav", 0 },//レーザー
-	{ "data/SE/SE_Homing.wav", 0 },//ホーミング
-	{ "data/SE/SE_Die.wav", 0 },//死んだとき
+	{ "data/SE/SE_Button.wav", 0 },	//クリック
+	{ "data/SE/SE_Cancel.wav", 0 },	//キャンセル
+	{ "data/SE/SE_Start.wav", 0 },	//スタート
+	{ "data/SE/SE_Shots.wav", 0 },	//ショット
+	{ "data/SE/SE_Laser.wav", 0 },	//レーザー
+	{ "data/SE/SE_Homing.wav", 0 },	//ホーミング
+	{ "data/SE/SE_Die.wav", 0 },	//死んだとき
 	{ "data/SE/SE_Warning.wav", 0 },//ワーニング
-	{ "data/SE/SE_Boss1.wav", 0 },//死んだボス(1と3)
-	{ "data/SE/SE_Boss2.wav", 0 },//死んだボス(2)
-	{ "data/SE/SE_Result.wav", 0 },//リザルトファンファーレ
+	{ "data/SE/SE_Boss1.wav", 0 },	//死んだボス(1と3)
+	{ "data/SE/SE_Boss2.wav", 0 },	//死んだボス(2)
+	{ "data/SE/SE_Result.wav", 0 },	//リザルトファンファーレ
 };
 
 //---------------------------------
@@ -230,32 +230,27 @@ void CSound::Uninit(void)
 //=============================================================================
 HRESULT CSound::Play(LABEL label)
 {
-	XAUDIO2_VOICE_STATE xa2state;
-	XAUDIO2_BUFFER buffer;
-
-	// バッファの値設定
-	memset(&buffer, 0, sizeof(XAUDIO2_BUFFER));
-	buffer.AudioBytes = m_aSizeAudio[label];
-	buffer.pAudioData = m_apDataAudio[label];
-	buffer.Flags      = XAUDIO2_END_OF_STREAM;
-	buffer.LoopCount  = m_aParam[label].nCntLoop;
-
-	// 状態取得
-	m_apSourceVoice[label]->GetState(&xa2state);
-	if(xa2state.BuffersQueued != 0)
-	{// 再生中
-		// 一時停止
-		m_apSourceVoice[label]->Stop(0);
-
-		// オーディオバッファの削除
-		m_apSourceVoice[label]->FlushSourceBuffers();
-	}
-
-	// オーディオバッファの登録
-	m_apSourceVoice[label]->SubmitSourceBuffer(&buffer);
-
-	// 再生
-	m_apSourceVoice[label]->Start(0);
+	//XAUDIO2_VOICE_STATE xa2state;
+	//XAUDIO2_BUFFER buffer;
+	//// バッファの値設定
+	//memset(&buffer, 0, sizeof(XAUDIO2_BUFFER));
+	//buffer.AudioBytes = m_aSizeAudio[label];
+	//buffer.pAudioData = m_apDataAudio[label];
+	//buffer.Flags      = XAUDIO2_END_OF_STREAM;
+	//buffer.LoopCount  = m_aParam[label].nCntLoop;
+	//// 状態取得
+	//m_apSourceVoice[label]->GetState(&xa2state);
+	//if(xa2state.BuffersQueued != 0)
+	//{// 再生中
+	//	// 一時停止
+	//	m_apSourceVoice[label]->Stop(0);
+	//	// オーディオバッファの削除
+	//	m_apSourceVoice[label]->FlushSourceBuffers();
+	//}
+	//// オーディオバッファの登録
+	//m_apSourceVoice[label]->SubmitSourceBuffer(&buffer);
+	//// 再生
+	//m_apSourceVoice[label]->Start(0);
 
 	return S_OK;
 }

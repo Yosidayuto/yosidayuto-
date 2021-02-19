@@ -9,17 +9,22 @@
 //----------------------------------
 CBossAnime::ANIME_DATA CBossAnime::BossAnim[BOSS_ANIME_MAX] = 
 {
-	NULL,"data/TEXTURE/BossAnime_0.png",45,2,true,
-	NULL,"data/TEXTURE/DeleteEffect_0.png",45,2,false,
+	45,2,true,
+	45,2,false,
 
-	NULL,"data/TEXTURE/BossAnime_1.png",50,2,true,
-	NULL,"data/TEXTURE/DeleteEffect_1.png",60,3,false,
-
-	NULL,"data/TEXTURE/BossAnime_2.png",60,2,true,
-	NULL,"data/TEXTURE/DeleteEffect_2.png",90,2,false,
-
-
+	50,2,true,
+	60,3,false,
+	
+	60,2,true,
+	90,2,false,
 };
+TEXTURE_DATA CBossAnime::m_TextureData[BOSS_ANIME_MAX] =
+{ { NULL,"data/TEXTURE/BossAnime_0.png" },
+{ NULL,"data/TEXTURE/DeleteEffect_0.png" },
+{ NULL,"data/TEXTURE/BossAnime_1.png" } ,
+{ NULL,"data/TEXTURE/DeleteEffect_1.png" },
+{ NULL,"data/TEXTURE/BossAnime_2.png" } ,
+{ NULL,"data/TEXTURE/DeleteEffect_2.png" } };
 
 //----------------------------------
 //コンストラクタ
@@ -65,7 +70,7 @@ HRESULT CBossAnime::Load(void)
 	for (int nCount = 0; nCount < BOSS_ANIME_MAX; nCount++)
 	{
 		//テクスチャの読み込み
-		D3DXCreateTextureFromFile(pDevice, BossAnim[nCount].pTextName, &BossAnim[nCount].pTexture);
+		D3DXCreateTextureFromFile(pDevice, m_TextureData[nCount].m_cFileName, &m_TextureData[nCount].m_Texture);
 
 	}
 	return S_OK;
@@ -79,10 +84,10 @@ void CBossAnime::Unload(void)
 	for (int nCount = 0; nCount < BOSS_ANIME_MAX; nCount++)
 	{
 		//テクスチャの破棄
-		if (BossAnim[nCount].pTexture != NULL)
+		if (m_TextureData[nCount].m_Texture != NULL)
 		{
-			BossAnim[nCount].pTexture->Release();
-			BossAnim[nCount].pTexture = NULL;
+			m_TextureData[nCount].m_Texture->Release();
+			m_TextureData[nCount].m_Texture = NULL;
 		}
 
 
@@ -106,9 +111,8 @@ HRESULT CBossAnime::Init(D3DXVECTOR3 size)
 	Texture[3] = D3DXVECTOR2(m_nPatternAnimX*(1.0f / (float)BossAnim[m_Type].MaxCount) + (1.0f / (float)BossAnim[m_Type].MaxCount), 1.0f);
 	
 	TextureAnim(Texture);
-
 	//テクスチャの設定
-	BindTexture(BossAnim[m_Type].pTexture);
+	BindTexture(m_TextureData[m_Type].m_Texture);
 
 	return S_OK;
 }

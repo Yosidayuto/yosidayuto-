@@ -1,252 +1,231 @@
-//----------------------------------------------
-//ヘッダーファイル
-//----------------------------------------------
-#include "homing.h"
-#include "manager.h"
-#include "renderer.h"
-#include "explosion.h"
+//=============================================================================
+//
+// ホーミング処理 [homing.cpp]
+// Author : 吉田悠人
+//
+//=============================================================================
+//=============================================================================
+//インクルードファイル
+//=============================================================================
+#include "homing.h"			
+#include "manager.h"		
+#include "renderer.h"		
+#include "explosion.h"		
+#include "sound.h"			
+#include "effect.h"			
+#include "enemy.h"			
+#include "boss.h"			
 #include <typeinfo.h>
-#include "enemy.h"
-#include "player.h"
-#include "boss.h"
-#include "sound.h"
-#include "effect.h"
-//----------------------------------
+//=============================================================================
 //マクロ定義
-//----------------------------------
-#define HOMING_LIFE	50
-#define HOMING_SIZE 25
-//----------------------------------
-//静的メンバー変数
-//----------------------------------
-LPDIRECT3DTEXTURE9 CHoming::m_pTexture = NULL;
+//=============================================================================
+#define HOMING_SIZE		(40)	//ホーミングの大きさ
+#define HOMING_LIFE		(50)	//ホーミングの射程距離
+#define HOMING_ATTACK	(2)		//ホーミングの攻撃力
+#define HOMING_RANGE	(780)	//ホーミング範囲
+#define HOMING_SPEED	(10.0f)	//ホーミングスピード
 
-CHoming::CHoming(int nPriorit)
+//=============================================================================
+//静的メンバー変数
+//=============================================================================
+TEXTURE_DATA CHoming::m_TextureData = { NULL,"data/TEXTURE/Bullet.png" };
+
+//=============================================================================
+//コンストラクタ
+//=============================================================================
+CHoming::CHoming()
 {
 	//タイプ処理
 	CScene::SetObjType(CScene::OBJ_TYPE_BULLET);
-	nLife = 0;
-	m_move = D3DXVECTOR3(0.0f, -3.0f, 0.0f);
-
+	m_nRange = HOMING_RANGE;
 }
 
+//=============================================================================
+//デストラクタ
+//=============================================================================
 CHoming::~CHoming()
 {
 }
 
+//=============================================================================
+// テクスチャロード
+//=============================================================================
 HRESULT CHoming::Load(void)
 {
 	//デバイス取得
 	LPDIRECT3DDEVICE9 pDevice = CManager::GetRenderer()->GetObjects();
 	//テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice, "data/TEXTURE/Bullet.png", &m_pTexture);
+	D3DXCreateTextureFromFile(pDevice, m_TextureData.m_cFileName, &m_TextureData.m_Texture);
 	return S_OK;
 }
 
+//=============================================================================
+// テクスチャアンロード
+//=============================================================================
 void CHoming::Unload(void)
 {
 	//テクスチャの破棄
-	if (m_pTexture != NULL)
+	if (m_TextureData.m_Texture != NULL)
 	{
-		m_pTexture->Release();
-		m_pTexture = NULL;
+		m_TextureData.m_Texture->Release();
+		m_TextureData.m_Texture = NULL;
 	}
 }
 
-CHoming * CHoming::Create(D3DXVECTOR3 Pos, int nSpeed, HOMING_TYPE Type)
+//=============================================================================
+// 生成処理
+//=============================================================================
+CHoming * CHoming::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move)
 {
+	//メモリ確保
 	CHoming *pHoming;
 	pHoming = new CHoming;
-	pHoming->SetPos(Pos);
-	pHoming->Init(nSpeed, Type);
+	//位置設定
+	pHoming->SetPos(pos);
+	//サイズ設定
+	pHoming->SetSize(D3DXVECTOR3(HOMING_SIZE / 2.0f, HOMING_SIZE / 2.0f, 0.0f));
+	//移動量設定
+	pHoming->SetMove(move);
+	//射程距離設定
+	pHoming->SetLife(HOMING_LIFE);
+	//初期化
+	pHoming->Init();
 	return pHoming;
 }
 
-HRESULT CHoming::Init(int nSpeed, HOMING_TYPE Type)
+//=============================================================================
+//初期化処理
+//=============================================================================
+HRESULT CHoming::Init(void)
 {
-	CSound *pSound = CManager::GetSound();	//サウンド取得
-
-	//射程距離
-	nLife = HOMING_LIFE;
-	//スピード　
-	m_nSpeed = nSpeed;
-	//タイプ
-	m_Type = Type;
-	if (m_Type == HOMING_TYPE_PLAYER)
-	{
-		pSound->Play(CSound::LABEL_SE_SHOTS);
-	}
-	//サイズ
-	SetSize(D3DXVECTOR3(HOMING_SIZE / 2, HOMING_SIZE / 2, 0.0f));
-	//テクスチャの設定
-	BindTexture(m_pTexture);
-
-
+	//サウンド取得
+	CSound *pSound = CManager::GetSound();
+	//サウンド
+	pSound->Play(CSound::LABEL_SE_LASER);
 	//初期化処理
-	CScene2d::Init();
+	CBulletBase::Init();
+	//テクスチャの設定
+	BindTexture(m_TextureData.m_Texture);
+
 	return S_OK;
 }
 
+//=============================================================================
+// 終了処理
+//=============================================================================
 void CHoming::Uninit(void)
 {
 	//終了処理
-	CScene2d::Uninit();
+	CBulletBase::Uninit();
+	//オブジェクトの破棄
+	Release();
 }
 
+//=============================================================================
+// 更新処理
+//=============================================================================
 void CHoming::Update(void)
 {
-	//ポリゴンの位置取得
-	D3DXVECTOR3 pos = GetPos();
-	//オブジェクト取得用
-	CScene* pTop[PRIORITY_MAX] = {};
-	//次チェックするオブジェクトのポインタ
-	CScene* pNext = NULL;
-
-	//topのアドレスを取得
-	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
-	{
-		pTop[nCount] = *(CScene::GetTop() + nCount);
-	}
-
-	//エフェクト生成
-	CEffect::Create(pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(HOMING_SIZE / 2, HOMING_SIZE, 0.0f), CEffect::EFFECT_TYPE_BULLET);
-
-	int nRange =780;
-	float fAngle;
-	//オブジェクト探査
-	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
-	{
-		if (pTop[nCount] != NULL)
-		{
-			pNext = pTop[nCount];
-			//その描画優先度のオブジェクトがなくなるまでループ
-			while (pNext != NULL)
-			{
-				switch (m_Type)
-				{
-				case HOMING_TYPE_PLAYER:
-					if (pNext->GetObjType() == OBJ_TYPE_ENEMY)
-					{
-						D3DXVECTOR3 EnemeyPos = ((CScene2d*)pNext)->GetPos();
-						if (TargetGet(pos, EnemeyPos)<nRange)
-						{
-							nRange = TargetGet(pos, EnemeyPos);
-							fAngle = atan2f((-pos.x + EnemeyPos.x), (-pos.y + EnemeyPos.y));
-							m_move.x = sinf(fAngle)*m_nSpeed;
-							m_move.y = cosf(fAngle)*m_nSpeed;
-						}
-					}
-					break;
-				}
-				//次のオブジェクトのポインタを更新
-				pNext = pNext->GetNext();
-			}
-		}
-	}
-
-	//位置更新
-	pos += m_move;
-	//球の射程距離
-	nLife--;
-
-	//ポリゴンの位置を渡す
-	SetPos(pos);
-	//更新処理
-	CScene2d::Update();
-
-	//射程距離
-	if (nLife <= 0)
-	{
-		CExplosion::Create(pos);
-		Uninit();	//終了処理
-		return;
-
-	}
-	//画面外に出た時
-	else if (pos.y < 0 || pos.y>SCREEN_HEIGHT || pos.x<0 || pos.x>SCREEN_WIDTH)
-	{
-		Uninit();	//終了処理
-		return;
-	}
-	if (nLife > 0)		//射程距離内
-	{
-		//topのアドレスを取得
-		for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
-		{
-			pTop[nCount] = *(CScene::GetTop() + nCount);
-		}
-
-		//ホーミング効果処理
-		for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
-		{
-			if (pTop[nCount] != NULL)
-			{
-				pNext = pTop[nCount];
-				//その描画優先度のオブジェクトがなくなるまでループ
-				while (pNext != NULL)
-				{
-					switch (m_Type)
-					{
-					case HOMING_TYPE_PLAYER:
-						if (pNext->GetObjType() == OBJ_TYPE_ENEMY)
-						{
-							D3DXVECTOR3 EnemeyPos = ((CScene2d*)pNext)->GetPos();
-							D3DXVECTOR3 EnemeySize = ((CScene2d*)pNext)->GetSize();
-							//当たり判定
-							if (EnemeyPos.x + EnemeySize.x / 2 > pos.x
-								&& EnemeyPos.x - EnemeySize.x / 2 < pos.x
-								&&EnemeyPos.y + EnemeySize.y / 2 > pos.y
-								&&EnemeyPos.y - EnemeySize.y / 2 < pos.y)
-							{
-								//エネミーダメージ処理
-								if (typeid(*pNext) == typeid(CEnemy))
-								{
-									//エクスプロージョン生成
-									CExplosion::Create(EnemeyPos);
-
-									((CEnemy*)pNext)->Damage(1);
-								}
-								else if (typeid(*pNext) == typeid(CBoss))
-								{
-									//エクスプロージョン生成
-									CExplosion::Create(pos);
-
-									((CBoss*)pNext)->Damage(1);
-								}
-								Uninit();
-								break;
-							}
-						}
-						break;
-					}
-					//次のオブジェクトのポインタを更新
-					pNext = pNext->GetNext();
-
-				}
-			}
-		}
-	}
-
+	CBulletBase::Update();
 }
 
+//=============================================================================
+//描画処理
+//=============================================================================
 void CHoming::Draw(void)
 {
 	//描画処理
-	CScene2d::Draw();
+	CBulletBase::Draw();
 }
 
-int CHoming::TargetGet(D3DXVECTOR3 pos, D3DXVECTOR3 EnemyPos)
+//=============================================================================
+// 移動処理
+//=============================================================================
+void CHoming::Move(void)
 {
-			
-	//タイプ取得
-	switch (m_Type)
+	//位置取得
+	D3DXVECTOR3 pos = GetPos();
+	//移動量取得
+	D3DXVECTOR3 move = GetMove();
+	//エフェクト生成
+	CEffect::Create(pos, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f), D3DXVECTOR3(HOMING_SIZE / 2.0f, HOMING_SIZE / 2.0f, 0.0f), CEffect::EFFECT_TYPE_BULLET);
+	//位置更新
+	pos += move;
+	//ポリゴンの位置を渡す
+	SetPos(pos);
+}
+
+//=============================================================================
+// バレット処理
+//=============================================================================
+void CHoming::Bullet(CScene * pObj)
+{
+	//位置取得
+	D3DXVECTOR3 pos = GetPos();
+	if (pObj->GetObjType() == OBJ_TYPE_ENEMY)
 	{
-	case HOMING_TYPE_PLAYER:
-			float nDistance = (pos.x- EnemyPos.x)*(pos.x - EnemyPos.x) + (pos.y - EnemyPos.y)*(pos.y - EnemyPos.y);
-			return (int)(sqrt(nDistance));
-		break;
-	
+		D3DXVECTOR3 EnemeyPos = ((CScene2d*)pObj)->GetPos();
+		D3DXVECTOR3 EnemeySize = ((CScene2d*)pObj)->GetSize();
+
+		//ターゲット捕捉
+		LockOn(pos, EnemeyPos);
+
+		//当たり判定
+		if (EnemeyPos.x + EnemeySize.x / 2 > pos.x
+			&&EnemeyPos.x - EnemeySize.x / 2 < pos.x
+			&&EnemeyPos.y + EnemeySize.y / 2 > pos.y
+			&&EnemeyPos.y - EnemeySize.y / 2 < pos.y)
+		{
+			//エクスプロージョン生成
+			CExplosion::Create(pos);
+			//エネミーダメージ処理
+			((CEnemy*)pObj)->Damage(HOMING_ATTACK);
+			//終了処理
+			Uninit();
+			return;
+		}
 	}
-			
-	return 0;
+}
+
+//=============================================================================
+// ターゲット取得関数
+//=============================================================================
+void CHoming::LockOn(D3DXVECTOR3 pos, D3DXVECTOR3 EnemyPos)
+{
+	//ターゲットの距離を取得変数
+	float	fDistance = 0.0f;
+	int		nDistance = 0;
+
+	//ターゲットの距離を取得
+	fDistance = (pos.x - EnemyPos.x)*(pos.x - EnemyPos.x) + (pos.y - EnemyPos.y)*(pos.y - EnemyPos.y);
+	
+	//int型に収納
+	nDistance = (int)(sqrt(fDistance));
+
+	//ホーミング範囲に一番近いターゲット収納
+	if (m_nRange>nDistance)
+	{
+		m_nRange = nDistance;
+		TargetMove(pos, EnemyPos);
+	}
+}
+
+//=============================================================================
+// ターゲット方向の移動量取得関数
+//=============================================================================
+void CHoming::TargetMove(D3DXVECTOR3 pos, D3DXVECTOR3 EnemyPos)
+{
+	//移動量取得
+	D3DXVECTOR3 move = GetMove();
+	//ターゲットの方向取得変数
+	float fAngle = 0.0f;
+
+	fAngle = atan2f((-pos.x + EnemyPos.x), (-pos.y + EnemyPos.y));
+	//移動量取得
+	move.x = sinf(fAngle)*HOMING_SPEED;
+	move.y = cosf(fAngle)*HOMING_SPEED;
+	
+	//移動量セット
+	SetMove(move);
+
 }

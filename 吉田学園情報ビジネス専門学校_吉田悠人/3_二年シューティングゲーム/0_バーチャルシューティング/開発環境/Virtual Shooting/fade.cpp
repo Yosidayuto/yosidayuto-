@@ -141,7 +141,6 @@ void CFade::Update(void)
 				m_Color.a = 1.0f;
 				//フェードイン処理に切り替え
 				m_Fade = FADE_IN;
-
 				//モードを設定
 				CManager::SetMode(m_ModeNext);
 			}

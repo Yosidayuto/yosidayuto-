@@ -22,41 +22,41 @@
 #include "ui.h"				
 #include "game.h"			
 #include "select.h"			
-#include "text.h"			
-#include "window.h"			
-#include "player.h"			
-#include "button.h"			
 #include "clear.h"			
-#include "telop_bar.h"		
+#include "telop.h"		
 #include "mouse pointer.h"	
-#include "telop_text.h"		
 #include "title bg.h"
 #include "title.h"
 #include "tutorial bg.h"
 #include "tutorial.h"
 #include "select bg.h"
-#include "weapon_UI.h"
-#include "start button.h"
-#include "button p.h"
-#include "life button.h"
 #include "life ui.h"
+#include "weapon manager.h"
+#include "button manager.h"
+#include "player data.h"
+#include "result bg.h"
+#include "stage.h"
+#include "stage_1.h"
+#include "stage_2.h"
+#include "stage_3.h"
+#include "score bar.h"
+#include "boss base.h"
 //=============================================================================
 //静的メンバ変数宣言
 //=============================================================================
-CRenderer *CManager::m_pRenderer	= NULL;
-CInihKeyboard *CManager::m_pInput	= NULL;
-CInihMouse *CManager::m_pInihMouse	= NULL;
-CSound *CManager::m_pSound			= NULL;
-GAME_MODE CManager::m_Mode			= GAME_MODE_TITLE;
-CScene *CManager::m_pScene			= NULL;
-CFade *CManager::m_pFade			= NULL;
-CGame *CManager::m_pGame			= NULL;
-CSelect *CManager::m_pSelect		= NULL;
-int CManager::m_nScore				= 10000;
-CManager::PLAYER_DATA CManager::m_Player =
-{ 0,0,{ WEAPONS_MODE_BUTTOL , WEAPONS_MODE_NONE } };
-CTitle *CManager::m_pTitle			= NULL;
-CTutorial *CManager::m_pTutorial	= NULL;
+CRenderer *CManager::m_pRenderer	 = NULL;
+CInihKeyboard *CManager::m_pInput	 = NULL;
+CInihMouse *CManager::m_pInihMouse	 = NULL;
+CSound *CManager::m_pSound			 = NULL;
+GAME_MODE CManager::m_Mode			 = GAME_MODE_TITLE;
+CScene *CManager::m_pScene			 = NULL;
+CFade *CManager::m_pFade			 = NULL;
+int CManager::m_nScore				 = 10000;
+CPlayerData *CManager::m_pPlayerData = NULL;
+CGame* CManager::m_pGame			 = NULL;
+CTitle* CManager::m_pTitle			 = NULL;
+CSelect* CManager::m_pSelect		 = NULL;
+CTutorial* CManager::m_pTutorial	 = NULL;
 //=============================================================================
 //コンストラクタ
 //=============================================================================
@@ -103,9 +103,13 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	//セレクト処理
 	m_pSelect	= new CSelect;
 	//ゲーム処理
-	m_pGame		= new CGame;
+	m_pGame = new CGame;
+
+
 	//ファイルロード
 	LoadFile();
+	//プレイヤー処理
+	m_pPlayerData = new CPlayerData;
 
 	//オブジェクトクラス生成
 	m_pFade->SetFade(m_Mode);
@@ -193,6 +197,7 @@ void CManager::Update()
 		m_pFade->Update();			
 	}
 
+	//場面ごとのアップデート
 	switch (m_Mode)
 	{
 	case GAME_MODE_TITLE:
@@ -214,7 +219,7 @@ void CManager::Update()
 		}
 		break;
 	case GAME_MODE_STAGE:
-		if (m_pSelect != NULL)
+		if (m_pGame != NULL)
 		{
 			m_pGame->Update();
 		}
@@ -228,7 +233,6 @@ void CManager::Update()
 //=============================================================================
 void CManager::Draw(void)
 {
-
 	//レンダラの描画
 	if (m_pRenderer != NULL)
 	{
@@ -241,6 +245,7 @@ void CManager::Draw(void)
 //=============================================================================
 void CManager::SetMode(GAME_MODE mode)
 {
+
 	//終了処理
 	switch (m_Mode)
 	{
@@ -271,13 +276,8 @@ void CManager::SetMode(GAME_MODE mode)
 		{
 			m_pGame->Uninit();
 		}
-		//シーン破棄
-		CScene::ReleaseAll();
-		//サウンド停止
-		m_pSound->Stop();
 		break;
 	case GAME_MODE_CLEAR:
-		m_Player = { 0,0,{ WEAPONS_MODE_BUTTOL , WEAPONS_MODE_NONE } };
 		m_nScore = 10000;
 		//シーン破棄
 		CScene::ReleaseAll();
@@ -358,16 +358,12 @@ int  CManager::GetScore(void)
 	return m_nScore;
 }
 
-int CManager::GetPlayer(int nPlayerData)
+//=============================================================================
+// プレイヤー取得
+//=============================================================================
+CPlayerData* CManager::GetPlayer(void)
 {
-	if (nPlayerData == 0)
-	{
-		return m_Player.m_nLife;
-	}
-	else
-	{
-		return m_Player.m_nSpeed;
-	}
+	return m_pPlayerData;
 }
 
 //=============================================================================
@@ -379,20 +375,20 @@ void CManager::LoadFile(void)
 	CClear::Load();			
 	CNumber::Load();		
 	CUi::Load();			
-	CText::Load();			
-	CWindow::Load();		
-	CButton::Load();		
-	CTelopBer::Load();		
-	CTelopText::Load();		
+	CTelop::Load();		
 	CPointer::Load();		
 	CTitleBg::Load();
 	CTutorialBg::Load();
 	CSelectBg::Load();		
-	CWeapon_Ui::Load();
-	CStartButton::Load();
-	CButtonp::Load();
-	CLifeButton::Load();
 	CLifeUi::Load();
+	CWeaponManager::Load();
+	CButtonManager::Load();
+	CGame::Load();
+	CResultBg::Load();
+	CScoreBar::Load();
+	CBossBase::Load();
+	//テキスト読み込み
+	CStage::LoadFile();
 }
 
 //=============================================================================
@@ -402,35 +398,26 @@ void CManager::UnLoadFile(void)
 {
 	//テクスチャの破棄
 	CClear::Unload();			
-	CButton::Unload();			
 	CNumber::Unload();			
 	CUi::Unload();				
-	CText::Unload();			
-	CWindow::Unload();			
-	CTelopBer::Unload();		
-	CTelopText::Unload();		
+	CTelop::Unload();		
 	CPointer::Unload();			
 	CTitleBg::Unload();
 	CTutorialBg::Unload();
 	CSelectBg::Unload();
-	CWeapon_Ui::Unload();
-	CStartButton::Unload();
-	CButtonp::Unload();
-	CLifeButton::Unload();
 	CLifeUi::Unload();
+	CWeaponManager::Unload();
+	CButtonManager::Unload();
+	CGame::Unload();
+	CResultBg::Unload();
+	CScoreBar::Unload();
+	CBossBase::Unload();
 
 }
 
-void CManager::SetPlayer(int nLife, int nSpeed)
+void CManager::SetPlayer(CPlayerData* Player)
 {
-	m_Player.m_nLife = nLife;
-	m_Player.m_nSpeed = nSpeed;
-}
-
-void CManager::SetWeapon(WEAPON_MODE nWeaponData1, WEAPON_MODE nWeaponData2)
-{
-	m_Player.m_nWeapon[0] = nWeaponData1;
-	m_Player.m_nWeapon[1] = nWeaponData2;
+	m_pPlayerData = Player;
 }
 
 

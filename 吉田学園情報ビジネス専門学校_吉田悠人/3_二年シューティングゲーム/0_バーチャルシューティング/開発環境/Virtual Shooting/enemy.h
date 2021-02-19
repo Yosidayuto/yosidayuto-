@@ -1,25 +1,31 @@
+//=============================================================================
+//
+// エネミー処理 [enemy.h]
+// Author : 吉田悠人
+//
+//=============================================================================
 #ifndef _ENEMY_H_
 #define _ENEMY_H_
-//----------------------------------------------
-//ヘッダーファイル
-//----------------------------------------------
+//=============================================================================
+//インクルードファイル
+//=============================================================================
 #include"main.h"
 #include"scene2d.h"
 #include "player.h"
-//----------------------------------
+//=============================================================================
 //マクロ定義
-//----------------------------------
+//=============================================================================
 #define MAX_ENEMY_BULLET 200
-//----------------------------------------------
-//クラス
-//----------------------------------------------
+//=============================================================================
+// クラス定義
+//=============================================================================
 class CEnemy:public CScene2d
 {
 public:
 
 	CEnemy(int nPriorit=3);			//コンストラクタ
 	~CEnemy();						//デストラクタ	
-	typedef enum  //エネミー種類
+	typedef enum			//エネミー種類
 	{
 		ENEMY_TYPE_1 = 0,
 		ENEMY_TYPE_2,
@@ -40,6 +46,7 @@ public:
 		PATTERN_MODE_STOP,		//ストップ
 		PATTERN_MODE_MAX		//マックス
 	}PATTERN_MODE;
+
 	typedef enum	//エネミーパターン
 	{
 		BULLET_PATTERN_NONE = 0,		//NULL
@@ -52,10 +59,12 @@ public:
 	}BULLET_PATTERN;
 
 
-	static CEnemy*	Create(D3DXVECTOR3 Pos, ENEMY_TYPE  nType, 
-		PATTERN_MODE nPattern,int nCountPattern=0,
-		BULLET_PATTERN BulletMode = BULLET_PATTERN_NONE,
-		D3DXVECTOR3 size = D3DXVECTOR3(PLAYER_SIZE / 2, PLAYER_SIZE / 2, 0.0f));//生成処理
+	static CEnemy*	Create(D3DXVECTOR3 Pos,
+							ENEMY_TYPE  nType, 
+							PATTERN_MODE nPattern,
+							int nCountPattern=0,
+							BULLET_PATTERN BulletMode = BULLET_PATTERN_NONE,
+							D3DXVECTOR3 size = D3DXVECTOR3(PLAYER_SIZE / 2, PLAYER_SIZE / 2, 0.0f));//生成処理
 	static HRESULT	Load(void);				//テクスチャ読み込み
 	static void		Unload(void);			//テクスチャの破棄
 
@@ -81,9 +90,9 @@ private:
 	void		Bullet(BULLET_PATTERN BulletMode);			//バレット処理
 	D3DXVECTOR3	Tracking(float fSpeed);						//追尾処理
 	D3DXVECTOR3 Random(float fSpeed);						//ランダム処理
-	float Spiral(void);						//螺旋処理
+	float		Spiral(void);								//螺旋処理
 	void		Move(D3DXVECTOR3 pos);						//移動処理									//移動処理
-	void		Hit(D3DXVECTOR3 Pos);								//当たり判定
+	void		Hit(D3DXVECTOR3 Pos);						//当たり判定
 	static char					*pTexture[ENEMY_TYPE_MAX];	//テキスト名
 	static LPDIRECT3DTEXTURE9	m_Texture[ENEMY_TYPE_MAX];	//テクスチャのポインタ
 	D3DXVECTOR3					m_pos;						//エネミー座標

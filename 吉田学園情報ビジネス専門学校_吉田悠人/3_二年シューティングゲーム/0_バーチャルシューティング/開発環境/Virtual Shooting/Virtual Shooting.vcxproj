@@ -146,7 +146,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="boss effect2.cpp" />
+    <ClCompile Include="boss effect3.cpp" />
     <ClCompile Include="boss base.cpp" />
+    <ClCompile Include="boss effect base.cpp" />
+    <ClCompile Include="boss effect1.cpp" />
     <ClCompile Include="boss type1.cpp" />
     <ClCompile Include="boss type2.cpp" />
     <ClCompile Include="boss type3.cpp" />
@@ -154,10 +158,11 @@
     <ClCompile Include="bullet base.cpp" />
     <ClCompile Include="bullet button.cpp" />
     <ClCompile Include="bg.cpp" />
-    <ClCompile Include="boss.cpp" />
-    <ClCompile Include="boss_anime.cpp" />
     <ClCompile Include="bullet icon.cpp" />
     <ClCompile Include="button manager.cpp" />
+    <ClCompile Include="delete effect1.cpp" />
+    <ClCompile Include="delete effect2.cpp" />
+    <ClCompile Include="delete effect3.cpp" />
     <ClCompile Include="enemy base.cpp" />
     <ClCompile Include="enemy bullet.cpp" />
     <ClCompile Include="enemy type1.cpp" />
@@ -175,6 +180,7 @@
     <ClCompile Include="laser button.cpp" />
     <ClCompile Include="laser icon.cpp" />
     <ClCompile Include="laser.cpp" />
+    <ClCompile Include="life tank.cpp" />
     <ClCompile Include="player data.cpp" />
     <ClCompile Include="result bg.cpp" />
     <ClCompile Include="score bar.cpp" />
@@ -198,7 +204,6 @@
     <ClCompile Include="button.cpp" />
     <ClCompile Include="clear.cpp" />
     <ClCompile Include="effect.cpp" />
-    <ClCompile Include="enemy.cpp" />
     <ClCompile Include="explosion.cpp" />
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="game.cpp" />
@@ -229,13 +234,16 @@
     <ClCompile Include="tutorial bg.cpp" />
     <ClCompile Include="tutorial.cpp" />
     <ClCompile Include="ui count.cpp" />
-    <ClCompile Include="ui.cpp" />
     <ClCompile Include="warning.cpp" />
     <ClCompile Include="weapon manager.cpp" />
     <ClCompile Include="weapon ui.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="boss effect2.h" />
+    <ClInclude Include="boss effect3.h" />
     <ClInclude Include="boss base.h" />
+    <ClInclude Include="boss effect base.h" />
+    <ClInclude Include="boss effect1.h" />
     <ClInclude Include="boss type1.h" />
     <ClInclude Include="boss type2.h" />
     <ClInclude Include="boss type3.h" />
@@ -243,10 +251,11 @@
     <ClInclude Include="bullet base.h" />
     <ClInclude Include="bullet button.h" />
     <ClInclude Include="bg.h" />
-    <ClInclude Include="boss.h" />
-    <ClInclude Include="boss_anime.h" />
     <ClInclude Include="bullet icon.h" />
     <ClInclude Include="button manager.h" />
+    <ClInclude Include="delete effect1.h" />
+    <ClInclude Include="delete effect2.h" />
+    <ClInclude Include="delete effect3.h" />
     <ClInclude Include="enemy base.h" />
     <ClInclude Include="enemy bullet.h" />
     <ClInclude Include="enemy type1.h" />
@@ -264,6 +273,7 @@
     <ClInclude Include="laser button.h" />
     <ClInclude Include="laser icon.h" />
     <ClInclude Include="laser.h" />
+    <ClInclude Include="life tank.h" />
     <ClInclude Include="player data.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="result bg.h" />
@@ -288,7 +298,6 @@
     <ClInclude Include="button.h" />
     <ClInclude Include="clear.h" />
     <ClInclude Include="effect.h" />
-    <ClInclude Include="enemy.h" />
     <ClInclude Include="explosion.h" />
     <ClInclude Include="fade.h" />
     <ClInclude Include="game.h" />
@@ -319,7 +328,6 @@
     <ClInclude Include="tutorial bg.h" />
     <ClInclude Include="tutorial.h" />
     <ClInclude Include="ui count.h" />
-    <ClInclude Include="ui.h" />
     <ClInclude Include="warning.h" />
     <ClInclude Include="weapon manager.h" />
     <ClInclude Include="weapon ui.h" />

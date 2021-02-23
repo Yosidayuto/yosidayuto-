@@ -21,12 +21,13 @@
 //=============================================================================
 //前方宣言
 //=============================================================================
-class CEnemy;
+class CBossBase;
 class CEnemyBase;
+class CScore;
 
 typedef enum	//エネミーの出現モード
 {
-	ENEMY_CREATE_NONE = 0,
+	ENEMY_CREATE_NULL = -1,	//初期状態
 	ENEMY_CREATE_1,		//フェーズ１
 	ENEMY_CREATE_2,		//フェーズ２
 	ENEMY_CREATE_3,		//フェーズ３
@@ -38,24 +39,30 @@ typedef enum	//エネミーの出現モード
 	ENEMY_CREATE_9,		//フェーズ9
 	ENEMY_CREATE_MAX,
 }STAGE_ENEMY;
-
 typedef struct	//エネミーの移動情報
 {
-	D3DXVECTOR3		pos;		//位置
-	float			fSpeed;		//スピード
-} MOVE_DATA;
+	D3DXVECTOR3	pos;		// 移動位置
+	float		fSpeed;		// スピード
+}MOVE_DATA;
 
-typedef struct	//エネミー情報
+typedef struct	//エネミーの出現情報
 {
-	MOVE_DATA	moveData[ENEMY_POINTER];	//移動情報
-	ENEMY_TYPE	EnemyType;					//エネミータイプ
+	MOVE_DATA	MoveData[ENEMY_POINTER];	// 移動データ
+	ENEMY_TYPE	EnemyType;					// エネミータイプ
+	int			nEnemyMoveNumber;			// 最大行動数
 } SPAWN_DATA;
 
 typedef struct	//フェーズ情報
 {
-	SPAWN_DATA	EnemySpawn[MAX_ENEMY];
+	SPAWN_DATA	EnemySpawn[MAX_ENEMY];		// エネミーデータ
+	int			nEnemyCount;				// 最大エネミー数
 } PHASE_DATA;
 
+typedef struct //ステージ情報
+{
+	PHASE_DATA	Phase[ENEMY_CREATE_MAX];	//フェーズ情報
+	int			nCountPhase;				//最大フェーズ
+}STAGE_DATA;
 
 //=============================================================================
 // クラス定義
@@ -70,15 +77,19 @@ public:
 	HRESULT			Init(void);		// 初期化処理
 	void			Uninit(void);	// 終了処理
 	void			Update(void);	// 更新処理
-	void			Result(STAGE_TYPE stage);	// リザルト
-	void			SetEnemyCount(int nConut);	// エネミーカウントセット
-	void			EnemeyCreate(void);			// エネミークリエイト
-	static void		LoadFile(void);				// ロードファイル
-	virtual void	StageMode(void) = 0;		// エネミーのスポーンモード
-
+	void			WarningCreate(void);				// ボス出現演出生成
+	void			Result(STAGE_TYPE stage);			// リザルト
+	void			SetEnemyCount(int nConut);			// エネミーカウントセット
+	void			SetScore(CScore* pScore);			// スコアポインタセッター
+	void			EnemeyCreate(void);					// エネミークリエイト
+	static void		LoadFile(void);						// ロードファイル
+	virtual void	StageMode(void) = 0;				// エネミーのスポーンモード
+	STAGE_DATA		GetStageEnemy(STAGE_TYPE stage);	// ステージエネミーデータゲッター
+	bool			BossSearch(void);					// ボスがいるか
 private:
-	int					m_nCountEnemy;							// エネミー出現までのカウント
-	static PHASE_DATA	m_Enemy[ENEMY_CREATE_MAX][MAX_STAGE];	// ステージのエネミー出現データ
-	static char*		pFileName[STAGE_TYPE_MAX];				// ファイルネーム
+	int					m_nCountEnemy;				// エネミー出現までのカウント
+	static STAGE_DATA	m_Stage[STAGE_TYPE_MAX];	// ステージのエネミー出現データ
+	static char*		pFileName[STAGE_TYPE_MAX];	// ファイルネーム
+	CScore*				m_pScore;					// スコアポインタ
 };
 #endif

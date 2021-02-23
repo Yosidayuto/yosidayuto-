@@ -1,22 +1,31 @@
-#pragma once
+//=============================================================================
+//
+// インプット処理 [input.cpp]
+// Author : 吉田悠人
+//
+//=============================================================================
 #ifndef _INPUT_H_
 #define _INPUT_H_
-#define _CRT_SECURE_NO_WARNNGS
 
+//=============================================================================
 //インクルードファイル
+//=============================================================================
 #include"main.h"
-//インプットクラス
+//=============================================================================
+// クラス定義
+//=============================================================================
 class CInput
 {
 public:
-	CInput();
-	virtual ~CInput();
-	virtual HRESULT Init(HINSTANCE hInstance, HWND hWnd);
-	virtual void Uninit(void);
-	virtual void Update(void)=0;
+	CInput();				//コンストラクタ
+	virtual ~CInput();		//デストラクタ	
+
+	virtual HRESULT Init(HINSTANCE hInstance, HWND hWnd);	// 初期化処理
+	virtual void	Uninit(void);							// 終了処理
+	virtual void	Update(void)=0;							// 更新処理
 protected:
-	LPDIRECTINPUTDEVICE8 m_pDevice;	//入力デバイス（キーボード）へのポインタ
-	static LPDIRECTINPUT8 m_pInput;	//Directlnputオブジェクトのポインタ
+	LPDIRECTINPUTDEVICE8	m_pDevice;	//入力デバイス（キーボード）へのポインタ
+	static LPDIRECTINPUT8	m_pInput;	//Directlnputオブジェクトのポインタ
 };
 
 

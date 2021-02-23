@@ -19,7 +19,7 @@
 //前方宣言
 //=============================================================================
 class CScene2d;
-class CUi;
+class CLifeTank;
 class CLifeUi;
 //=============================================================================
 // クラス定義
@@ -42,12 +42,9 @@ public:
 	void			DownLife(int nLifeDown);	//ダメージを受けた時
 private:
 	static LPDIRECT3DTEXTURE9	m_apTexture;			//テクスチャへのポインタ
-	CUi							*m_Ui;					//UIクラス
-	CLifeUi						*m_LifeUi[MAX_LIFE];	//ライフUI
+	CLifeTank*					m_LifeTank;				//ライフタンクポインタ
+	CLifeUi*					m_LifeUi[MAX_LIFE];		//ライフUI
 	int							nLife;					//ライフ量
 	D3DXVECTOR3					pos;					//位置
 };
-
-
-
 #endif

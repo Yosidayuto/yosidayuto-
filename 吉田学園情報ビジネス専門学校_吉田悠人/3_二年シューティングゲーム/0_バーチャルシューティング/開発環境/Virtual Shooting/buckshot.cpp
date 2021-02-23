@@ -39,15 +39,19 @@ CBuckShot::~CBuckShot()
 CBuckShot * CBuckShot::Create(D3DXVECTOR3 pos)
 {
 	//メモリの確保
-	CBuckShot* pBuckShot;
+	CBuckShot* pBuckShot = NULL;
 	pBuckShot = new CBuckShot;
-	//位置設定
-	pBuckShot->SetPos(pos);
-	//向き設定
-	pBuckShot->Tracking(SHOTS_SPEED);
-	//初期化処理
-	pBuckShot->Init();
 
+	//NULLチェック
+	if (pBuckShot != NULL)
+	{
+		//位置設定
+		pBuckShot->SetPos(pos);
+		//向き設定
+		pBuckShot->Tracking(SHOTS_SPEED);
+		//初期化処理
+		pBuckShot->Init();
+	}
 	return pBuckShot;
 }
 

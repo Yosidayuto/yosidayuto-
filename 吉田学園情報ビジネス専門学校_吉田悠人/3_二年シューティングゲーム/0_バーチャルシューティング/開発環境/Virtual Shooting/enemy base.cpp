@@ -21,22 +21,25 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-
+#define PLAYER_HIT_DAMAGE (1)	//プレイヤーにぶつかった時のダメージ
 //=============================================================================
 // コンストラクト
 //=============================================================================
 CEnemyBase::CEnemyBase(int nPriorit)
 {
-	m_nLife = 0;
-	m_Score = 0;
-	m_nPointer = 0;
-	m_bAttack = false;
-	m_Stats = STATS_MODE_NORMAL;
-	m_Shots = BULLET_PATTERN_NONE;
+	m_nLife			= 0;
+	m_Score			= 0;
+	m_nMoveCount	= 0;
+	m_nPointer		= 0;
+	m_bAttack		= false;
+	m_Stats			= STATS_MODE_NORMAL;
+	m_Shots			= BULLET_PATTERN_NONE;
+	m_pShotsBase	= NULL;
+
+	memset(m_fSpeed, NULL, sizeof(m_fSpeed));
 	memset(m_move,NULL, sizeof(m_move));
 	memset(m_movePointer, NULL, sizeof(m_movePointer));
 	SetObjType(OBJ_TYPE_ENEMY);				//タイプ処理
-	m_pShotsBase = NULL;
 }
 
 //=============================================================================
@@ -77,7 +80,8 @@ HRESULT CEnemyBase::Init(void)
 {
 	//初期化処理
 	CScene2d::Init();
-
+	//初期位置取得
+	SetMovePointer(GetPos(), 0, 0.0f);
 	return S_OK;
 }
 
@@ -260,7 +264,7 @@ void CEnemyBase::Hit(void)
 						&& Playerpos.y > pos.y - size.y / 2
 						&& Playerpos.y < pos.y + size.y / 2)
 					{
-						((CPlayer*)pNext)->Damage(1);
+						((CPlayer*)pNext)->Damage(PLAYER_HIT_DAMAGE);
 					}
 				}
 				//次のオブジェクトのポインタを更新
@@ -285,25 +289,26 @@ void CEnemyBase::Move(void)
 	//サイズ取得
 	D3DXVECTOR3 size = GetSize();
 	//移動位置
-	if (m_nPointer>0)
+	if (m_nMoveCount<m_nPointer+1)
 	{
-		if (pos.x + 1.0f>m_movePointer[m_nPointer].x
-			&&pos.x - 1.0f<m_movePointer[m_nPointer].x
-			&&pos.y + 1.0f>m_movePointer[m_nPointer].y
-			&&pos.y - 1.0f<m_movePointer[m_nPointer].y)
-		{
-			//次の位置
-			m_nPointer--;
-		}
 		//目標の位置方向取得
-		fAngle = atan2f((-pos.x + m_movePointer[m_nPointer].x), (-pos.y + m_movePointer[m_nPointer].z));
+		fAngle = atan2f((-pos.x + m_movePointer[m_nMoveCount].x), (-pos.y + m_movePointer[m_nMoveCount].y));
 		//目標までの移動
-		m_move.x = sinf(fAngle) * 1.0f;
-		m_move.y = cosf(fAngle) * 1.0f;
+		m_move.x = sinf(fAngle) * m_fSpeed[m_nMoveCount];
+		m_move.y = cosf(fAngle) * m_fSpeed[m_nMoveCount];
 		//位置更新
 		pos += m_move;
 		//位置設定
 		SetPos(pos);
+	
+		if (pos.x + 5.0f>m_movePointer[m_nMoveCount].x
+			&&pos.x - 5.0f<m_movePointer[m_nMoveCount].x
+			&&pos.y + 5.0f>m_movePointer[m_nMoveCount].y
+			&&pos.y - 5.0f<m_movePointer[m_nMoveCount].y)
+		{
+			//次の位置
+			m_nMoveCount++;
+		}
 
 		//画面外処理
 		if (pos.y > SCREEN_HEIGHT+(size.y / 2)						// 画面下
@@ -365,11 +370,28 @@ int CEnemyBase::GetScore(void)
 }
 
 //=============================================================================
+// スピードセッター
+//=============================================================================
+void CEnemyBase::SetSpeed(float nSpeed, int nPointer)
+{
+	m_fSpeed[nPointer] = nSpeed;
+}
+
+//=============================================================================
+// スピードゲッター
+//=============================================================================
+float CEnemyBase::GetSpeed(int nPointer)
+{
+	return m_fSpeed[nPointer];
+}
+
+//=============================================================================
 // 移動地点ポインター
 //=============================================================================
-void CEnemyBase::SetMovePointer(D3DXVECTOR3 pointer, int nPointer)
+void CEnemyBase::SetMovePointer(D3DXVECTOR3 pointer, int nPointer, float fSpeed)
 {
 	m_nPointer = nPointer;
+	SetSpeed(fSpeed,m_nPointer);
 	m_movePointer[m_nPointer] = pointer;
 }
 

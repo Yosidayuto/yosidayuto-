@@ -57,15 +57,19 @@ void CWeaponManager::Unload(void)
 //=============================================================================
 CWeaponManager * CWeaponManager::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CWeaponManager* pWeaponManager;
+	//メモリの確保
+	CWeaponManager* pWeaponManager = NULL;
 	pWeaponManager = new CWeaponManager;
-	//位置設定
-	pWeaponManager->m_pos = pos;
-	//サイズ設定
-	pWeaponManager->m_size = size;
-	//初期化処理
-	pWeaponManager->Init();
-
+	//NULLチェック
+	if (pWeaponManager != NULL)
+	{
+		//位置設定
+		pWeaponManager->m_pos = pos;
+		//サイズ設定
+		pWeaponManager->m_size = size;
+		//初期化処理
+		pWeaponManager->Init();
+	}
 	return pWeaponManager;
 }
 
@@ -74,9 +78,14 @@ CWeaponManager * CWeaponManager::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 //=============================================================================
 HRESULT CWeaponManager::Init(void)
 {
+	
+	//UI生成
 	for (int nCountWeapon = 0; nCountWeapon < MAX_WEAPON; nCountWeapon++)
 	{
-		m_pWeaponUi[nCountWeapon] = CWeaponUi::Create(D3DXVECTOR3(m_pos.x + ((m_size.x)*nCountWeapon), m_pos.y, m_pos.z), m_size);
+		//UIの横幅
+		int Interval =(int)((m_size.x * nCountWeapon)*1.5f);
+		//生成
+		m_pWeaponUi[nCountWeapon] = CWeaponUi::Create(D3DXVECTOR3(m_pos.x + Interval, m_pos.y, m_pos.z), m_size);
 	}
 	return S_OK;
 }

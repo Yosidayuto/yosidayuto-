@@ -21,13 +21,13 @@
 // 静的メンバー変数
 //=============================================================================
 TEXTURE_DATA CStartButton::m_TextureData = {NULL,	"data/TEXTURE/Text_Start.png",};
-int			CStartButton::m_StageNuber = 0;
 //=============================================================================
 // コンストラクタ
 //=============================================================================
 CStartButton::CStartButton(int nPriorit):CButton(nPriorit)
 {
 	m_pNumber = NULL;
+	m_bPush = false;
 }
 
 //=============================================================================
@@ -68,19 +68,27 @@ void CStartButton::Unload(void)
 //=============================================================================
 // 生成処理
 //=============================================================================
-CStartButton * CStartButton::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
+CStartButton * CStartButton::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, int nStage)
 {
-	CStartButton *pStartButton;
+	//メモリ確保
+	CStartButton *pStartButton = NULL;
 	pStartButton = new CStartButton;
+	
+	//NULLチェック
+	if (pStartButton != NULL)
+	{
+		//位置設定
+		pStartButton->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
+		//サイズ設定
+		pStartButton->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
+		//テクスチャ設定
+		pStartButton->BindTexture(m_TextureData.m_Texture);
+		//ステージ設定
+		pStartButton->SetStage(nStage+1);
+		//初期化処理
+		pStartButton->Init();
 
-	//位置設定
-	pStartButton->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
-	//サイズ設定
-	pStartButton->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
-	//テクスチャ設定
-	pStartButton->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pStartButton->Init();
+	}
 	return pStartButton;
 }
 
@@ -89,12 +97,18 @@ CStartButton * CStartButton::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 //=============================================================================
 HRESULT CStartButton::Init(void)
 {
+	//現在のステージ番号
 	m_pNumber = CNumber::Create(D3DXVECTOR3(GetPos().x + 65, GetPos().y, 0.0f), D3DXVECTOR3(25.0f, GetSize().y, 0.0f));
-	m_pNumber->SetNumber(m_StageNuber + 1);
+	m_pNumber->SetNumber(nStage);
+	
+	//ボタンの初期化処理
 	CButton::Init();
+	
+	//文字の位置調整
 	SetPos(D3DXVECTOR3(GetPos().x + 20, GetPos().y,0.0f));
 	SetSize(D3DXVECTOR3(GetSize().x-100, GetSize().y,0.0f));
-	return E_NOTIMPL;
+
+	return S_OK;
 }
 
 //=============================================================================
@@ -102,11 +116,12 @@ HRESULT CStartButton::Init(void)
 //=============================================================================
 void CStartButton::Uninit(void)
 {
+	//NULLチェック
 	if (m_pNumber != NULL)
 	{
 		m_pNumber->Uninit();
 	}
-
+	//終了処理
 	CButton::Uninit();
 }
 
@@ -123,12 +138,21 @@ void CStartButton::Update(void)
 //=============================================================================
 void CStartButton::Draw(void)
 {
+	//NULLチェック
 	if (m_pNumber != NULL)
 	{
 		m_pNumber->Draw();
 	}
 
 	CButton::Draw();
+}
+
+//=============================================================================
+// ステージ番号ゲッター
+//=============================================================================
+void CStartButton::SetStage(int stage)
+{
+	nStage = stage;
 }
 
 //=============================================================================
@@ -144,8 +168,6 @@ void CStartButton::MouseOver(void)
 //=============================================================================
 void CStartButton::Push()
 {
-	//ボタンを一度でも押したか
-	//static bool bPush = false;
 	//マウスポインタ取得
 	CInihMouse *pMouse = CManager::GetMouse();
 	//サウンド取得
@@ -158,7 +180,8 @@ void CStartButton::Push()
 	//左クリック
 	if (pMouse->GetClickTrigger(CLICK_LEFT) == true)
 	{
-		//if (bPush==false)
+		//ボタンを押したか
+		if (m_bPush == false)
 		{
 			//武装がどちらも装備しているか
 			if (nPlayerWeapon.Left != WEAPONS_MODE_NONE
@@ -168,13 +191,9 @@ void CStartButton::Push()
 				pSound->Play(CSound::LABEL_SE_START);
 				//フェイドアウト判定
 				pFade->SetFade(GAME_MODE_STAGE);
-				//ステージ番号を進める
-				m_StageNuber += 1;
 				//ボタン押したか
-				//bPush = true;
+				m_bPush = true;
 			}
-
 		}
-
 	}
 }

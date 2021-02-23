@@ -16,26 +16,30 @@
 //=============================================================================
 //前方宣言
 //=============================================================================
-
+class CBossEffectBase;
 //=============================================================================
 // クラス定義
 //=============================================================================
 class CBossType2 :public CBossBase
 {
 public:
-	CBossType2(int nPriorit = PRIORITY_OBJECT_1);	//コンストラクタ
+	CBossType2();	//コンストラクタ
 	~CBossType2();									//デストラクタ	
 
 	static HRESULT		Load(void);					// テクスチャ読み込み
 	static void			Unload(void);				// テクスチャの破棄
 	static CBossType2*	Create(D3DXVECTOR3 pos);	// 生成処理
 
-	HRESULT Init(void);				// 初期化処理
-	void	Uninit(void);			// 終了処理
-	void	Update(void);			// 更新処理
-	void	Draw(void);				// 描画処理
+	HRESULT Init(void);			// 初期化処理
+	void	Uninit(void)	;	// 終了処理
+	void	Update(void)	;	// 更新処理
+	void	Draw(void);			// 描画処理
+	void	Effect(void);		//エフェクト生成
+	void	DisEffect(void);	//倒されたときのエフェクト処理
+
 private:
-	static TEXTURE_DATA	m_TextureData;					// テクスチャデータ
+	static TEXTURE_DATA	m_TextureData;	// テクスチャデータ
+	CBossEffectBase*	m_Effect;		// エフェクトポインタ
 
 };
 #endif

@@ -12,10 +12,9 @@
 #include "manager.h"		
 #include "renderer.h"		
 #include "explosion.h"		
+#include "player.h"
 #include "sound.h"			
 #include "effect.h"			
-#include "enemy.h"			
-#include "boss.h"			
 //=============================================================================
 //マクロ定義
 //=============================================================================
@@ -73,18 +72,24 @@ void CEnemyBullet::Unload(void)
 CEnemyBullet * CEnemyBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move)
 {
 	//メモリ確保
-	CEnemyBullet *pEnemyBullet;
+	CEnemyBullet *pEnemyBullet = NULL;
 	pEnemyBullet = new CEnemyBullet;
-	//位置設定
-	pEnemyBullet->SetPos(pos);
-	//サイズ設定
-	pEnemyBullet->SetSize(D3DXVECTOR3(BULLET_SIZE / 2.0f, BULLET_SIZE / 2.0f, 0.0f));
-	//移動量設定
-	pEnemyBullet->SetMove(move);
-	//射程距離設定
-	pEnemyBullet->SetLife(BULLET_LIFE);
-	//初期化
-	pEnemyBullet->Init();
+
+	//NULLチェック
+	if (pEnemyBullet != NULL)
+	{
+		//位置設定
+		pEnemyBullet->SetPos(pos);
+		//サイズ設定
+		pEnemyBullet->SetSize(D3DXVECTOR3(BULLET_SIZE / 2.0f, BULLET_SIZE / 2.0f, 0.0f));
+		//移動量設定
+		pEnemyBullet->SetMove(move);
+		//射程距離設定
+		pEnemyBullet->SetLife(BULLET_LIFE);
+		//初期化
+		pEnemyBullet->Init();
+
+	}
 	return pEnemyBullet;
 }
 

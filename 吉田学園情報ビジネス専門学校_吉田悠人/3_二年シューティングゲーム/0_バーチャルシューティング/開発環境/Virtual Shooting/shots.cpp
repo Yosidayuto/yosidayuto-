@@ -39,15 +39,20 @@ CShots::~CShots()
 CShots * CShots::Create(D3DXVECTOR3 pos)
 {
 	//メモリの確保
-	CShots* pShots;
+	CShots* pShots = NULL;
 	pShots = new CShots;
-	//位置設定
-	pShots->SetPos(pos);
-	//向き設定
-	pShots->Tracking(SHOTS_SPEED);
-	//初期化処理
-	pShots->Init();
 
+	//NULLチェック
+	if (pShots != NULL)
+	{
+		//位置設定
+		pShots->SetPos(pos);
+		//向き設定
+		pShots->Tracking(SHOTS_SPEED);
+		//初期化処理
+		pShots->Init();
+
+	}
 	return pShots;
 }
 

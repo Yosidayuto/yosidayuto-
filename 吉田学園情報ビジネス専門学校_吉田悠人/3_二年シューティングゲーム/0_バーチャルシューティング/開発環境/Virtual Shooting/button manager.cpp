@@ -67,12 +67,20 @@ void CButtonManager::Unload(void)
 //=============================================================================
 // 生成処理
 //=============================================================================
-CButtonManager * CButtonManager::Create(void)
+CButtonManager * CButtonManager::Create(int nStage)
 {
-	CButtonManager* pButtonManager;
+	//メモリ確保
+	CButtonManager* pButtonManager=NULL;
 	pButtonManager = new CButtonManager;
-	//初期化処理
-	pButtonManager->Init();
+	
+	//NULLチェック
+	if (pButtonManager != NULL)
+	{
+		// ステージ番号セット
+		pButtonManager->SetStageNumber(nStage);
+		//初期化処理
+		pButtonManager->Init();
+	}
 	return pButtonManager;
 }
 
@@ -81,7 +89,7 @@ CButtonManager * CButtonManager::Create(void)
 //=============================================================================
 HRESULT CButtonManager::Init(void)
 {
-	m_pButton[BUTTON_TYPE_START]	= CStartButton::Create(D3DXVECTOR3(140, 150, 0.0f), D3DXVECTOR3(270.0f, 35.0f, 0.0f));
+	m_pButton[BUTTON_TYPE_START]	= CStartButton::Create(D3DXVECTOR3(140, 150, 0.0f), D3DXVECTOR3(270.0f, 35.0f, 0.0f), m_nStageNumber);
 	m_pButton[BUTTON_TYPE_LIFE]		= CLifeButton::Create(D3DXVECTOR3(140, 250, 0.0f), D3DXVECTOR3(270.0f, 35.0f, 0.0f));
 	m_pButton[BUTTON_TYPE_SPEED]	= CSpeedButton::Create(D3DXVECTOR3(140, 300, 0.0f), D3DXVECTOR3(270.0f, 35.0f, 0.0f));
 	m_pButton[BUTTON_TYPE_BUTTOL]	= CBulletButton::Create(D3DXVECTOR3(140, 350, 0.0f), D3DXVECTOR3(270.0f, 35.0f, 0.0f));
@@ -113,6 +121,14 @@ void CButtonManager::Update(void)
 //=============================================================================
 void CButtonManager::Draw(void)
 {
+}
+
+//=============================================================================
+// ステージナンバーセッター
+//=============================================================================
+void CButtonManager::SetStageNumber(int nStage)
+{
+	m_nStageNumber = nStage;
 }
 
 //=============================================================================

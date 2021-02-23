@@ -44,15 +44,19 @@ CSplitShots::~CSplitShots()
 CSplitShots * CSplitShots::Create(D3DXVECTOR3 pos)
 {
 	//メモリの確保
-	CSplitShots* pSplitShots;
+	CSplitShots* pSplitShots = NULL;
 	pSplitShots = new CSplitShots;
-	//位置設定
-	pSplitShots->SetPos(pos);
-	//向き設定
-	pSplitShots->Tracking(SHOTS_SPEED);
-	//初期化処理
-	pSplitShots->Init();
 
+	//NULLチェック
+	if (pSplitShots != NULL)
+	{
+		//位置設定
+		pSplitShots->SetPos(pos);
+		//向き設定
+		pSplitShots->Tracking(SHOTS_SPEED);
+		//初期化処理
+		pSplitShots->Init();
+	}
 	return pSplitShots;
 }
 

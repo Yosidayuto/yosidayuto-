@@ -39,14 +39,20 @@ CSpiral::~CSpiral()
 CSpiral * CSpiral::Create(D3DXVECTOR3 pos)
 {
 	//メモリの確保
-	CSpiral* pSpiral;
+	CSpiral* pSpiral = NULL;
 	pSpiral = new CSpiral;
-	//位置設定
-	pSpiral->SetPos(pos);
-	//向き設定
-	pSpiral->Tracking(SPIRAL_SPEED);
-	//初期化処理
-	pSpiral->Init();
+	
+	//NULLチェック
+	if (pSpiral != NULL)
+	{
+		//位置設定
+		pSpiral->SetPos(pos);
+		//向き設定
+		pSpiral->Tracking(SPIRAL_SPEED);
+		//初期化処理
+		pSpiral->Init();
+
+	}
 
 	return pSpiral;
 }

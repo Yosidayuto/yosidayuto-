@@ -8,21 +8,23 @@
 //インクルードファイル
 //=============================================================================
 #include "stage.h"
+#include "scene.h"
+#include "sound.h"
 #include "manager.h"
 #include "renderer.h"
-#include "boss.h"
 #include "game.h"
 #include "result.h"
+#include "warning.h"
 #include "score.h"
 #include<thread>
 //=============================================================================
 // 静的メンバー変数
 //=============================================================================
 char* CStage::pFileName[STAGE_TYPE_MAX] = {
-"data/TEXT/Data", 
-"",
+"data/TEXT/stage1", 
+"data/TEXT/stage2",
 ""};
-PHASE_DATA CStage::m_Enemy[ENEMY_CREATE_MAX][MAX_STAGE] = {};
+STAGE_DATA CStage::m_Stage[STAGE_TYPE_MAX] = {};
 //=============================================================================
 // コンストラクト
 //=============================================================================
@@ -71,6 +73,8 @@ void CStage::Result(STAGE_TYPE stage)
 {
 	//スコアセット
 	CManager::SetScore(CGame::GetScore()->GetScore());
+	//ステージセット
+	CGame::SetStageType((STAGE_TYPE)(stage + 1));
 	//リザルト表示
 	CResult::Create(stage);
 
@@ -85,17 +89,28 @@ void CStage::SetEnemyCount(int nConut)
 }
 
 //=============================================================================
+// スコアポインタセッター
+//=============================================================================
+void CStage::SetScore(CScore * pScore)
+{
+	m_pScore = pScore;
+}
+
+//=============================================================================
 // エネミー出現までのカウント
 //=============================================================================
 void CStage::EnemeyCreate(void)
 {
-	if (CBoss::GetEnemyNumber() == false)
+	//ボスが出現しているか
+	if (!BossSearch())
 	{
 		m_nCountEnemy--;
 	}
 
+	//カウントが0になったら
 	if (m_nCountEnemy <= 0)
 	{
+		//ステージを進める
 		StageMode();
 	}
 
@@ -112,8 +127,10 @@ void CStage::LoadFile(void)
 	int		nEnemyCount;
 	// フェーズ数
 	int		nPhase;
-	// 移動回数
+	// 読み込んだ移動回数
 	int		nMoveNumber;
+	// 総合移動回数
+	int		nTotalMove;
 
 	//読み込み用のデータ
 	char cFileString[256];
@@ -126,6 +143,8 @@ void CStage::LoadFile(void)
 		//初期化
 		nPhase		= 0;
 		nEnemyCount = 0;
+		memset(cFileString, 0, sizeof(cFileString));
+
 		//テキスト読み込み
 		fopen_s(&pFile[nStage], pFileName[nStage], "r");
 		if (pFile[nStage] != NULL)
@@ -151,6 +170,9 @@ void CStage::LoadFile(void)
 						//エネミーデータ
 						if (strcmp(cFileString, "ENEMY_DATA") == 0)
 						{
+							//初期化
+							nTotalMove = 0;
+
 							while (strcmp(cFileString, "ENEMY_END") != 0)
 							{
 								//初期化
@@ -161,6 +183,7 @@ void CStage::LoadFile(void)
 								//エネミータイプ取得
 								if (strcmp(cFileString, "ENEMY_TYPE") == 0)
 								{
+
 									int nType;
 									fscanf_s(pFile[nStage], " = %d", &nType);
 
@@ -168,16 +191,16 @@ void CStage::LoadFile(void)
 									switch (nType)
 									{
 									case 0:
-										m_Enemy[nPhase][nStage].EnemySpawn[nEnemyCount].EnemyType= ENEMY_TYPE_1;
-										break;
-									case 1:
-										m_Enemy[nPhase][nStage].EnemySpawn[nEnemyCount].EnemyType = ENEMY_TYPE_2;
-										break;
-									case 2:
-										m_Enemy[nPhase][nStage].EnemySpawn[nEnemyCount].EnemyType = ENEMY_TYPE_3;
+										m_Stage[nStage].Phase[nPhase].EnemySpawn[nEnemyCount].EnemyType= ENEMY_TYPE_1;
+										break;		   
+									case 1:			   
+										m_Stage[nStage].Phase[nPhase].EnemySpawn[nEnemyCount].EnemyType = ENEMY_TYPE_2;
+										break;		   
+									case 2:			   
+										m_Stage[nStage].Phase[nPhase].EnemySpawn[nEnemyCount].EnemyType = ENEMY_TYPE_3;
 										break;
 									case 3:
-										m_Enemy[nPhase][nStage].EnemySpawn[nEnemyCount].EnemyType = ENEMY_TYPE_4;
+										m_Stage[nStage].Phase[nPhase].EnemySpawn[nEnemyCount].EnemyType = ENEMY_TYPE_4;
 										break;
 
 									}									
@@ -197,18 +220,21 @@ void CStage::LoadFile(void)
 										if (strcmp(cFileString, "ENEMY_MOVE_NUMBER") == 0)
 										{
 											fscanf_s(pFile[nStage], " = %d", &nMoveNumber);
+											nTotalMove++;
 										}
 										if (strcmp(cFileString, "ENEMY_SPEED") == 0)
 										{
-											fscanf_s(pFile[nStage], " = %f", &m_Enemy[nPhase][nStage].EnemySpawn[nEnemyCount].moveData[nMoveNumber].fSpeed);
+											fscanf_s(pFile[nStage], " = %f", &m_Stage[nStage].Phase[nPhase].EnemySpawn[nEnemyCount].MoveData[nMoveNumber].fSpeed);
 										}
 										if (strcmp(cFileString, "ENEMY_POS") == 0)
 										{
 											fscanf_s(pFile[nStage], " = %f %f",
-												&m_Enemy[nPhase][nStage].EnemySpawn[nEnemyCount].moveData[nMoveNumber].pos.x,
-												&m_Enemy[nPhase][nStage].EnemySpawn[nEnemyCount].moveData[nMoveNumber].pos.y);
+												&m_Stage[nStage].Phase[nPhase].EnemySpawn[nEnemyCount].MoveData[nMoveNumber].pos.x,
+												&m_Stage[nStage].Phase[nPhase].EnemySpawn[nEnemyCount].MoveData[nMoveNumber].pos.y);
 										}
 									}
+									//行動回数取得
+									m_Stage[nStage].Phase[nPhase].EnemySpawn[nEnemyCount].nEnemyMoveNumber = nTotalMove;
 								}
 
 							}
@@ -216,14 +242,82 @@ void CStage::LoadFile(void)
 							nEnemyCount++;
 						}
 					}
+					//エネミー総数
+					m_Stage[nStage].Phase[nPhase].nEnemyCount = nEnemyCount;
 					//フェーズを進める
 					nPhase++;
 				}
 			}
+			m_Stage[nStage].nCountPhase = nPhase;
 			fclose(pFile[nStage]);	//ファイルを閉じる
 
 		}
 
 	}
+}
+
+//=============================================================================
+// ステージ情報ゲッター
+//=============================================================================
+STAGE_DATA CStage::GetStageEnemy(STAGE_TYPE stage)
+{
+	return m_Stage[stage];
+}
+
+//=============================================================================
+// ボスがいるか
+//=============================================================================
+bool CStage::BossSearch(void)
+{
+	//オブジェクト取得用
+	CScene* pTop[PRIORITY_MAX] = {};
+	//次チェックするオブジェクトのポインタ
+	CScene* pNext = NULL;
+
+	//topのアドレスを取得
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
+	{
+		pTop[nCount] = *(CScene::GetTop() + nCount);
+	}
+
+	//ボス索敵処理
+	for (int nCount = 0; nCount < PRIORITY_MAX; nCount++)
+	{
+		if (pTop[nCount] != NULL)
+		{
+			pNext = pTop[nCount];
+			//その描画優先度のオブジェクトがなくなるまでループ
+			while (pNext != NULL)
+			{
+				//ボスがいた場合
+				if (pNext->GetObjType() == CScene::OBJ_TYPE_BOSS)
+				{
+
+					return true;
+				}
+				
+				//次のオブジェクトのポインタを更新
+				pNext = pNext->GetNext();
+			}
+		}
+	}
+	//ボスがいない場合
+	return false;
+}
+
+
+//=============================================================================
+// ボス演出生成
+//=============================================================================
+void CStage::WarningCreate(void)
+{
+	//サウンドポインタ取得
+	CSound *pSound = CManager::GetSound();
+
+	//サウンドストップ
+	pSound->Stop();
+	//ワーニング生成
+	CWarning::Create(D3DXVECTOR3(STAGE_POS, SCREEN_HEIGHT / 2, 0.0f));
+
 }
 

@@ -14,7 +14,6 @@
 #include "explosion.h"		
 #include "sound.h"			
 #include "effect.h"			
-#include "enemy.h"			
 #include "enemy base.h"
 #include "boss base.h"
 #include <typeinfo.h>
@@ -76,19 +75,26 @@ void CBullet::Unload(void)
 CBullet * CBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move)
 {
 	//メモリ確保
-	CBullet *pBullet;
+	CBullet *pBullet = NULL;
 	pBullet = new CBullet;
-	//位置設定
-	pBullet->SetPos(pos);
-	//サイズ設定
-	pBullet->SetSize(D3DXVECTOR3(BULLET_SIZE / 2.0f, BULLET_SIZE / 2.0f, 0.0f));
-	//移動量設定
-	pBullet->SetMove(move);
-	//射程距離設定
-	pBullet->SetLife(BULLET_LIFE);
-	//初期化
-	pBullet->Init();
-	return pBullet;
+
+	//NULLチェック
+	if (pBullet != NULL)
+	{
+		//位置設定
+		pBullet->SetPos(pos);
+		//サイズ設定
+		pBullet->SetSize(D3DXVECTOR3(BULLET_SIZE / 2.0f, BULLET_SIZE / 2.0f, 0.0f));
+		//移動量設定
+		pBullet->SetMove(move);
+		//射程距離設定
+		pBullet->SetLife(BULLET_LIFE);
+		//初期化
+		pBullet->Init();
+
+		return pBullet;
+	}
+	return NULL;
 }
 
 //=============================================================================

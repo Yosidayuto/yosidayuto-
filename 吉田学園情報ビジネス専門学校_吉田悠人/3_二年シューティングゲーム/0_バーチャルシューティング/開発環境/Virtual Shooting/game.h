@@ -10,7 +10,7 @@
 //マクロ定義
 //=============================================================================
 #define STAGE_POS (780)		//ステージ中心
-#define STAGE_SIZE (800)	//ステージのサイズ
+#define STAGE_SIZE (800)	//ステージのXサイズ
 //=============================================================================
 // ヘッダファイルのインクルード
 //=============================================================================
@@ -49,8 +49,9 @@ public:
 	void			Uninit(void);	// 終了処理
 	void			Update(void);	// 更新処理
 	void			Draw(void);		// 描画処理
-	static CScore*		GetScore(void);		// スコアゲッター
-	//static STAGE_TYPE	GetStageType(void);	// ステージタイプゲッター
+	static CScore*			GetScore(void);		// スコアゲッター
+	STAGE_TYPE			GetStageType(void);	// ステージタイプゲッター
+	static void			SetStageType(STAGE_TYPE stage);
 	static CPlayer*		GetPlayer(void);
 private:
 	CStage*				m_pStage;			// ステージポインタ

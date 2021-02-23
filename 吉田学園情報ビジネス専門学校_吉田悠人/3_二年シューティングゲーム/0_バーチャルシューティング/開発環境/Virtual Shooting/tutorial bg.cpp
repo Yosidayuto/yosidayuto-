@@ -69,17 +69,22 @@ void CTutorialBg::Unload(void)
 //=============================================================================
 CTutorialBg * CTutorialBg::Create(void)
 {
-	CTutorialBg *pTutorialBg;
+	//メモリ確保
+	CTutorialBg *pTutorialBg = NULL;
 	pTutorialBg = new CTutorialBg;
 
-	//位置設定
-	pTutorialBg->SetPos(D3DXVECTOR3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 0.0f));
-	//サイズ設定
-	pTutorialBg->SetSize(D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
-	//テクスチャ設定
-	pTutorialBg->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pTutorialBg->Init();
+	//NULLチェック
+	if (pTutorialBg != NULL)
+	{
+		//位置設定
+		pTutorialBg->SetPos(D3DXVECTOR3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 0.0f));
+		//サイズ設定
+		pTutorialBg->SetSize(D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
+		//テクスチャ設定
+		pTutorialBg->BindTexture(m_TextureData.m_Texture);
+		//初期化処理
+		pTutorialBg->Init();
+	}
 
 	return pTutorialBg;
 }

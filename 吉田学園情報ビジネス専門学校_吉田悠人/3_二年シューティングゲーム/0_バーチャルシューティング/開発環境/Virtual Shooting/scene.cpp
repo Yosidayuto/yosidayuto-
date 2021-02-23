@@ -5,7 +5,6 @@
 #include <typeinfo.h>
 #include "player.h"
 #include "bullet.h"
-#include "enemy.h"
 #include "manager.h"
 #include "inputmouse.h"
 #include "inihkeyboard.h"

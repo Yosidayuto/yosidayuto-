@@ -23,12 +23,12 @@
 class CEnemyType1 :public CEnemyBase
 {
 public:
-	CEnemyType1(int nPriorit = PRIORITY_OBJECT_1);	//コンストラクタ
+	CEnemyType1();	//コンストラクタ
 	~CEnemyType1();									//デストラクタ	
 
 	static HRESULT		Load(void);					// テクスチャ読み込み
 	static void			Unload(void);				// テクスチャの破棄
-	static CEnemyType1*	Create(D3DXVECTOR3 pos, ENEMY_PATTERN Type);	// 生成処理
+	static CEnemyType1*	Create(D3DXVECTOR3 pos);	// 生成処理
 
 	HRESULT Init(void);				// 初期化処理
 	void	Uninit(void);			// 終了処理

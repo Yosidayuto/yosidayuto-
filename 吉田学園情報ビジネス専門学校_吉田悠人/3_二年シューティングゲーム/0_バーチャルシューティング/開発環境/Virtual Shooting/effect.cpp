@@ -78,19 +78,23 @@ void CEffect::Unload(void)
 CEffect * CEffect::Create(D3DXVECTOR3 Pos, D3DXCOLOR col, D3DXVECTOR3 size, EFFECT_TYPE type)
 {
 	//メモリ確保
-	CEffect *pEffect;
+	CEffect *pEffect = NULL;
 	pEffect = new CEffect;
-	//位置セット
-	pEffect->SetPos(Pos);
-	//サイズセット
-	pEffect->SetSize(D3DXVECTOR3(size.x, size.y, 0.0f));
-	//タイプセット
-	pEffect->m_Type = type;
-	//カラーセット
-	pEffect->SetCol(col);
-	//初期化処理
-	pEffect->Init();
-
+	
+	//NULLチェック
+	if (pEffect != NULL)
+	{
+		//位置セット
+		pEffect->SetPos(Pos);
+		//サイズセット
+		pEffect->SetSize(D3DXVECTOR3(size.x, size.y, 0.0f));
+		//タイプセット
+		pEffect->m_Type = type;
+		//カラーセット
+		pEffect->SetCol(col);
+		//初期化処理
+		pEffect->Init();
+	}
 	return pEffect;
 }
 

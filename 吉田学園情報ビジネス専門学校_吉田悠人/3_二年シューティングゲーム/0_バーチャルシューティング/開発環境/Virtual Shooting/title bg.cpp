@@ -65,17 +65,22 @@ void CTitleBg::Unload(void)
 //=============================================================================
 CTitleBg * CTitleBg::Create(void)
 {
-	CTitleBg *pTitleBg;
+	//メモリ確保
+	CTitleBg *pTitleBg = NULL;
 	pTitleBg = new CTitleBg;
 
-	//位置設定
-	pTitleBg->SetPos(D3DXVECTOR3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 0.0f));
-	//サイズ設定
-	pTitleBg->SetSize(D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
-	//テクスチャ設定
-	pTitleBg->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pTitleBg->Init();
+	//NULLチェック
+	if (pTitleBg != NULL)
+	{
+		//位置設定
+		pTitleBg->SetPos(D3DXVECTOR3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 0.0f));
+		//サイズ設定
+		pTitleBg->SetSize(D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
+		//テクスチャ設定
+		pTitleBg->BindTexture(m_TextureData.m_Texture);
+		//初期化処理
+		pTitleBg->Init();
+	}
 	return pTitleBg;
 }
 

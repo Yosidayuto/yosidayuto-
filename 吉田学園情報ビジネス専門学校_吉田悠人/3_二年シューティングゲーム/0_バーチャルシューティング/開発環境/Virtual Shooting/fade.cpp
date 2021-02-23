@@ -36,6 +36,7 @@ CFade * CFade::Create(void)
 	CFade *pFade;
 	//インスタンス生成
 	pFade = new CFade;
+
 	//初期化処理
 	if (pFade != NULL)
 	{

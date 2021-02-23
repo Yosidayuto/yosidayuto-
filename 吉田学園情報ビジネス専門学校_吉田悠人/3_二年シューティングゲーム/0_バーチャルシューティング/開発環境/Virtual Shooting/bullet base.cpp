@@ -14,7 +14,6 @@
 #include "explosion.h"	
 #include "sound.h"		
 #include "effect.h"		
-#include "enemy.h"
 #include "bullet.h"
 #include "enemy bullet.h"
 #include "laser.h"

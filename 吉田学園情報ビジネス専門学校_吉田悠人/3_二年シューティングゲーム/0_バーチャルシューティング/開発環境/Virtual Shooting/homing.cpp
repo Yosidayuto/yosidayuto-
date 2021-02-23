@@ -13,8 +13,8 @@
 #include "explosion.h"		
 #include "sound.h"			
 #include "effect.h"			
-#include "enemy.h"			
-#include "boss.h"			
+#include "boss base.h"
+#include "enemy base.h"
 #include <typeinfo.h>
 //=============================================================================
 //マクロ定義
@@ -78,18 +78,24 @@ void CHoming::Unload(void)
 CHoming * CHoming::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move)
 {
 	//メモリ確保
-	CHoming *pHoming;
+	CHoming *pHoming=NULL;
 	pHoming = new CHoming;
-	//位置設定
-	pHoming->SetPos(pos);
-	//サイズ設定
-	pHoming->SetSize(D3DXVECTOR3(HOMING_SIZE / 2.0f, HOMING_SIZE / 2.0f, 0.0f));
-	//移動量設定
-	pHoming->SetMove(move);
-	//射程距離設定
-	pHoming->SetLife(HOMING_LIFE);
-	//初期化
-	pHoming->Init();
+	
+	//NULLチェック
+	if (pHoming != NULL)
+	{
+		//位置設定
+		pHoming->SetPos(pos);
+		//サイズ設定
+		pHoming->SetSize(D3DXVECTOR3(HOMING_SIZE / 2.0f, HOMING_SIZE / 2.0f, 0.0f));
+		//移動量設定
+		pHoming->SetMove(move);
+		//射程距離設定
+		pHoming->SetLife(HOMING_LIFE);
+		//初期化
+		pHoming->Init();
+	}
+
 	return pHoming;
 }
 
@@ -162,6 +168,7 @@ void CHoming::Bullet(CScene * pObj)
 {
 	//位置取得
 	D3DXVECTOR3 pos = GetPos();
+	//エネミーの当たり判定
 	if (pObj->GetObjType() == OBJ_TYPE_ENEMY)
 	{
 		D3DXVECTOR3 EnemeyPos = ((CScene2d*)pObj)->GetPos();
@@ -179,12 +186,34 @@ void CHoming::Bullet(CScene * pObj)
 			//エクスプロージョン生成
 			CExplosion::Create(pos);
 			//エネミーダメージ処理
-			((CEnemy*)pObj)->Damage(HOMING_ATTACK);
+			((CEnemyBase*)pObj)->Damage(HOMING_ATTACK);
 			//終了処理
 			Uninit();
 			return;
 		}
 	}
+	//ボスの当たり判定処理
+	if (pObj->GetObjType() == OBJ_TYPE_BOSS)
+	{
+		D3DXVECTOR3 BossPos = ((CScene2d*)pObj)->GetPos();
+		D3DXVECTOR3 BossSize = ((CScene2d*)pObj)->GetSize();
+		//当たり判定
+		if (BossPos.x + BossSize.x / 2 > pos.x
+			&&BossPos.x - BossSize.x / 2 < pos.x
+			&&BossPos.y + BossSize.y / 2 > pos.y
+			&&BossPos.y - BossSize.y / 2 < pos.y)
+		{
+			//エクスプロージョン生成
+			CExplosion::Create(pos);
+			//エネミーダメージ処理
+			((CBossBase*)pObj)->Damage(HOMING_ATTACK);
+			//バレット終了処理
+			Uninit();
+			return;
+		}
+
+	}
+
 }
 
 //=============================================================================

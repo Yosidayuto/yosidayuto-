@@ -121,12 +121,6 @@
     <Filter Include="ヘッダー ファイル\UI\MousePointer">
       <UniqueIdentifier>{498a3ddf-1a88-48c0-b372-2a00d639df0c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Manager\GameStage">
-      <UniqueIdentifier>{54694b53-4690-459a-a389-ce74621fc3de}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Manager\GameStage">
-      <UniqueIdentifier>{150c5c4b-0e6c-494b-8fdf-30748bf6f328}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\UI\Score">
       <UniqueIdentifier>{bc99c0cb-b88a-4b55-9122-f41eb19d85e0}</UniqueIdentifier>
     </Filter>
@@ -151,6 +145,24 @@
     <Filter Include="ヘッダー ファイル\Enemy\Boss">
       <UniqueIdentifier>{d483e115-40ad-4f42-bd29-947db057ca01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Effect\BossEffect">
+      <UniqueIdentifier>{e56dcd09-d139-4a11-8543-72562137ee90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Effect\BossEffect">
+      <UniqueIdentifier>{d68eb27e-7cfd-4a60-a888-245f4d36bf9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Effect\BossDeleteEffect">
+      <UniqueIdentifier>{c013ce05-0bfb-4e5e-89bf-e032172dfcbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Effect\BossDeleteEffect">
+      <UniqueIdentifier>{bcf7173a-b67c-4ff1-a9d9-d41a9e570ca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameStage">
+      <UniqueIdentifier>{150c5c4b-0e6c-494b-8fdf-30748bf6f328}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\GameStage">
+      <UniqueIdentifier>{54694b53-4690-459a-a389-ce74621fc3de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="fade.cpp">
@@ -165,20 +177,11 @@
     <ClCompile Include="scene2d.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="boss.cpp">
-      <Filter>ソース ファイル\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="boss_anime.cpp">
-      <Filter>ソース ファイル\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="bullet.cpp">
       <Filter>ソース ファイル\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="clear.cpp">
       <Filter>ソース ファイル\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="enemy.cpp">
-      <Filter>ソース ファイル\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="explosion.cpp">
       <Filter>ソース ファイル\Bullet</Filter>
@@ -191,9 +194,6 @@
     </ClCompile>
     <ClCompile Include="inputmouse.cpp">
       <Filter>ソース ファイル\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="ui.cpp">
-      <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
     <ClCompile Include="effect.cpp">
       <Filter>ソース ファイル\Effect</Filter>
@@ -336,20 +336,17 @@
     <ClCompile Include="game pointer.cpp">
       <Filter>ソース ファイル\UI\MousePointer</Filter>
     </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>ソース ファイル\Manager\GameStage</Filter>
-    </ClCompile>
     <ClCompile Include="stage_1.cpp">
-      <Filter>ソース ファイル\Manager\GameStage</Filter>
+      <Filter>ソース ファイル\GameStage</Filter>
     </ClCompile>
     <ClCompile Include="stage_2.cpp">
-      <Filter>ソース ファイル\Manager\GameStage</Filter>
+      <Filter>ソース ファイル\GameStage</Filter>
     </ClCompile>
     <ClCompile Include="stage_3.cpp">
-      <Filter>ソース ファイル\Manager\GameStage</Filter>
+      <Filter>ソース ファイル\GameStage</Filter>
     </ClCompile>
     <ClCompile Include="stage.cpp">
-      <Filter>ソース ファイル\Manager\GameStage</Filter>
+      <Filter>ソース ファイル\GameStage</Filter>
     </ClCompile>
     <ClCompile Include="score.cpp">
       <Filter>ソース ファイル\UI\Score</Filter>
@@ -414,6 +411,33 @@
     <ClCompile Include="split shots.cpp">
       <Filter>ソース ファイル\Bullet\EnemyShots</Filter>
     </ClCompile>
+    <ClCompile Include="boss effect1.cpp">
+      <Filter>ソース ファイル\Effect\BossEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="boss effect2.cpp">
+      <Filter>ソース ファイル\Effect\BossEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="boss effect3.cpp">
+      <Filter>ソース ファイル\Effect\BossEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="boss effect base.cpp">
+      <Filter>ソース ファイル\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="delete effect1.cpp">
+      <Filter>ソース ファイル\Effect\BossDeleteEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="delete effect2.cpp">
+      <Filter>ソース ファイル\Effect\BossDeleteEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="delete effect3.cpp">
+      <Filter>ソース ファイル\Effect\BossDeleteEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="life tank.cpp">
+      <Filter>ソース ファイル\UI\life</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fade.h">
@@ -427,15 +451,6 @@
     </ClInclude>
     <ClInclude Include="scene2d.h">
       <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="enemy.h">
-      <Filter>ヘッダー ファイル\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="boss.h">
-      <Filter>ヘッダー ファイル\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="boss_anime.h">
-      <Filter>ヘッダー ファイル\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="bullet.h">
       <Filter>ヘッダー ファイル\Bullet</Filter>
@@ -475,9 +490,6 @@
     </ClInclude>
     <ClInclude Include="select.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="ui.h">
-      <Filter>ヘッダー ファイル\UI</Filter>
     </ClInclude>
     <ClInclude Include="sound.h">
       <Filter>ヘッダー ファイル\Base</Filter>
@@ -599,20 +611,17 @@
     <ClInclude Include="game pointer.h">
       <Filter>ヘッダー ファイル\UI\MousePointer</Filter>
     </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>ヘッダー ファイル\Manager\GameStage</Filter>
-    </ClInclude>
     <ClInclude Include="stage_1.h">
-      <Filter>ヘッダー ファイル\Manager\GameStage</Filter>
+      <Filter>ヘッダー ファイル\GameStage</Filter>
     </ClInclude>
     <ClInclude Include="stage_2.h">
-      <Filter>ヘッダー ファイル\Manager\GameStage</Filter>
+      <Filter>ヘッダー ファイル\GameStage</Filter>
     </ClInclude>
     <ClInclude Include="stage_3.h">
-      <Filter>ヘッダー ファイル\Manager\GameStage</Filter>
+      <Filter>ヘッダー ファイル\GameStage</Filter>
     </ClInclude>
     <ClInclude Include="stage.h">
-      <Filter>ヘッダー ファイル\Manager\GameStage</Filter>
+      <Filter>ヘッダー ファイル\GameStage</Filter>
     </ClInclude>
     <ClInclude Include="score.h">
       <Filter>ヘッダー ファイル\UI\Score</Filter>
@@ -679,6 +688,33 @@
     </ClInclude>
     <ClInclude Include="split shots.h">
       <Filter>ヘッダー ファイル\Bullet\EnemyShots</Filter>
+    </ClInclude>
+    <ClInclude Include="boss effect1.h">
+      <Filter>ヘッダー ファイル\Effect\BossEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="boss effect2.h">
+      <Filter>ヘッダー ファイル\Effect\BossEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="boss effect3.h">
+      <Filter>ヘッダー ファイル\Effect\BossEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="boss effect base.h">
+      <Filter>ヘッダー ファイル\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="delete effect1.h">
+      <Filter>ヘッダー ファイル\Effect\BossDeleteEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="delete effect2.h">
+      <Filter>ヘッダー ファイル\Effect\BossDeleteEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="delete effect3.h">
+      <Filter>ヘッダー ファイル\Effect\BossDeleteEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="life tank.h">
+      <Filter>ヘッダー ファイル\UI\life</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>ヘッダー ファイル\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

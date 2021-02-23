@@ -27,7 +27,8 @@ public:
 	CPlayerData();	// コンストラクタ
 	~CPlayerData();	// デストラクタ
 
-	void		Uninit(void);					// 終了処理
+	static CPlayerData*	Create(void);					// 生成処理
+	void			Uninit(void);					// 終了処理
 
 	void		SetLifeData(int nLife);				// ライフデータセッター
 	void		SetSpeedData(float fSpeed);			// スピードデータセッター

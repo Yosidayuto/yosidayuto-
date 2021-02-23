@@ -43,16 +43,16 @@ public:
 
 	static HRESULT			Load(void);		
 	static void				Unload(void);
-	static CButtonManager*	Create(void);
+	static CButtonManager*	Create(int nStage);
 
 	HRESULT			Init(void);		// 初期化処理
 	void			Uninit(void);	// 終了処理
 	void			Update(void);	// 更新処理
 	void			Draw(void);		// 描画処理
-
-	void			MouseOut(void);	// テロップの切替
+	void			SetStageNumber(int nStage);	//ステージ番号取得
+	void			MouseOut(void);				// テロップの切替
 private:
 	CButton*		m_pButton[BUTTON_TYPE_MAX];	// ボタンポインタ
-
+	int				m_nStageNumber;				// ステージナンバー
 };
 #endif

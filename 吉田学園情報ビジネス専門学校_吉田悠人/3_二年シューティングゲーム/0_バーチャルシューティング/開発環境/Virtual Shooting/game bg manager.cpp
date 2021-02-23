@@ -61,11 +61,16 @@ void CGameBgManager::Unload(void)
 //=============================================================================
 CGameBgManager * CGameBgManager::Create(void)
 {
-	CGameBgManager *pGameBgManager;
+	//メモリ確保
+	CGameBgManager *pGameBgManager = NULL;
 	pGameBgManager = new CGameBgManager;
-
-	//初期化処理
-	pGameBgManager->Init();
+	
+	//NULLチェック
+	if (pGameBgManager != NULL)
+	{
+		//初期化処理
+		pGameBgManager->Init();
+	}
 
 	return pGameBgManager;
 }

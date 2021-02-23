@@ -13,8 +13,8 @@
 #include "explosion.h"		
 #include "sound.h"			
 #include "effect.h"			
-#include "enemy.h"			
-#include "boss.h"			
+#include "enemy base.h"
+#include "boss base.h"
 #include <typeinfo.h>
 //=============================================================================
 //マクロ定義
@@ -77,18 +77,24 @@ void CLaser::Unload(void)
 CLaser * CLaser::Create(D3DXVECTOR3 pos, D3DXVECTOR3 move)
 {
 	//メモリ確保
-	CLaser *pLaser;
+	CLaser *pLaser = NULL;
 	pLaser = new CLaser;
-	//位置設定
-	pLaser->SetPos(pos);
-	//サイズ設定
-	pLaser->SetSize(D3DXVECTOR3(LASER_X_SIZE / 2.0f, LASER_Y_SIZE / 2.0f, 0.0f));
-	//移動量設定
-	pLaser->SetMove(move);
-	//射程距離設定
-	pLaser->SetLife(LASER_LIFE);
-	//初期化
-	pLaser->Init();
+
+	//NULLチェック
+	if (pLaser != NULL)
+	{
+		//位置設定
+		pLaser->SetPos(pos);
+		//サイズ設定
+		pLaser->SetSize(D3DXVECTOR3(LASER_X_SIZE / 2.0f, LASER_Y_SIZE / 2.0f, 0.0f));
+		//移動量設定
+		pLaser->SetMove(move);
+		//射程距離設定
+		pLaser->SetLife(LASER_LIFE);
+		//初期化
+		pLaser->Init();
+	}
+
 	return pLaser;
 }
 
@@ -177,7 +183,30 @@ void CLaser::Bullet(CScene * pObj)
 			//エクスプロージョン生成
 			CExplosion::Create(pos);
 			//エネミーダメージ処理
-			((CEnemy*)pObj)->Damage(LASER_ATTACK);
+			((CEnemyBase*)pObj)->Damage(LASER_ATTACK);
+			//当たった状態
+			m_bHit[m_nHitCount] = true;
+			return;
+		}
+		//エネミーカウント
+		m_nHitCount++;
+	}
+	//ボスの当たり判定処理
+	if (pObj->GetObjType() == OBJ_TYPE_BOSS)
+	{
+		D3DXVECTOR3 BossPos = ((CScene2d*)pObj)->GetPos();
+		D3DXVECTOR3 BossSize = ((CScene2d*)pObj)->GetSize();
+		//当たり判定
+		if (BossPos.x + BossSize.x / 2 > pos.x
+			&&BossPos.x - BossSize.x / 2 < pos.x
+			&&BossPos.y + BossSize.y / 2 > pos.y
+			&&BossPos.y - BossSize.y / 2 < pos.y
+			&&m_bHit[m_nHitCount] != true)
+		{
+			//エクスプロージョン生成
+			CExplosion::Create(pos);
+			//エネミーダメージ処理
+			((CBossBase*)pObj)->Damage(LASER_ATTACK);
 			//当たった状態
 			m_bHit[m_nHitCount] = true;
 			return;
@@ -186,4 +215,6 @@ void CLaser::Bullet(CScene * pObj)
 		m_nHitCount++;
 
 	}
+
+
 }

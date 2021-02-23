@@ -63,17 +63,22 @@ void CLifeUi::Unload(void)
 //=============================================================================
 CLifeUi * CLifeUi::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CLifeUi *pLifeUi;
+	//メモリ確保
+	CLifeUi *pLifeUi = NULL;
 	pLifeUi = new CLifeUi;
 
-	//位置設定
-	pLifeUi->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
-	//サイズ設定
-	pLifeUi->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
-	//テクスチャ設定
-	pLifeUi->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pLifeUi->Init();
+	//NULLチェック
+	if (pLifeUi != NULL)
+	{
+		//位置設定
+		pLifeUi->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
+		//サイズ設定
+		pLifeUi->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
+		//テクスチャ設定
+		pLifeUi->BindTexture(m_TextureData.m_Texture);
+		//初期化処理
+		pLifeUi->Init();
+	}
 	return pLifeUi;
 }
 

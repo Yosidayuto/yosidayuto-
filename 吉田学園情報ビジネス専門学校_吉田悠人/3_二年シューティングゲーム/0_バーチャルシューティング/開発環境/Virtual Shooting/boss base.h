@@ -59,14 +59,17 @@ public:
 	void	Bullet(void);			// ボスのショット処理
 	bool	CoolTime(void);			// 攻撃時のクールタイム
 
+	virtual void	Effect(void) = 0;		//エフェクト生成
+	virtual void	DisEffect(void) = 0;	//倒されたときのエフェクト処理
+
 	void		SetCoolTime(int nCoolTime);	// クールタイムセッター
 	int			GetCoolTime(void);			// クールタイムゲッター
 	void		SetLife(int nLife);			// ライフセッター
 	int			GetLife(void);				// ライフゲッター
 	void		SetScore(int nScore);		// スコアセッター
 	int			GetScore(void);				// スコアゲッター
-	void			SetPattern(BOSS_PATTERN type);				//攻撃パターンセッター
-	BOSS_PATTERN	GetPattern(void);								//攻撃パターンゲッター
+	void			SetPattern(BOSS_PATTERN type);	//攻撃パターンセッター
+	BOSS_PATTERN	GetPattern(void);				//攻撃パターンゲッター
 private:
 	typedef enum	// エネミーの状態
 	{
@@ -77,7 +80,6 @@ private:
 
 	STATS_MODE			m_Stats;			// エネミーの状態
 	BOSS_PATTERN		m_Shots;			// ショットタイプ
-	
 	int					m_Score;			// スコア
 	int					m_nLife;			// エネミーのライフ
 	int					m_nCoolTime;		// 攻撃時のクールタイム

@@ -66,17 +66,22 @@ void CResultBg::Unload(void)
 //=============================================================================
 CResultBg * CResultBg::Create(void)
 {
-	CResultBg *pResultBg;
+	//メモリ確保
+	CResultBg *pResultBg = NULL;
 	pResultBg = new CResultBg;
 
-	//位置設定
-	pResultBg->SetPos(D3DXVECTOR3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 0.0f));
-	//サイズ設定
-	pResultBg->SetSize(D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
-	//テクスチャ設定
-	pResultBg->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pResultBg->Init();
+	//NULLチェック
+	if (pResultBg != NULL)
+	{
+		//位置設定
+		pResultBg->SetPos(D3DXVECTOR3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 0.0f));
+		//サイズ設定
+		pResultBg->SetSize(D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
+		//テクスチャ設定
+		pResultBg->BindTexture(m_TextureData.m_Texture);
+		//初期化処理
+		pResultBg->Init();
+	}
 
 	return pResultBg;
 }

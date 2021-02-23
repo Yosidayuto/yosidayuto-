@@ -61,25 +61,29 @@ void CEnemyType2::Unload(void)
 //=============================================================================
 // 生成処理
 //=============================================================================
-CEnemyType2 * CEnemyType2::Create(D3DXVECTOR3 pos, ENEMY_PATTERN Type)
+CEnemyType2 * CEnemyType2::Create(D3DXVECTOR3 pos)
 {
 	//メモリ確保
-	CEnemyType2* pEnemyType2;
+	CEnemyType2* pEnemyType2 = NULL;
 	pEnemyType2 = new CEnemyType2;
-	//位置設定
-	pEnemyType2->SetPos(pos);
-	//サイズ設定
-	pEnemyType2->SetSize(D3DXVECTOR3(TYPE1_SIZE / 2.0f, TYPE1_SIZE / 2.0f, 0.0f));
-	//ライフ設定
-	pEnemyType2->SetLife(TYPE1_LIFE);
-	//スコア設定
-	pEnemyType2->SetScore(TYPE1_SCORE);
-	//タイプセット
-	pEnemyType2->SetPattern(Type);
-	//テクスチャセット
-	pEnemyType2->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pEnemyType2->Init();
+
+	//NULLチェック
+	if (pEnemyType2 != NULL)
+	{
+		//位置設定
+		pEnemyType2->SetPos(pos);
+		//サイズ設定
+		pEnemyType2->SetSize(D3DXVECTOR3(TYPE1_SIZE / 2.0f, TYPE1_SIZE / 2.0f, 0.0f));
+		//ライフ設定
+		pEnemyType2->SetLife(TYPE1_LIFE);
+		//スコア設定
+		pEnemyType2->SetScore(TYPE1_SCORE);
+		//テクスチャセット
+		pEnemyType2->BindTexture(m_TextureData.m_Texture);
+		//初期化処理
+		pEnemyType2->Init();
+
+	}
 	return pEnemyType2;
 }
 

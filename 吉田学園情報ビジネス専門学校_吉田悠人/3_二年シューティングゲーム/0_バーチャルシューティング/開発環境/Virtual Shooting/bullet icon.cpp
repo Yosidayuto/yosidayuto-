@@ -65,16 +65,20 @@ void CBulletIcon::Unload(void)
 //=============================================================================
 CBulletIcon * CBulletIcon::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CBulletIcon* pBulletIcon;
+	//メモリ確保
+	CBulletIcon* pBulletIcon=NULL;
 	pBulletIcon = new CBulletIcon;
 
-	//位置設定
-	pBulletIcon->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
-	//サイズ設定
-	pBulletIcon->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
-	//初期化処理
-	pBulletIcon->Init();
-
+	//NULLチェック
+	if (pBulletIcon != NULL)
+	{
+		//位置設定
+		pBulletIcon->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
+		//サイズ設定
+		pBulletIcon->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
+		//初期化処理
+		pBulletIcon->Init();
+	}
 	return pBulletIcon;
 }
 

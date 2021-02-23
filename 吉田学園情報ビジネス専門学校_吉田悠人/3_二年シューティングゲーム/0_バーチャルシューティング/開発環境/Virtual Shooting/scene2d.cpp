@@ -28,20 +28,26 @@ CScene2d::~CScene2d()
 //=============================================================================
 CScene2d *CScene2d::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, float frot, LPDIRECT3DTEXTURE9 pTexture, int nPriority)
 {
-	CScene2d *pScene2d;
+	CScene2d *pScene2d=NULL;
 	pScene2d = new CScene2d(nPriority);
-	//位置設定
-	pScene2d->SetPos(pos);
-	//大きさ設定
-	pScene2d->SetSize(size);
-	//向き設定
-	pScene2d->SetRot(frot);
-	//テクスチャの設定
-	pScene2d->BindTexture(pTexture);
-	//初期化処理
-	pScene2d->Init();
+	
+	//NULLチェック
+	if (pScene2d != NULL)
+	{
+		//位置設定
+		pScene2d->SetPos(pos);
+		//大きさ設定
+		pScene2d->SetSize(size);
+		//向き設定
+		pScene2d->SetRot(frot);
+		//テクスチャの設定
+		pScene2d->BindTexture(pTexture);
+		//初期化処理
+		pScene2d->Init();
 
-	return pScene2d;
+		return pScene2d;
+	}
+	return NULL;
 }
 
 //=============================================================================

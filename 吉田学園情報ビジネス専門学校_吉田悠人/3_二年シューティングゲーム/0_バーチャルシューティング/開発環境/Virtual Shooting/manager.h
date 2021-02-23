@@ -57,7 +57,7 @@ public:
 																   
 	static void SetMode(GAME_MODE mode);						// ゲームモードセット
 	static void	SetScore(int nScore) { m_nScore = nScore; };	// スコアセッター
-	static void SetPlayer(CPlayerData* Player);						// プレイヤーセッター
+	static void SetPlayer(CPlayerData* Player);					// プレイヤーセッター
 
 	static int				GetScore(void);		//スコア取得
 	static CPlayerData*		GetPlayer(void);	//プレイヤー取得
@@ -86,6 +86,7 @@ private:
 	static GAME_MODE		m_Mode;			// ゲームモード
 	static CTitle*			m_pTitle;		// タイトルポインタ
 	static CTutorial*		m_pTutorial;	// チュートリアルポインタ
+
 };
 
 

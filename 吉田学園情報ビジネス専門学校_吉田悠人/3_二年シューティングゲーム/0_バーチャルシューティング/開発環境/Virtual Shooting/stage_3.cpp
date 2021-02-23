@@ -11,18 +11,24 @@
 #include "stage_3.h"
 #include "manager.h"
 #include "sound.h"
-#include "enemy.h"
-#include "boss.h"
+#include "boss base.h"
+#include "boss type1.h"
+#include "boss type2.h"
+#include "boss type3.h"
 #include "warning.h"
 //=============================================================================
-// 静的メンバー変数
+// マクロ定義
 //=============================================================================
+#define PHASE_COUNT (200)	//フェーズが位置段階変わるまでのカウント数
+
 //=============================================================================
 // コンストラクト
 //=============================================================================
 CStage3::CStage3()
 {
-	m_EnemyCreate = ENEMY_CREATE_NONE;
+	m_EnemyCreate = ENEMY_CREATE_NULL;
+	m_nBossPhase = 0;
+	memset(&m_StageData, NULL, sizeof(m_StageData));
 }
 
 //=============================================================================
@@ -38,10 +44,15 @@ CStage3::~CStage3()
 CStage3 * CStage3::Create(void)
 {
 	//メモリの確保
-	CStage3* pStage3;
+	CStage3* pStage3 = NULL;
 	pStage3 = new CStage3;
-	//初期化処理
-	pStage3->Init();
+
+	//NULLチェック
+	if (pStage3 != NULL)
+	{
+		//初期化処理
+		pStage3->Init();
+	}
 	return pStage3;
 }
 
@@ -53,7 +64,7 @@ HRESULT CStage3::Init(void)
 	//サウンドクラス取得
 	CSound *pSound = CManager::GetSound();
 	//サウンド再生
-	pSound->Play(CSound::LABEL_BGM_STAGE_1);
+	pSound->Play(CSound::LABEL_BGM_STAGE_3);
 	return S_OK;
 }
 
@@ -87,50 +98,41 @@ void CStage3::StageMode(void)
 	//サウンドポインタ取得
 	CSound *pSound = CManager::GetSound();
 	//ステージ進行
-	m_EnemyCreate = (STAGE_3_ENEMY)(m_EnemyCreate + 1);
+	m_EnemyCreate = (STAGE_ENEMY)(m_EnemyCreate + 1);
 
-	//780中心　幅400
+	//フェーズ処理
 	switch (m_EnemyCreate)
 	{
 	case ENEMY_CREATE_1:
-		CWarning::Create(D3DXVECTOR3(STAGE_POS, SCREEN_HEIGHT / 2, 0.0f), D3DXVECTOR3(800, 200, 0.0f));
-	
-		SetEnemyCount(350);
+		//ワーニング生成
+		CWarning::Create(D3DXVECTOR3(STAGE_POS, SCREEN_HEIGHT / 2, 0.0f));
 		break;
 	case ENEMY_CREATE_2:
-		CBoss::Create(D3DXVECTOR3(STAGE_POS, 100, 0.0f), CBoss::BOSS_TYPE_1, D3DXVECTOR3(500, 500, 0));
-	
-		SetEnemyCount(450);
+		//ボス生成
+		CBossType1::Create(D3DXVECTOR3(STAGE_POS, 100, 0.0f));
 		break;
 	case ENEMY_CREATE_3:
-		CWarning::Create(D3DXVECTOR3(STAGE_POS, SCREEN_HEIGHT / 2, 0.0f), D3DXVECTOR3(800, 200, 0.0f));
-	
-		SetEnemyCount(300);
+		//ワーニング生成
+		CWarning::Create(D3DXVECTOR3(STAGE_POS, SCREEN_HEIGHT / 2, 0.0f));
 		break;
 	case ENEMY_CREATE_4:
-		CBoss::Create(D3DXVECTOR3(STAGE_POS, 100, 0.0f), CBoss::BOSS_TYPE_2, D3DXVECTOR3(500, 500, 0));
-	
-		SetEnemyCount(450);
+		//ボス生成
+		CBossType2::Create(D3DXVECTOR3(STAGE_POS, 100, 0.0f));
 		break;
 	case ENEMY_CREATE_5:
-		//サウンドストップ
-		pSound->Stop(CSound::LABEL_BGM_STAGE_3);
-	
-		CWarning::Create(D3DXVECTOR3(STAGE_POS, SCREEN_HEIGHT / 2, 0.0f), D3DXVECTOR3(800, 200, 0.0f));
-	
-		SetEnemyCount(300);
+		//ボス演出
+		WarningCreate();
 		break;
 	case ENEMY_CREATE_6:
 		//サウンド再生
 		pSound->Play(CSound::LABEL_BGM_BOSS_3);
-	
-		CBoss::Create(D3DXVECTOR3(STAGE_POS, 100, 0.0f), CBoss::BOSS_TYPE_3, D3DXVECTOR3(500, 500, 0));
-	
-		SetEnemyCount(450);
+		//ボス生成
+		CBossType3::Create(D3DXVECTOR3(STAGE_POS, 100, 0.0f));
 		break;
 	case ENEMY_CREATE_7:
 		//リザルト表示
 		Result(STAGE_TYPE_3);
 		break;
 	}
+	SetEnemyCount(PHASE_COUNT);
 }

@@ -47,6 +47,7 @@ public:
 	void			Uninit(void);	//終了処理
 	void			Update(void);	//更新処理
 	void			Draw(void);		//描画処理
+	void			SetStage(int nStage);	//ステージセッタ
 
 	static CUiCount*	GetNumber(NUMBER_TYPE NumberType);	// ナンバーゲット
 	static CScore*		GetScore(void);						// スコアゲット
@@ -58,5 +59,6 @@ private:
 	static CScore*		m_pMinusScore;				// 消費スコアクラス
 	static CUiCount*	Number[NUMBER_TYPE_MAX];	// カウントクラス
 	static CTelop*		m_pTelop;					// テロップクラス
+	int					m_nStage;					// ステージ番号
 };
 #endif

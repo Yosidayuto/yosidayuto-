@@ -70,17 +70,22 @@ void CGameScrollBg::Unload(void)
 //=============================================================================
 CGameScrollBg * CGameScrollBg::Create(void)
 {
-	CGameScrollBg *pGameScrollBg;
+	//メモリ確保
+	CGameScrollBg *pGameScrollBg = NULL;
 	pGameScrollBg = new CGameScrollBg;
-
-	//位置設定
-	pGameScrollBg->SetPos(D3DXVECTOR3(STAGE_POS, SCREEN_HEIGHT / 2.0f, 0.0f));
-	//サイズ設定
-	pGameScrollBg->SetSize(D3DXVECTOR3(STAGE_SIZE, SCREEN_HEIGHT, 0.0f));
-	//テクスチャ設定
-	pGameScrollBg->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pGameScrollBg->Init();
+	
+	//NULLチェック
+	if (pGameScrollBg != NULL)
+	{
+		//位置設定
+		pGameScrollBg->SetPos(D3DXVECTOR3(STAGE_POS, SCREEN_HEIGHT / 2.0f, 0.0f));
+		//サイズ設定
+		pGameScrollBg->SetSize(D3DXVECTOR3(STAGE_SIZE, SCREEN_HEIGHT, 0.0f));
+		//テクスチャ設定
+		pGameScrollBg->BindTexture(m_TextureData.m_Texture);
+		//初期化処理
+		pGameScrollBg->Init();
+	}
 
 	return pGameScrollBg;
 }

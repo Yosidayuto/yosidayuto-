@@ -26,7 +26,8 @@ typedef enum						//エネミータイプ
 	ENEMY_TYPE_1 = 0,
 	ENEMY_TYPE_2,
 	ENEMY_TYPE_3,
-	ENEMY_TYPE_4
+	ENEMY_TYPE_4,
+	ENEMY_TYPE_MAX
 }ENEMY_TYPE;
 typedef enum						//エネミーパターン
 {
@@ -65,11 +66,13 @@ public:
 	int			GetLife(void);				// ライフゲッター
 	void		SetScore(int nScore);		// スコアセッター
 	int			GetScore(void);				// スコアゲッター
-	void		SetMovePointer(D3DXVECTOR3 pointer, int nPointer);	//移動位置セット
-	void			SetPattern(ENEMY_PATTERN type);				//攻撃パターンセッター
-	ENEMY_PATTERN	GetPattern(void);								//攻撃パターンゲッター
+	void		SetSpeed(float nSpeed,int nPointer);		// スピードセッター
+	float		GetSpeed(int nPointer);				// スピードゲッター
+	void		SetMovePointer(D3DXVECTOR3 pointer, int nPointer,float fSpeed);	// 移動位置セット
+	void			SetPattern(ENEMY_PATTERN type);					// 攻撃パターンセッター
+	ENEMY_PATTERN	GetPattern(void);								// 攻撃パターンゲッター
 private:
-	typedef enum	// エネミーの状態
+	typedef enum				// エネミーの状態
 	{
 		STATS_MODE_NORMAL = 0,	// 通常状態
 		STATS_MODE_DAMAGE,		// ダメージ状態
@@ -81,7 +84,9 @@ private:
 	D3DXVECTOR3			m_move;							// 移動量
 	int					m_Score;						// スコア
 	int					m_nLife;						// エネミーのライフ
-	int					m_nPointer;						// ポインタ
+	int					m_nPointer;						// 最大移動回数
+	int					m_nMoveCount;					// 移動回数	
+	float				m_fSpeed[ENEMY_POINTER];		// エネミーのスピード
 	D3DXVECTOR3			m_movePointer[ENEMY_POINTER];	// 移動地点ポインター
 	bool				m_bAttack;						// 攻撃したか
 	CShotsBase*			m_pShotsBase;					// ショットポインタ

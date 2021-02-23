@@ -41,14 +41,19 @@ CFullRange::~CFullRange()
 CFullRange * CFullRange::Create(D3DXVECTOR3 pos)
 {
 	//メモリの確保
-	CFullRange* pFullRange;
+	CFullRange* pFullRange = NULL;
 	pFullRange = new CFullRange;
-	//位置設定
-	pFullRange->SetPos(pos);
-	//向き設定
-	pFullRange->Tracking(SHOTS_SPEED);
-	//初期化処理
-	pFullRange->Init();
+
+	//NULLチェック
+	if (pFullRange != NULL)
+	{
+		//位置設定
+		pFullRange->SetPos(pos);
+		//向き設定
+		pFullRange->Tracking(SHOTS_SPEED);
+		//初期化処理
+		pFullRange->Init();
+	}
 
 	return pFullRange;
 }

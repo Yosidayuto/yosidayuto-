@@ -13,9 +13,11 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define TYPE1_SIZE	(100.0f)	//サイズ
+#define TYPE1_SIZE	(100.0f)//サイズ
 #define TYPE1_LIFE	(2)		//ライフ
 #define TYPE1_SCORE (100)	//スコア
+#define TYPE1_SPEED (5.5f)	//スピード
+
 //=============================================================================
 // 静的メンバー変数
 //=============================================================================
@@ -23,7 +25,7 @@ TEXTURE_DATA CEnemyType1::m_TextureData = { NULL,"data/TEXTURE/Enemy_1.png", };
 //=============================================================================
 // コンストラクト
 //=============================================================================
-CEnemyType1::CEnemyType1(int nPriorit)
+CEnemyType1::CEnemyType1()
 {
 }
 //=============================================================================
@@ -61,25 +63,28 @@ void CEnemyType1::Unload(void)
 //=============================================================================
 // 生成処理
 //=============================================================================
-CEnemyType1 * CEnemyType1::Create(D3DXVECTOR3 pos, ENEMY_PATTERN Type)
+CEnemyType1 * CEnemyType1::Create(D3DXVECTOR3 pos)
 {
 	//メモリ確保
-	CEnemyType1* pEnemyType1;
+	CEnemyType1* pEnemyType1 = NULL;
 	pEnemyType1 = new CEnemyType1;
-	//位置設定
-	pEnemyType1->SetPos(pos);
-	//サイズ設定
-	pEnemyType1->SetSize(D3DXVECTOR3(TYPE1_SIZE / 2.0f, TYPE1_SIZE / 2.0f, 0.0f));
-	//ライフ設定
-	pEnemyType1->SetLife(TYPE1_LIFE);
-	//スコア設定
-	pEnemyType1->SetScore(TYPE1_SCORE);
-	//タイプセット
-	pEnemyType1->SetPattern(Type);
-	//テクスチャセット
-	pEnemyType1->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pEnemyType1->Init();
+
+	//NULLチェック
+	if (pEnemyType1 != NULL)
+	{
+		//位置設定
+		pEnemyType1->SetPos(pos);
+		//サイズ設定
+		pEnemyType1->SetSize(D3DXVECTOR3(TYPE1_SIZE / 2.0f, TYPE1_SIZE / 2.0f, 0.0f));
+		//ライフ設定
+		pEnemyType1->SetLife(TYPE1_LIFE);
+		//スコア設定
+		pEnemyType1->SetScore(TYPE1_SCORE);
+		//テクスチャセット
+		pEnemyType1->BindTexture(m_TextureData.m_Texture);
+		//初期化処理
+		pEnemyType1->Init();
+	}
 	return pEnemyType1;
 }
 

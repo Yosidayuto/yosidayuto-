@@ -67,17 +67,22 @@ void CWeaponUi::Unload(void)
 //=============================================================================
 CWeaponUi * CWeaponUi::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CWeaponUi *pWeaponUi;
+	//メモリ確保
+	CWeaponUi* pWeaponUi = NULL;
 	pWeaponUi = new CWeaponUi;
-	//位置設定
-	pWeaponUi->SetPos(pos);
-	//大きさ設定
-	pWeaponUi->SetSize(size);
-	//テクスチャの設定
-	pWeaponUi->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pWeaponUi->Init();
 
+	//NULLチェック
+	if (pWeaponUi != NULL)
+	{
+		//位置設定
+		pWeaponUi->SetPos(pos);
+		//大きさ設定
+		pWeaponUi->SetSize(size);
+		//テクスチャの設定
+		pWeaponUi->BindTexture(m_TextureData.m_Texture);
+		//初期化処理
+		pWeaponUi->Init();
+	}
 	return pWeaponUi;
 }
 

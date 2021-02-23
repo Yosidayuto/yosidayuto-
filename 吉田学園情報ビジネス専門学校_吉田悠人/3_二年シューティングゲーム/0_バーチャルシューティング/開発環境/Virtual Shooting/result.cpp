@@ -46,10 +46,18 @@ CResult::~CResult()
 CResult * CResult::Create(STAGE_TYPE stage)
 {
 	//メモリ確保
-	CResult *pResult;
+	CResult *pResult = NULL;
 	pResult = new CResult;
-	pResult->m_Stage = stage;
-	pResult->Init();
+
+	//NULLチェック
+	if (pResult != NULL)
+	{
+		pResult->m_Stage = stage;
+
+		//初期化処理
+		pResult->Init();
+
+	}
 	return pResult;
 }
 
@@ -126,12 +134,12 @@ void CResult::Uninit(void)
 //---------------------------------
 void CResult::Update(void)
 {
-	CInihMouse *pMouse = CManager::GetMouse();		//マウス取得
-	CFade *pFade = CManager::GetFade();				//フェード取得	
+	CInihMouse*	pMouse	= CManager::GetMouse();		//マウス取得
+	CFade*		pFade	= CManager::GetFade();		//フェード取得	
 	
 	if (pMouse->GetClickTrigger(CLICK_LEFT) == true  )
 	{
-		if(m_Stage == STAGE_TYPE_MAX)
+		if(m_Stage == STAGE_TYPE_3)
 		{
 			pFade->SetFade(GAME_MODE_CLEAR);
 		}

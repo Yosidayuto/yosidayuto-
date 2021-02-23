@@ -19,7 +19,6 @@
 #include "score.h"			
 #include "number.h"			
 #include "fade.h"			
-#include "ui.h"				
 #include "game.h"			
 #include "select.h"			
 #include "clear.h"			
@@ -31,6 +30,7 @@
 #include "tutorial.h"
 #include "select bg.h"
 #include "life ui.h"
+#include "life tank.h"
 #include "weapon manager.h"
 #include "button manager.h"
 #include "player data.h"
@@ -41,6 +41,7 @@
 #include "stage_3.h"
 #include "score bar.h"
 #include "boss base.h"
+#include "boss effect base.h"
 //=============================================================================
 //静的メンバ変数宣言
 //=============================================================================
@@ -108,8 +109,6 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 
 	//ファイルロード
 	LoadFile();
-	//プレイヤー処理
-	m_pPlayerData = new CPlayerData;
 
 	//オブジェクトクラス生成
 	m_pFade->SetFade(m_Mode);
@@ -252,6 +251,8 @@ void CManager::SetMode(GAME_MODE mode)
 	case GAME_MODE_TITLE:
 		if (m_pTitle != NULL)
 		{
+			//プレイヤー処理
+			m_pPlayerData = CPlayerData::Create();
 			//タイトルシーン破棄
 			m_pTitle->Uninit();
 		}
@@ -309,7 +310,9 @@ void CManager::SetMode(GAME_MODE mode)
 		if (m_pSelect != NULL)
 		{
 			//セレクト初期化処理
+			m_pSelect->SetStage(m_pGame->GetStageType());
 			m_pSelect->Init();
+
 		}
 		break;
 	case GAME_MODE_STAGE:
@@ -322,6 +325,8 @@ void CManager::SetMode(GAME_MODE mode)
 	case GAME_MODE_CLEAR:
 		//ゲームクリア
 		CClear::Create();
+		//プレイヤーのデータ破棄
+		m_pPlayerData->Uninit();
 		//サウンド再生
 		m_pSound->Play(CSound::LABEL_SE_RESULT);
 		break;
@@ -374,7 +379,6 @@ void CManager::LoadFile(void)
 	//テクスチャの読み込み
 	CClear::Load();			
 	CNumber::Load();		
-	CUi::Load();			
 	CTelop::Load();		
 	CPointer::Load();		
 	CTitleBg::Load();
@@ -387,6 +391,8 @@ void CManager::LoadFile(void)
 	CResultBg::Load();
 	CScoreBar::Load();
 	CBossBase::Load();
+	CBossEffectBase::Load();
+	CLifeTank::Load();
 	//テキスト読み込み
 	CStage::LoadFile();
 }
@@ -399,7 +405,6 @@ void CManager::UnLoadFile(void)
 	//テクスチャの破棄
 	CClear::Unload();			
 	CNumber::Unload();			
-	CUi::Unload();				
 	CTelop::Unload();		
 	CPointer::Unload();			
 	CTitleBg::Unload();
@@ -412,6 +417,8 @@ void CManager::UnLoadFile(void)
 	CResultBg::Unload();
 	CScoreBar::Unload();
 	CBossBase::Unload();
+	CBossEffectBase::Unload();
+	CLifeTank::Unload();
 
 }
 

@@ -66,18 +66,22 @@ void CSelectBg::Unload(void)
 //=============================================================================
 CSelectBg * CSelectBg::Create(void)
 {
-	CSelectBg *pSelectBg;
+	//メモリ確保
+	CSelectBg *pSelectBg = NULL;
 	pSelectBg = new CSelectBg;
 
-	//位置設定
-	pSelectBg->SetPos(D3DXVECTOR3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 0.0f));
-	//サイズ設定
-	pSelectBg->SetSize(D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
-	//テクスチャ設定
-	pSelectBg->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pSelectBg->Init();
-
+	//NULLチェック
+	if (pSelectBg != NULL)
+	{
+		//位置設定
+		pSelectBg->SetPos(D3DXVECTOR3(SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f, 0.0f));
+		//サイズ設定
+		pSelectBg->SetSize(D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f));
+		//テクスチャ設定
+		pSelectBg->BindTexture(m_TextureData.m_Texture);
+		//初期化処理
+		pSelectBg->Init();
+	}
 	return pSelectBg;
 }
 

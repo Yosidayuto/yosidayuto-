@@ -27,26 +27,17 @@ public:
 	CStage3();	//コンストラクタ
 	~CStage3();	//デストラクタ
 	static CStage3*	Create(void);	//生成処理
-	HRESULT			Init(void);		// 初期化処理
-	void			Uninit(void);	// 終了処理
-	void			Update(void);	// 更新処理
-	void			StageMode(void);	// エネミーのスポーンモード
+
+	HRESULT	Init(void);		// 初期化処理
+	void	Uninit(void);	// 終了処理
+	void	Update(void);	// 更新処理
+	void	StageMode(void);	// ステージの進行
 
 private:
-	typedef enum	//エネミーの出現モード
-	{
-		ENEMY_CREATE_NONE = 0,
-		ENEMY_CREATE_1,		//フェーズ１
-		ENEMY_CREATE_2,		//フェーズ２
-		ENEMY_CREATE_3,		//フェーズ３
-		ENEMY_CREATE_4,		//フェーズ４
-		ENEMY_CREATE_5,		//フェーズ5
-		ENEMY_CREATE_6,		//フェーズ6
-		ENEMY_CREATE_7,		//フェーズ7
-		ENEMY_CREATE_MAX,
-	}STAGE_3_ENEMY;
+	STAGE_ENEMY	m_EnemyCreate;		//エネミーの出現モード
+	STAGE_DATA	m_StageData;		//エネミーの出現データ
+	int			m_nBossPhase;		//ボス出現データ
 
-	STAGE_3_ENEMY	m_EnemyCreate;	//エネミーの出現モード
 };
 
 

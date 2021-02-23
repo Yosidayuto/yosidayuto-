@@ -39,6 +39,7 @@ CSelect::CSelect()
 	ZeroMemory(Number, sizeof(Number));
 	m_pTelop		= NULL;
 	m_pMinusScore	= NULL;
+	m_nStage		= 0;
 }
 
 //=============================================================================
@@ -61,7 +62,7 @@ HRESULT CSelect::Init(void)
 	ShowCursor(false);
 	//クリエイト処理
 	//ボタン生成
-	CButtonManager::Create();
+	CButtonManager::Create(m_nStage);
 	//ウェポンアイコン
 	CWeaponManager::Create(D3DXVECTOR3(1000, 400, 0.0f), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
 	//テロップ生成
@@ -114,6 +115,14 @@ void CSelect::Update(void)
 //=============================================================================
 void CSelect::Draw(void)
 {
+}
+
+//=============================================================================
+// ステージナンバーセッター
+//=============================================================================
+void CSelect::SetStage(int nStage)
+{
+	m_nStage = nStage;
 }
 
 //=============================================================================

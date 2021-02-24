@@ -19,14 +19,12 @@
 //前方宣言
 //=============================================================================
 class CSelectBg;
-class CButton;
 class CScore;
 class CUiCount;
 class CTelop;
-class CStartButton;
-class CLifeButton;
-class CPlayer;
-
+class CButtonManager;
+class CWeaponManager;
+class CSelectPointer;
 //------------------------------------
 //クラス処理
 //------------------------------------
@@ -54,11 +52,14 @@ public:
 	static CScore*		GetMinusScore(void);				// 消費スコアゲット
 	static CTelop*		GetTelop(void);						// テロップゲット
 private:
-	CSelectBg*			m_pSelectBg;				// 背景クラス
-	static CScore*		m_pScore;					// スコアクラス
-	static CScore*		m_pMinusScore;				// 消費スコアクラス
-	static CUiCount*	Number[NUMBER_TYPE_MAX];	// カウントクラス
-	static CTelop*		m_pTelop;					// テロップクラス
+	CSelectBg*			m_pSelectBg;				// 背景ポインタ
+	CWeaponManager*		m_pWeaponManager;			// ウェポンUIマネージャーポインタ
+	static CScore*		m_pScore;					// スコアポインタ
+	static CScore*		m_pMinusScore;				// 消費スコアポインタ
+	static CUiCount*	Number[NUMBER_TYPE_MAX];	// カウントポインタ
+	static CTelop*		m_pTelop;					// テロップポインタ
+	CButtonManager*		m_pButtonManager;			// ボタンマネージャーポインタ
+	CSelectPointer*		m_pSelectPointer;			// マウスポインタ
 	int					m_nStage;					// ステージ番号
 };
 #endif

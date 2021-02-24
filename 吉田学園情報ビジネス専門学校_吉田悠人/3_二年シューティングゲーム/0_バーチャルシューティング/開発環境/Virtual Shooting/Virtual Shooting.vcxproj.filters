@@ -165,9 +165,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="fade.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="warning.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -438,11 +435,17 @@
     <ClCompile Include="game.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="fade.cpp">
+      <Filter>ソース ファイル\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="load.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="load bg.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="fade.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="warning.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -715,6 +718,15 @@
     </ClInclude>
     <ClInclude Include="game.h">
       <Filter>ヘッダー ファイル\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="fade.h">
+      <Filter>ヘッダー ファイル\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="load.h">
+      <Filter>ヘッダー ファイル\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="load bg.h">
+      <Filter>ヘッダー ファイル\Bg</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

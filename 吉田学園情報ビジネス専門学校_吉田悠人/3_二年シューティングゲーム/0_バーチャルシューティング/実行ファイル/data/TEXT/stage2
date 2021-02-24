@@ -1,0 +1,1049 @@
+STAGE_DATA
+
+//フェーズ1	(修正)
+PHASE_START
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 3
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 420 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 420 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 0
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 720 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 420 360
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 2
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 100 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 0
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 100 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 400 360
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 2
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 720 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+PHASE_END
+
+//フェーズ2
+PHASE_START
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 3
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 300 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 300 170
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 3
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 520 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 520 170
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 300 60
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 300 220
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 2
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 20 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 520 60
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 520 220
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 2
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 800 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 100 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 100 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 720 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 720 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+PHASE_END
+
+
+//フェーズ3
+PHASE_START
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 3
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 200 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 200 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+PHASE_END
+
+//フェーズ4
+
+PHASE_START
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 3
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 620 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 5
+
+           ENEMY_POS = 620 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+PHASE_END
+
+//フェーズ5
+PHASE_START
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 3
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 420 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 420 250
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 2
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 420 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 3
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 420 60
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 420 260
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 2
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 20 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 3
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 420 110
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 420 270
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 2
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 800 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+PHASE_END
+
+//フェーズ6
+
+PHASE_START
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 20 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 20 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 80 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 80 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 140 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 140 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 200 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 200 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 260 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 260 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 320 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 320 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 380 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 380 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 440 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 440 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 500 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 500 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 560 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 560 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 620 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 620 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 680 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 4
+
+           ENEMY_POS = 680 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+PHASE_END
+
+//7フェーズ
+PHASE_START
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 760 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 760 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 700 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 700 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 640 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 640 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 580 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 580 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 520 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 520 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 460 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 460 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 400 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 400 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 340 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 340 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 280 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 280 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+    ENEMY_DATA
+
+       ENEMY_TYPE = 2
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 0
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 220 10
+
+        STATUS_EMD
+
+        STATUS_DATA
+
+           ENEMY_MOVE_NUMBER = 1
+
+           ENEMY_SPEED = 3
+
+           ENEMY_POS = 220 720
+
+        STATUS_EMD
+
+    ENEMY_END
+
+PHASE_END
+
+
+//終了
+STAGE_END

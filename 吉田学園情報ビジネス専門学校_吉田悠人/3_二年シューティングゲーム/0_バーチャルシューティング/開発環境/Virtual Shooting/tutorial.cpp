@@ -32,8 +32,6 @@ CTutorial::~CTutorial()
 //=============================================================================
 HRESULT CTutorial::Init(void)
 {
-	CSound*	pSound = CManager::GetSound();	//サウンド取得
-
 	//チュートリアル生成
 	m_pTutorialBg = CTutorialBg::Create();
 
@@ -46,13 +44,10 @@ HRESULT CTutorial::Init(void)
 //=============================================================================
 void CTutorial::Uninit(void)
 {
-	//サウンド取得
-	CSound*	pSound = CManager::GetSound();
-	//サウンド停止
-	pSound->Stop();
 	//シーン破棄
 	CScene::ReleaseAll();
 }
+
 
 //=============================================================================
 // 更新処理

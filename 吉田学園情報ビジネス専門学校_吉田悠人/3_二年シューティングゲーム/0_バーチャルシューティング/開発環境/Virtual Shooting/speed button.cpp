@@ -82,7 +82,7 @@ CSpeedButton * CSpeedButton::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 	pLifeButton = new CSpeedButton;
 
 	//NULLチェック
-	if (pLifeButton = NULL)
+	if (pLifeButton != NULL)
 	{
 		//位置設定
 		pLifeButton->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));

@@ -21,8 +21,6 @@ class CRenderer;
 class CInihKeyboard;
 class CInihMouse;
 class CSound;
-class CPause;
-class CScore;
 class CScene;
 class CFade;
 class CGame;
@@ -30,9 +28,11 @@ class CSelect;
 class CPlayerData;
 class CTitle;
 class CTutorial;
+class CLoad;
 typedef enum	//ゲームモード
 {
 	GAME_MODE_NONE = 0,
+	GAME_MODE_LOAD,			//ロード
 	GAME_MODE_TITLE,		//タイトル
 	GAME_MODE_TUTORIAL,		//チュートリアル
 	GAME_MODE_SELECT,		//セレクト
@@ -68,7 +68,7 @@ public:
 	static CSound			*GetSound(void);	// サウンド取得
 	static CFade			*GetFade(void);		// フェードアウト取得
 private:
-	void LoadFile(void);						// ファイルロード関数
+	static void LoadFile(void);						// ファイルロード関数
 	void UnLoadFile(void);						// ファイルアンロード関数
 
 	static CRenderer		*m_pRenderer;	// レンダリングクラス
@@ -86,7 +86,8 @@ private:
 	static GAME_MODE		m_Mode;			// ゲームモード
 	static CTitle*			m_pTitle;		// タイトルポインタ
 	static CTutorial*		m_pTutorial;	// チュートリアルポインタ
-
+	static CLoad*			m_pLoad;		// ロード画面
+	static bool				m_bLoad;		// ロードが終わっているか
 };
 
 

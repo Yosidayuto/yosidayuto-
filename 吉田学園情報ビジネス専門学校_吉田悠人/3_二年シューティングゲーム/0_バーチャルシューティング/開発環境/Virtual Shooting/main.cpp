@@ -78,13 +78,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		NULL,
 		hInstance,
 		NULL);
-	CManager *pManager = NULL;
-	//マネージャー生成
-	pManager = new CManager;
-	pManager->Init(hInstance, hWnd, true);
+
 
 	// 分解能を設定
-	timeBeginPeriod(1);
+	timeBeginPeriod(0);
 
 	// フレームカウント初期化
 	dwCurrentTime =
@@ -95,6 +92,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	// ウインドウの表示
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
+
+	//マネージャーポインタ
+	CManager *pManager = NULL;
+
+	//マネージャー生成
+	pManager = new CManager;
+	if (pManager != NULL)
+	{
+		pManager->Init(hInstance, hWnd, true);
+	}
 
 	// メッセージループ
 	while (1)
@@ -129,9 +136,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			{// 1/60秒経過
 				dwExecLastTime = dwCurrentTime;	// 現在の時間を保存
 
-				pManager->Update();				//マネージャー更新処理
-
-				pManager->Draw();				//マネージャー描画処理
+				pManager->Update();	//マネージャー更新処理
+				pManager->Draw();	//マネージャー描画処理
 
 				dwFrameCount++;
 			}

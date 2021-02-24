@@ -18,6 +18,7 @@
 #include "sound.h"			
 #include "score.h"			
 #include "number.h"			
+#include "load.h"
 #include "fade.h"			
 #include "game.h"			
 #include "select.h"			
@@ -42,6 +43,8 @@
 #include "score bar.h"
 #include "boss base.h"
 #include "boss effect base.h"
+#include <thread>
+
 //=============================================================================
 //静的メンバ変数宣言
 //=============================================================================
@@ -49,7 +52,7 @@ CRenderer *CManager::m_pRenderer	 = NULL;
 CInihKeyboard *CManager::m_pInput	 = NULL;
 CInihMouse *CManager::m_pInihMouse	 = NULL;
 CSound *CManager::m_pSound			 = NULL;
-GAME_MODE CManager::m_Mode			 = GAME_MODE_TITLE;
+GAME_MODE CManager::m_Mode			 = GAME_MODE_LOAD;
 CScene *CManager::m_pScene			 = NULL;
 CFade *CManager::m_pFade			 = NULL;
 int CManager::m_nScore				 = 10000;
@@ -58,12 +61,13 @@ CGame* CManager::m_pGame			 = NULL;
 CTitle* CManager::m_pTitle			 = NULL;
 CSelect* CManager::m_pSelect		 = NULL;
 CTutorial* CManager::m_pTutorial	 = NULL;
+CLoad* CManager::m_pLoad			 = NULL;
+bool CManager::m_bLoad				 = false;
 //=============================================================================
 //コンストラクタ
 //=============================================================================
 CManager::CManager()
 {
-
 }
 
 //=============================================================================
@@ -105,13 +109,18 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	m_pSelect	= new CSelect;
 	//ゲーム処理
 	m_pGame = new CGame;
-
-
-	//ファイルロード
-	LoadFile();
-
+	//ロード画面
+	m_pLoad = new CLoad;
+	//ロード画面ロード
+	CLoad::Load();
+	//LoadFile();
+	//ファイルロード(マルチスレッド)
+	std::thread thWorker(LoadFile);
+	thWorker.detach();
+	
 	//オブジェクトクラス生成
 	m_pFade->SetFade(m_Mode);
+
 	return S_OK;
 }
 
@@ -129,7 +138,6 @@ void CManager::Uninit(void)
 		m_pInput->Uninit();
 		delete m_pInput;
 		m_pInput = NULL;
-
 	}
 	//マウス破棄
 	if (m_pInihMouse != NULL)
@@ -137,7 +145,6 @@ void CManager::Uninit(void)
 		m_pInihMouse->Uninit();
 		delete m_pInihMouse;
 		m_pInihMouse = NULL;
-
 	}
 	//サウンド破棄
 	if (m_pSound != NULL)
@@ -152,6 +159,41 @@ void CManager::Uninit(void)
 		m_pFade->Uninit();
 		delete m_pFade;
 		m_pFade = NULL;
+	}
+	//タイトル破棄
+	if (m_pTitle != NULL)
+	{
+		m_pTitle->Uninit();
+		delete m_pTitle;
+		m_pTitle = NULL;
+	}
+	//チュートリアル破棄
+	if (m_pTutorial != NULL)
+	{
+		m_pTutorial->Uninit();
+		delete m_pTutorial;
+		m_pTutorial = NULL;
+	}
+	//セレクト破棄
+	if (m_pSelect != NULL)
+	{
+		m_pSelect->Uninit();
+		delete m_pSelect;
+		m_pSelect = NULL;
+	}
+	//ゲーム破棄
+	if (m_pGame != NULL)
+	{
+		m_pGame->Uninit();
+		delete m_pGame;
+		m_pGame = NULL;
+	}
+	//ロード破棄
+	if (m_pLoad != NULL)
+	{
+		m_pLoad->Uninit();
+		delete m_pLoad;
+		m_pLoad = NULL;
 	}
 
 	//レンダリングクラスの破棄
@@ -199,6 +241,21 @@ void CManager::Update()
 	//場面ごとのアップデート
 	switch (m_Mode)
 	{
+	case GAME_MODE_LOAD:
+		//ロードが終わっているか
+		if (m_bLoad == false)
+		{
+			if (m_pLoad != NULL)
+			{
+				m_pLoad->Update();
+			}
+		}
+		else
+		{
+			//m_Loadがtrueの時
+			m_pFade->SetFade(GAME_MODE_TITLE);
+		}
+		break;
 	case GAME_MODE_TITLE:
 		if (m_pTitle != NULL)
 		{
@@ -248,19 +305,27 @@ void CManager::SetMode(GAME_MODE mode)
 	//終了処理
 	switch (m_Mode)
 	{
+	case GAME_MODE_LOAD:
+		if (m_pLoad != NULL)
+		{
+			//ロード破棄
+			m_pLoad->Uninit();
+		}
+		break;
 	case GAME_MODE_TITLE:
 		if (m_pTitle != NULL)
 		{
-			//プレイヤー処理
-			m_pPlayerData = CPlayerData::Create();
 			//タイトルシーン破棄
 			m_pTitle->Uninit();
+			//プレイヤー処理
+			m_pPlayerData = CPlayerData::Create();
 		}
 
 		break;
 	case GAME_MODE_TUTORIAL:
 		if (m_pTutorial != NULL)
 		{
+			//チュートリアルシーンの破棄
 			m_pTutorial->Uninit();
 		}
 		break;
@@ -280,18 +345,24 @@ void CManager::SetMode(GAME_MODE mode)
 		break;
 	case GAME_MODE_CLEAR:
 		m_nScore = 10000;
-		//シーン破棄
-		CScene::ReleaseAll();
-		//サウンド停止
-		m_pSound->Stop();
 		break;
 	}
 
+	//サウンド停止
+	m_pSound->Stop();
+	//モード変更処理
 	m_Mode = mode;
 
 	//初期化処理
 	switch (m_Mode)
 	{
+	case GAME_MODE_LOAD:
+		if (m_pLoad != NULL)
+		{
+			//ロード画面初期化
+			m_pLoad->Init();
+		}
+		break;
 	case GAME_MODE_TITLE:
 		if (m_pTitle != NULL)
 		{
@@ -395,6 +466,8 @@ void CManager::LoadFile(void)
 	CLifeTank::Load();
 	//テキスト読み込み
 	CStage::LoadFile();
+	m_bLoad = true;
+
 }
 
 //=============================================================================
@@ -419,6 +492,7 @@ void CManager::UnLoadFile(void)
 	CBossBase::Unload();
 	CBossEffectBase::Unload();
 	CLifeTank::Unload();
+	CLoad::Unload();
 
 }
 

@@ -22,7 +22,7 @@ class CBgc :public CScene2d
 {
 public:
 
-	CBgc(int nPriorit = 0);			//コンストラクタ
+	CBgc(int nPriorit = PRIORITY_SCENE);			//コンストラクタ
 	~CBgc();						//デストラクタ
 
 	HRESULT			Init(void);		//初期化処理

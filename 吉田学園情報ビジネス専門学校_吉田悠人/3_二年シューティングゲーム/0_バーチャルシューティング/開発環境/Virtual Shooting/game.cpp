@@ -46,11 +46,6 @@ CGame::CGame()
 //=============================================================================
 CGame::~CGame()
 {
-	m_StageType;
-	if (m_StageType == STAGE_TYPE_MAX)
-	{
-		m_StageType = STAGE_TYPE_1;
-	}
 }
 
 //=============================================================================
@@ -96,15 +91,15 @@ HRESULT CGame::Init(void)
 	//クリエイト処理
 	//=============================================================================
 	//背景
-	CGameBgManager::Create();
+	m_pGameBgManager = CGameBgManager::Create();
 	//プレイヤー生成
 	m_pPlayer = CPlayer::Create(D3DXVECTOR3(780, 600, 0.0f));
 	//スコア表記
 	m_Score	= CScore::Create(D3DXVECTOR3(35,670,0),D3DXVECTOR3(20,45,0.0f),true);
 	m_Score->SetScore(CManager::GetScore());
 	//マウスポインタ生成
-	CGamePointer::Create();
-	
+	m_pGamePointer = CGamePointer::Create();
+
 	//ステージ生成
 	switch (m_StageType)
 	{
@@ -127,21 +122,14 @@ HRESULT CGame::Init(void)
 //=============================================================================
 void CGame::Uninit(void)
 {
-	//サウンド取得
-	CSound*	pSound = CManager::GetSound();
-
-	if (m_pStage != NULL)
+	//ステージの初期化
+	if (m_StageType > STAGE_TYPE_3)
 	{
-		m_pStage->Uninit();
-		delete m_pStage;
-		m_pStage = NULL;
+		m_StageType = STAGE_TYPE_1;
 	}
 
 	//シーン破棄
 	CScene::ReleaseAll();
-	//サウンド停止
-	pSound->Stop();
-
 }
 
 //=============================================================================

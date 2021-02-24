@@ -68,7 +68,7 @@ CSelectPointer * CSelectPointer::Create(void)
 	pSelectPointer = new CSelectPointer;
 
 	//NULLチェック
-	if (pSelectPointer = NULL)
+	if (pSelectPointer != NULL)
 	{
 		//テクスチャ設定
 		pSelectPointer->BindTexture(m_TextureData.m_Texture);

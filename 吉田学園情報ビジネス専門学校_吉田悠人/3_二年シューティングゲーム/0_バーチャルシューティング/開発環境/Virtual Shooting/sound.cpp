@@ -9,6 +9,7 @@ CSound::PARAM CSound::m_aParam[LABEL_MAX] =
 {
 	//BGM
 	{ "data/BGM/Title.wav", 0 },	//タイトル
+	{ "data/BGM/Load.wav", 0 },		//ロード
 	{ "data/BGM/Select.wav", 0 },	//セレクト
 	{ "data/BGM/Stage_1.wav", 0 },	//ステージ１
 	{ "data/BGM/Stage_2.wav", 0 },	//ステージ２

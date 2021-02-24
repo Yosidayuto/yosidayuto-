@@ -21,10 +21,10 @@
 //前方宣言
 //=============================================================================
 class CPlayer;
-class CEnemy;
-class CBg;
 class CScore;
 class CStage;
+class CGameBgManager;
+class CGamePointer;
 typedef enum //ステージタイプ
 {
 	STAGE_TYPE_1 = 0,	//1ステージ
@@ -54,7 +54,9 @@ public:
 	static void			SetStageType(STAGE_TYPE stage);
 	static CPlayer*		GetPlayer(void);
 private:
+	CGameBgManager*		m_pGameBgManager;	// ゲームステージ背景ポインタ
 	CStage*				m_pStage;			// ステージポインタ
+	CGamePointer*		m_pGamePointer;		// マウスポインターのポインタ
 	static CPlayer*		m_pPlayer;			// プレイヤーポインタ
 	static CScore*		m_Score;			// スコアポインタ
 	static STAGE_TYPE	m_StageType;		// ステージタイプ

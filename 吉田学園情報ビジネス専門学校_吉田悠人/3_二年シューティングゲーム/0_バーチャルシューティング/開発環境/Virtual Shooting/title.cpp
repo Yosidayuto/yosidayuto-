@@ -48,11 +48,6 @@ HRESULT CTitle::Init(void)
 //=============================================================================
 void CTitle::Uninit(void)
 {
-	//サウンド取得
-	CSound*	pSound = CManager::GetSound();	
-	//サウンド停止
-	pSound->Stop();
-
 	//シーン破棄
 	CScene::ReleaseAll();
 }

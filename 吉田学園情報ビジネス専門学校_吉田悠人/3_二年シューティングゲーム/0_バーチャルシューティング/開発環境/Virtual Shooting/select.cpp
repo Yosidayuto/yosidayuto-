@@ -62,13 +62,13 @@ HRESULT CSelect::Init(void)
 	ShowCursor(false);
 	//クリエイト処理
 	//ボタン生成
-	CButtonManager::Create(m_nStage);
+	m_pButtonManager = CButtonManager::Create(m_nStage);
 	//ウェポンアイコン
-	CWeaponManager::Create(D3DXVECTOR3(1000, 400, 0.0f), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
+	m_pWeaponManager = CWeaponManager::Create(D3DXVECTOR3(1000, 400, 0.0f), D3DXVECTOR3(100.0f, 100.0f, 0.0f));
 	//テロップ生成
-	m_pTelop=CTelop::Create(D3DXVECTOR3(SCREEN_WIDTH - 425, 25, 0.0f), D3DXVECTOR3(850, 50, 0.0f));
+	m_pTelop = CTelop::Create(D3DXVECTOR3(SCREEN_WIDTH - 425, 25, 0.0f), D3DXVECTOR3(850, 50, 0.0f));
 	//背景生成
-	CSelectBg::Create();
+	m_pSelectBg = CSelectBg::Create();
 	//スコア
 	m_pScore = CScore::Create(D3DXVECTOR3(35.0f, 585.0f, 0.0f), D3DXVECTOR3(25.0f, 35.0f, 0.0f), true);
 	m_pScore->AddScore(CManager::GetScore());
@@ -76,8 +76,8 @@ HRESULT CSelect::Init(void)
 	m_pMinusScore = CScore::Create(D3DXVECTOR3(35.0f, 500.0f, 0.0f), D3DXVECTOR3(25.0f, 35.0f, 0.0f), true);
 	m_pMinusScore->ColChange(D3DXCOLOR(1.0f,0.0f,0.0f,1.0f));
 	//マウスポインタ
-	CSelectPointer::Create();
-	
+	m_pSelectPointer = CSelectPointer::Create();
+
 	//ナンバーセット
 	Number[NUMBER_TYPE_LIEF] = CUiCount::Create(D3DXVECTOR3(580.0f, 225.0f, 0.0f), D3DXVECTOR3(25.0f, 50.0f, 0.0f));
 	Number[NUMBER_TYPE_LIEF]->SetCount(CManager::GetPlayer()->GetLifeData());
@@ -93,13 +93,8 @@ HRESULT CSelect::Init(void)
 //=============================================================================
 void CSelect::Uninit(void)
 {
-	//サウンド取得
-	CSound*	pSound = CManager::GetSound();
-	//サウンド停止
-	pSound->Stop();
 	//シーン破棄
 	CScene::ReleaseAll();
-
 }
 
 //=============================================================================

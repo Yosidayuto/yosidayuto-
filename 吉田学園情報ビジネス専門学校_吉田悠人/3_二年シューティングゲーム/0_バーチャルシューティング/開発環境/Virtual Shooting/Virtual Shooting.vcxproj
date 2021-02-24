@@ -181,6 +181,8 @@
     <ClCompile Include="laser icon.cpp" />
     <ClCompile Include="laser.cpp" />
     <ClCompile Include="life tank.cpp" />
+    <ClCompile Include="load bg.cpp" />
+    <ClCompile Include="load.cpp" />
     <ClCompile Include="player data.cpp" />
     <ClCompile Include="result bg.cpp" />
     <ClCompile Include="score bar.cpp" />
@@ -274,6 +276,8 @@
     <ClInclude Include="laser icon.h" />
     <ClInclude Include="laser.h" />
     <ClInclude Include="life tank.h" />
+    <ClInclude Include="load bg.h" />
+    <ClInclude Include="load.h" />
     <ClInclude Include="player data.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="result bg.h" />

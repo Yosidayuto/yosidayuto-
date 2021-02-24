@@ -144,20 +144,31 @@ void CButtonManager::MouseOut(void)
 	//どれかボタンにマウスカーソルが重なっているか
 	for (int nCountType = 0; nCountType < BUTTON_TYPE_MAX; nCountType++)
 	{
-		if (m_pButton[nCountType]->Hit())
+		if (m_pButton[nCountType] != NULL)
 		{
-			//処理を終わる
-			return;
+			if (m_pButton[nCountType]->Hit())
+			{
+				//処理を終わる
+				return;
+			}
+
 		}
 	}
 
 	//マウスカーソルが重なっていなかったとき
-	if (pTelop->GetTelopType() != TELOP_TYPE_TUTORIAL)
+	if (pTelop != NULL)
 	{
-		//テロップ切替
-		pTelop->TypeChange(TELOP_TYPE_TUTORIAL);
+		if (pTelop->GetTelopType() != TELOP_TYPE_TUTORIAL)
+		{
+			//テロップ切替
+			pTelop->TypeChange(TELOP_TYPE_TUTORIAL);
+		}
+
 	}
 	//消費スコアを0に変換
-	pMinusScore->SetScore(0);
+	if (pMinusScore != NULL)
+	{
+		pMinusScore->SetScore(0);
+	}
 
 }

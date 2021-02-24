@@ -19,6 +19,7 @@ public:
 	{
 		//BGM
 		LABEL_BGM_TITLE = 0,	//タイトル
+		LABEL_BGM_LOAD,			//ロード
 		LABEL_BGM_SELECT,		//セレクト
 		LABEL_BGM_STAGE_1,		//ステージ１
 		LABEL_BGM_STAGE_2,		//ステージ２

@@ -15,10 +15,10 @@
 //=============================================================================
 CPlayerData::CPlayerData()
 {
-	m_nLifeData = 0;
-	m_fSpeedData = 0.0f;
-	m_WeaponData.Left = WEAPONS_MODE_BUTTOL;
-	m_WeaponData.Right = WEAPONS_MODE_NONE;
+	m_nLifeData			= 0;
+	m_fSpeedData		= 0.0f;
+	m_WeaponData.Left	= WEAPONS_MODE_BUTTOL;
+	m_WeaponData.Right	= WEAPONS_MODE_NONE;
 
 }
 

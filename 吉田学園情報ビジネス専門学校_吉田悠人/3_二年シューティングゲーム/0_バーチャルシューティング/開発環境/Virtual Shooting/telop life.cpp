@@ -65,15 +65,21 @@ void CTelopLife::Unload(void)
 //=============================================================================
 CTelopLife * CTelopLife::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CTelopLife* pTelopLife;
+	//メモリ確保
+	CTelopLife* pTelopLife = NULL;
 	pTelopLife = new CTelopLife;
 
-	//位置設定
-	pTelopLife->SetPos(D3DXVECTOR3(pos.x - TELOP_X_SIZE, pos.y, pos.z));
-	//サイズ設定
-	pTelopLife->SetSize(D3DXVECTOR3(size.x - TELOP_X_SIZE / 2, size.y, size.z));
-	//初期化処理
-	pTelopLife->Init();
+	//NULLチェック
+	if (pTelopLife != NULL)
+	{
+		//位置設定
+		pTelopLife->SetPos(D3DXVECTOR3(pos.x - TELOP_X_SIZE, pos.y, pos.z));
+		//サイズ設定
+		pTelopLife->SetSize(D3DXVECTOR3(size.x - TELOP_X_SIZE / 2, size.y, size.z));
+		//初期化処理
+		pTelopLife->Init();
+
+	}
 
 	return pTelopLife;
 }

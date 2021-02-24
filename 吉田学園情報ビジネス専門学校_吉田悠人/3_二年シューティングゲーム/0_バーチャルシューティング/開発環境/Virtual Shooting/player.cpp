@@ -82,21 +82,27 @@ void CPlayer::Unload(void)
 //=============================================================================
 CPlayer * CPlayer::Create(D3DXVECTOR3 Pos)
 {
-	CPlayer *pPlayer;
+	//メモリ確保
+	CPlayer *pPlayer = NULL;
 	pPlayer = new CPlayer;
 
-	//位置設定
-	pPlayer->SetPos(Pos);
-	//サイズ設定
-	pPlayer->SetSize(D3DXVECTOR3(PLAYER_SIZE / 2.0f, PLAYER_SIZE / 2.0f, 0.0f));
-	//ライフ設定
-	pPlayer->SetLife(PLAYER_LIFE + CManager::GetPlayer()->GetLifeData());
-	//スピード設定
-	pPlayer->SetSpeed(PLAYER_SPEED + CManager::GetPlayer()->GetSpeedData());
-	//ウェポン設定
-	pPlayer->SetWeapon (CManager::GetPlayer()->GetWeaponData());
-	//初期化処理
-	pPlayer->Init();
+	//NULLチェック
+	if (pPlayer != NULL)
+	{
+		//位置設定
+		pPlayer->SetPos(Pos);
+		//サイズ設定
+		pPlayer->SetSize(D3DXVECTOR3(PLAYER_SIZE / 2.0f, PLAYER_SIZE / 2.0f, 0.0f));
+		//ライフ設定
+		pPlayer->SetLife(PLAYER_LIFE + CManager::GetPlayer()->GetLifeData());
+		//スピード設定
+		pPlayer->SetSpeed(PLAYER_SPEED + CManager::GetPlayer()->GetSpeedData());
+		//ウェポン設定
+		pPlayer->SetWeapon(CManager::GetPlayer()->GetWeaponData());
+		//初期化処理
+		pPlayer->Init();
+
+	}
 
 	return pPlayer;
 }

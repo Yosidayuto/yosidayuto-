@@ -72,17 +72,23 @@ void CBulletButton::Unload(void)
 //=============================================================================
 CBulletButton * CBulletButton::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CBulletButton* pBulletButton;
+	//メモリ確保
+	CBulletButton* pBulletButton = NULL;
 	pBulletButton = new CBulletButton;
 
-	//位置設定
-	pBulletButton->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
-	//サイズ設定
-	pBulletButton->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
-	//テクスチャ設定
-	pBulletButton->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pBulletButton->Init();
+	//NULLチェック
+	if (pBulletButton != NULL)
+	{
+		//位置設定
+		pBulletButton->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
+		//サイズ設定
+		pBulletButton->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
+		//テクスチャ設定
+		pBulletButton->BindTexture(m_TextureData.m_Texture);
+		//初期化処理
+		pBulletButton->Init();
+
+	}
 
 	return pBulletButton;
 }

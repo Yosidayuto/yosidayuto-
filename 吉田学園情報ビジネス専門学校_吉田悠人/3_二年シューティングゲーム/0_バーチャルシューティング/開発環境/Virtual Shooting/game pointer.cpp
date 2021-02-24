@@ -64,13 +64,18 @@ void CGamePointer::Unload(void)
 CGamePointer * CGamePointer::Create(void)
 {
 	//メモリ確保
-	CGamePointer* pGamePointer;
+	CGamePointer* pGamePointer = NULL;
 	pGamePointer = new CGamePointer;
-	//テクスチャ設定
-	pGamePointer->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pGamePointer->Init();
 
+	//NULLチェック
+	if (pGamePointer != NULL)
+	{
+		//テクスチャ設定
+		pGamePointer->BindTexture(m_TextureData.m_Texture);
+		//初期化処理
+		pGamePointer->Init();
+
+	}
 	return pGamePointer;
 }
 

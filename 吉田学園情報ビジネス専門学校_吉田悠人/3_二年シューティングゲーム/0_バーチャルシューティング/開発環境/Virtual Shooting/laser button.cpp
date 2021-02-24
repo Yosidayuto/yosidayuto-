@@ -21,6 +21,7 @@
 // マクロ定義
 //=============================================================================
 #define LASER_SCORE (7000)	//消費スコア
+
 //=============================================================================
 // 静的メンバー変数
 //=============================================================================
@@ -73,17 +74,23 @@ void CLaserButton::Unload(void)
 //=============================================================================
 CLaserButton * CLaserButton::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CLaserButton* pLaserButton;
+	//メモリ確保
+	CLaserButton* pLaserButton = NULL;
 	pLaserButton = new CLaserButton;
 
-	//位置設定
-	pLaserButton->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
-	//サイズ設定
-	pLaserButton->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
-	//テクスチャ設定
-	pLaserButton->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pLaserButton->Init();
+	//NULLチェック
+	if (pLaserButton != NULL)
+	{
+		//位置設定
+		pLaserButton->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
+		//サイズ設定
+		pLaserButton->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
+		//テクスチャ設定
+		pLaserButton->BindTexture(m_TextureData.m_Texture);
+		//初期化処理
+		pLaserButton->Init();
+
+	}
 
 	return pLaserButton;
 }

@@ -40,12 +40,19 @@ CScore::~CScore()
 //=============================================================================
 CScore * CScore::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, bool UI, PRIORITY priority)
 {
-	CScore *pScore;
+	//メモリ確保
+	CScore* pScore = NULL;
 	pScore = new CScore(priority);
-	pScore->m_pos = pos;
-	pScore->m_size = size;
-	pScore->UiSwitch = UI;
-	pScore->Init();
+	
+	//NULLチェック
+	if (pScore != NULL)
+	{
+		pScore->m_pos = pos;
+		pScore->m_size = size;
+		pScore->UiSwitch = UI;
+		pScore->Init();
+
+	}
 	return pScore;
 }
 

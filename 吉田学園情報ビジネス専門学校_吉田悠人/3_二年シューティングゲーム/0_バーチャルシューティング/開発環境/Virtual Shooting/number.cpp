@@ -54,11 +54,21 @@ void CNumber::Unload(void)
 //=============================================================================
 CNumber * CNumber::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CNumber *pNumber;
+	//メモリ確保
+	CNumber *pNumber=NULL;
 	pNumber = new CNumber;
-	pNumber->pos = pos;
-	pNumber->size = size;
-	pNumber->Init();
+	
+	//NULLチェック
+	if (pNumber != NULL)
+	{
+		//位置設定
+		pNumber->pos = pos;
+		//サイズ設定
+		pNumber->size = size;
+		//初期化処理
+		pNumber->Init();
+
+	}
 	return pNumber;
 }
 

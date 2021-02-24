@@ -33,7 +33,7 @@ CFade::~CFade()
 //=============================================================================
 CFade * CFade::Create(void)
 {
-	CFade *pFade;
+	CFade *pFade = NULL;
 	//インスタンス生成
 	pFade = new CFade;
 

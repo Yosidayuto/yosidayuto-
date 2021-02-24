@@ -65,18 +65,23 @@ void CTelopSpeed::Unload(void)
 //=============================================================================
 CTelopSpeed * CTelopSpeed::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CTelopSpeed* pTelopSpeed;
+	//メモリ確保
+	CTelopSpeed* pTelopSpeed = NULL;
 	pTelopSpeed = new CTelopSpeed;
 
-	//位置設定
-	pTelopSpeed->SetPos(D3DXVECTOR3(pos.x - TELOP_X_SIZE, pos.y, pos.z));
-	//サイズ設定
-	pTelopSpeed->SetSize(D3DXVECTOR3(size.x - TELOP_X_SIZE / 2, size.y, size.z));
-	//初期化処理
-	pTelopSpeed->Init();
-	//テクスチャ設定
-	pTelopSpeed->BindTexture(m_TextureData.m_Texture);
+	//NULLチェック
+	if (pTelopSpeed != NULL)
+	{
+		//位置設定
+		pTelopSpeed->SetPos(D3DXVECTOR3(pos.x - TELOP_X_SIZE, pos.y, pos.z));
+		//サイズ設定
+		pTelopSpeed->SetSize(D3DXVECTOR3(size.x - TELOP_X_SIZE / 2, size.y, size.z));
+		//初期化処理
+		pTelopSpeed->Init();
+		//テクスチャ設定
+		pTelopSpeed->BindTexture(m_TextureData.m_Texture);
 
+	}
 	return pTelopSpeed;
 }
 

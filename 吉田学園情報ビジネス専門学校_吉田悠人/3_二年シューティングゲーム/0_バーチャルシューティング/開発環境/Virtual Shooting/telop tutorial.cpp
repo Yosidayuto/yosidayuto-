@@ -67,15 +67,20 @@ void CTelopTutorial::Unload(void)
 //=============================================================================
 CTelopTutorial * CTelopTutorial::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CTelopTutorial* pTelopText;
+	//メモリ確保
+	CTelopTutorial* pTelopText = NULL;
 	pTelopText = new CTelopTutorial;
 
-	//位置設定
-	pTelopText->SetPos(D3DXVECTOR3(pos.x - TELOP_X_SIZE / 2, pos.y, pos.z));
-	//サイズ設定
-	pTelopText->SetSize(D3DXVECTOR3(size.x - TELOP_X_SIZE, size.y - TELOP_Y_SIZE, size.z));
-	//初期化処理
-	pTelopText->Init();
+	//NULLチェック
+	if (pTelopText != NULL)
+	{
+		//位置設定
+		pTelopText->SetPos(D3DXVECTOR3(pos.x - TELOP_X_SIZE / 2, pos.y, pos.z));
+		//サイズ設定
+		pTelopText->SetSize(D3DXVECTOR3(size.x - TELOP_X_SIZE, size.y - TELOP_Y_SIZE, size.z));
+		//初期化処理
+		pTelopText->Init();
+	}
 
 	return pTelopText;
 }

@@ -77,17 +77,22 @@ void CLifeButton::Unload(void)
 //=============================================================================
 CLifeButton * CLifeButton::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CLifeButton *pLifeButton;
+	//メモリ確保
+	CLifeButton *pLifeButton = NULL;
 	pLifeButton = new CLifeButton;
 
-	//位置設定
-	pLifeButton->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
-	//サイズ設定
-	pLifeButton->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
-	//テクスチャ設定
-	pLifeButton->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pLifeButton->Init();
+	//NULLチェック
+	if (pLifeButton != NULL)
+	{
+		//位置設定
+		pLifeButton->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
+		//サイズ設定
+		pLifeButton->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
+		//テクスチャ設定
+		pLifeButton->BindTexture(m_TextureData.m_Texture);
+		//初期化処理
+		pLifeButton->Init();
+	}
 
 	return pLifeButton;
 }

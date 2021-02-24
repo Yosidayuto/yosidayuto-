@@ -27,12 +27,19 @@ CUiCount::~CUiCount()
 //=============================================================================
 CUiCount * CUiCount::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size, PRIORITY priority)
 {
-	CUiCount *pUiCount;
+	//メモリ確保
+	CUiCount *pUiCount = NULL;
 	pUiCount = new CUiCount(priority);
-	pUiCount->m_pos = pos;
-	pUiCount->m_size = size;
-	pUiCount->Init();
-
+	//NULLチェック
+	if (pUiCount != NULL)
+	{
+		//位置設定
+		pUiCount->m_pos = pos;
+		//サイズ設定
+		pUiCount->m_size = size;
+		//初期化処理
+		pUiCount->Init();
+	}
 	return pUiCount;
 }
 

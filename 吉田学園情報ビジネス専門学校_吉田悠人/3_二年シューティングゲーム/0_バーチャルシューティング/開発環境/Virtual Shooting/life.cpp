@@ -51,14 +51,14 @@ CLife::~CLife()
 CLife * CLife::Create(D3DXVECTOR3 pos)
 {
 	//メモリ確保
-	CLife *pLife=NULL;
+	CLife *pLife = NULL;
 	pLife = new CLife;
+
 	//NULLチェック
 	if (pLife!=NULL)
 	{
 		//位置設定
 		pLife->SetPos(pos);
-		
 		//初期化処理
 		pLife->Init();
 	}

@@ -64,12 +64,18 @@ void CSelectPointer::Unload(void)
 CSelectPointer * CSelectPointer::Create(void)
 {
 	//メモリ確保
-	CSelectPointer* pSelectPointer;
+	CSelectPointer* pSelectPointer = NULL;
 	pSelectPointer = new CSelectPointer;
-	//テクスチャ設定
-	pSelectPointer->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pSelectPointer->Init();
+
+	//NULLチェック
+	if (pSelectPointer = NULL)
+	{
+		//テクスチャ設定
+		pSelectPointer->BindTexture(m_TextureData.m_Texture);
+		//初期化処理
+		pSelectPointer->Init();
+
+	}
 	
 	return pSelectPointer;
 }

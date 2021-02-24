@@ -65,15 +65,20 @@ void CTelopBullet::Unload(void)
 //=============================================================================
 CTelopBullet * CTelopBullet::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CTelopBullet* pTelopBullet;
+	//メモリ確保
+	CTelopBullet* pTelopBullet = NULL;
 	pTelopBullet = new CTelopBullet;
 
-	//位置設定
-	pTelopBullet->SetPos(D3DXVECTOR3(pos.x - TELOP_X_SIZE, pos.y, pos.z));
-	//サイズ設定
-	pTelopBullet->SetSize(D3DXVECTOR3(size.x - TELOP_X_SIZE / 2, size.y, size.z));
-	//初期化処理
-	pTelopBullet->Init();
+	//NULLチェック
+	if (pTelopBullet != NULL)
+	{
+		//位置設定
+		pTelopBullet->SetPos(D3DXVECTOR3(pos.x - TELOP_X_SIZE, pos.y, pos.z));
+		//サイズ設定
+		pTelopBullet->SetSize(D3DXVECTOR3(size.x - TELOP_X_SIZE / 2, size.y, size.z));
+		//初期化処理
+		pTelopBullet->Init();
+	}
 
 	return pTelopBullet;
 }

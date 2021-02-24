@@ -1,8 +1,14 @@
-﻿  stage_1.cpp
+﻿  bullet icon.cpp
+  clear.cpp
+  fade.cpp
+  homing icon.cpp
+  laser icon.cpp
+  number.cpp
+  ui count.cpp
   コード生成しています。
-  1 of 943 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+  9 of 943 functions ( 1.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    4 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   Virtual Shooting.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\吉田学園情報ビジネス専門学校_吉田悠人\3_二年シューティングゲーム\0_バーチャルシューティング\開発環境\Release\Virtual Shooting.exe
   Virtual Shooting.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\吉田学園情報ビジネス専門学校_吉田悠人\3_二年シューティングゲーム\0_バーチャルシューティング\開発環境\Release\Virtual Shooting.pdb (Full PDB)

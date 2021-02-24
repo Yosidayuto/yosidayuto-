@@ -66,7 +66,7 @@ void CBulletIcon::Unload(void)
 CBulletIcon * CBulletIcon::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
 	//メモリ確保
-	CBulletIcon* pBulletIcon=NULL;
+	CBulletIcon* pBulletIcon = NULL;
 	pBulletIcon = new CBulletIcon;
 
 	//NULLチェック

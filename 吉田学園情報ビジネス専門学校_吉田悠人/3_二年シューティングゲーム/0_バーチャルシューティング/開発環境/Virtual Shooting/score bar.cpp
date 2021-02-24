@@ -65,16 +65,20 @@ void CScoreBar::Unload(void)
 //=============================================================================
 CScoreBar * CScoreBar::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CScoreBar* pScoreBar;
+	//メモリ確保
+	CScoreBar* pScoreBar = NULL;
 	pScoreBar = new CScoreBar;
 
-	//位置設定
-	pScoreBar->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
-	//サイズ設定
-	pScoreBar->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
-	//初期化処理
-	pScoreBar->Init();
-
+	//NULLチェック
+	if (pScoreBar != NULL)
+	{
+		//位置設定
+		pScoreBar->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
+		//サイズ設定
+		pScoreBar->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
+		//初期化処理
+		pScoreBar->Init();
+	}
 	return pScoreBar;
 }
 

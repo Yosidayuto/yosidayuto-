@@ -78,16 +78,23 @@ void CTelop::Unload(void)
 //=============================================================================
 CTelop * CTelop::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CTelop *pTelopBer;
+	//メモリ確保
+	CTelop *pTelopBer = NULL;
 	pTelopBer = new CTelop;
-	//位置
-	pTelopBer->SetPos(D3DXVECTOR3(SCREEN_WIDTH - 425, 25, 0.0f));
-	//サイズ
-	pTelopBer->SetSize(D3DXVECTOR3(850, 50, 0.0f));
-	//テクスチャ設定
-	pTelopBer->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pTelopBer->Init();
+	
+	//NULLチェック
+	if (pTelopBer != NULL)
+	{
+		//位置
+		pTelopBer->SetPos(D3DXVECTOR3(SCREEN_WIDTH - 425, 25, 0.0f));
+		//サイズ
+		pTelopBer->SetSize(D3DXVECTOR3(850, 50, 0.0f));
+		//テクスチャ設定
+		pTelopBer->BindTexture(m_TextureData.m_Texture);
+		//初期化処理
+		pTelopBer->Init();
+
+	}
 	return pTelopBer;
 }
 

@@ -66,15 +66,21 @@ void CTelopHoming::Unload(void)
 //=============================================================================
 CTelopHoming * CTelopHoming::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CTelopHoming* pTelopHoming;
+	//メモリ確保
+	CTelopHoming* pTelopHoming = NULL;
 	pTelopHoming = new CTelopHoming;
 
-	//位置設定
-	pTelopHoming->SetPos(D3DXVECTOR3(pos.x - TELOP_X_SIZE, pos.y, pos.z));
-	//サイズ設定
-	pTelopHoming->SetSize(D3DXVECTOR3(size.x - TELOP_X_SIZE / 2, size.y, size.z));
-	//初期化処理
-	pTelopHoming->Init();
+	//NULLチェック
+	if (pTelopHoming != NULL)
+	{
+		//位置設定
+		pTelopHoming->SetPos(D3DXVECTOR3(pos.x - TELOP_X_SIZE, pos.y, pos.z));
+		//サイズ設定
+		pTelopHoming->SetSize(D3DXVECTOR3(size.x - TELOP_X_SIZE / 2, size.y, size.z));
+		//初期化処理
+		pTelopHoming->Init();
+
+	}
 
 	return pTelopHoming;
 }

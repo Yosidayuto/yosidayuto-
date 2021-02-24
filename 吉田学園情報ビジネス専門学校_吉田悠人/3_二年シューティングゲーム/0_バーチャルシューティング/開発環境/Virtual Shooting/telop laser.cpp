@@ -65,16 +65,22 @@ void CTelopLaser::Unload(void)
 //=============================================================================
 CTelopLaser * CTelopLaser::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CTelopLaser* pTelopLaser;
+	//メモリ確保
+	CTelopLaser* pTelopLaser = NULL;
 	pTelopLaser = new CTelopLaser;
 
-	//位置設定
-	pTelopLaser->SetPos(D3DXVECTOR3(pos.x - TELOP_X_SIZE, pos.y, pos.z));
-	//サイズ設定
-	pTelopLaser->SetSize(D3DXVECTOR3(size.x - TELOP_X_SIZE / 2, size.y, size.z));
-	//初期化処理
-	pTelopLaser->Init();
+	//NULLチェック
+	if (pTelopLaser != NULL)
+	{
+		//位置設定
+		pTelopLaser->SetPos(D3DXVECTOR3(pos.x - TELOP_X_SIZE, pos.y, pos.z));
+		//サイズ設定
+		pTelopLaser->SetSize(D3DXVECTOR3(size.x - TELOP_X_SIZE / 2, size.y, size.z));
+		//初期化処理
+		pTelopLaser->Init();
 
+
+	}
 	return pTelopLaser;
 }
 

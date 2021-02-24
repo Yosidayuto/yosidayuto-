@@ -70,8 +70,9 @@ void CClear::Unload(void)
 CClear * CClear::Create(void)
 {
 	//メモリの確保
-	CClear *pClear=NULL;
+	CClear *pClear = NULL;
 	pClear = new CClear;
+	
 	//NULLチェック
 	if (pClear != NULL)
 	{

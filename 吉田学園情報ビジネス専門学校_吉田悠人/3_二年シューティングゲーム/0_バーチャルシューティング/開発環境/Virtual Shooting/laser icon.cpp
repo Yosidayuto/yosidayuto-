@@ -65,16 +65,21 @@ void CLaserIcon::Unload(void)
 //=============================================================================
 CLaserIcon * CLaserIcon::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CLaserIcon* pLaserIcon;
+	//メモリ確保
+	CLaserIcon* pLaserIcon=NULL;
 	pLaserIcon = new CLaserIcon;
 
-	//位置設定
-	pLaserIcon->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
-	//サイズ設定
-	pLaserIcon->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
-	//初期化処理
-	pLaserIcon->Init();
+	//NULLチェック
+	if (pLaserIcon != NULL)
+	{
+		//位置設定
+		pLaserIcon->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
+		//サイズ設定
+		pLaserIcon->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
+		//初期化処理
+		pLaserIcon->Init();
 
+	}
 	return pLaserIcon;
 }
 

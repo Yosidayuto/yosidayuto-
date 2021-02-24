@@ -65,15 +65,21 @@ void CHomingIcon::Unload(void)
 //=============================================================================
 CHomingIcon * CHomingIcon::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CHomingIcon* pHomingIcon;
+	//メモリ確保
+	CHomingIcon* pHomingIcon=NULL;
 	pHomingIcon = new CHomingIcon;
 
-	//位置設定
-	pHomingIcon->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
-	//サイズ設定
-	pHomingIcon->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
-	//初期化処理
-	pHomingIcon->Init();
+	//NULLチェック
+	if (pHomingIcon != NULL)
+	{
+		//位置設定
+		pHomingIcon->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
+		//サイズ設定
+		pHomingIcon->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
+		//初期化処理
+		pHomingIcon->Init();
+
+	}
 
 	return pHomingIcon;
 }

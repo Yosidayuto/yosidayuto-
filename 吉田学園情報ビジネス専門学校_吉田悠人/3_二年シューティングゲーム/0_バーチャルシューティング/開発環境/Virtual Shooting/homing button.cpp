@@ -74,17 +74,22 @@ void CHomingButton::Unload(void)
 //=============================================================================
 CHomingButton * CHomingButton::Create(D3DXVECTOR3 pos, D3DXVECTOR3 size)
 {
-	CHomingButton* pHomingButton;
+	//メモリ確保
+	CHomingButton* pHomingButton = NULL;
 	pHomingButton = new CHomingButton;
 
-	//位置設定
-	pHomingButton->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
-	//サイズ設定
-	pHomingButton->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
-	//テクスチャ設定
-	pHomingButton->BindTexture(m_TextureData.m_Texture);
-	//初期化処理
-	pHomingButton->Init();
+	//NULLチェック
+	if (pHomingButton != NULL)
+	{
+		//位置設定
+		pHomingButton->SetPos(D3DXVECTOR3(pos.x, pos.y, pos.z));
+		//サイズ設定
+		pHomingButton->SetSize(D3DXVECTOR3(size.x, size.y, size.z));
+		//テクスチャ設定
+		pHomingButton->BindTexture(m_TextureData.m_Texture);
+		//初期化処理
+		pHomingButton->Init();
+	}
 
 	return pHomingButton;
 }

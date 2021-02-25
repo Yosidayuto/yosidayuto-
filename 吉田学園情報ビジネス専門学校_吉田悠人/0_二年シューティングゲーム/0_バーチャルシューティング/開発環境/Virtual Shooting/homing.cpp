@@ -21,7 +21,7 @@
 //=============================================================================
 #define HOMING_SIZE		(40)	//ホーミングの大きさ
 #define HOMING_LIFE		(50)	//ホーミングの射程距離
-#define HOMING_ATTACK	(2)		//ホーミングの攻撃力
+#define HOMING_ATTACK	(1)		//ホーミングの攻撃力
 #define HOMING_RANGE	(780)	//ホーミング範囲
 #define HOMING_SPEED	(10.0f)	//ホーミングスピード
 

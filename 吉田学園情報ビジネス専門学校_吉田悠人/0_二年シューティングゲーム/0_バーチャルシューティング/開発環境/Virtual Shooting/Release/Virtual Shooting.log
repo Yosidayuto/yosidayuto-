@@ -1,9 +1,89 @@
-﻿  bullet.cpp
+﻿  bg.cpp
+  boss effect1.cpp
+  boss effect2.cpp
+  boss effect3.cpp
+  boss type1.cpp
+  boss type2.cpp
+  boss type3.cpp
+  bullet base.cpp
+  bullet button.cpp
+  bullet icon.cpp
+  bullet.cpp
+  button manager.cpp
+  button.cpp
+  clear.cpp
+  delete effect1.cpp
+  delete effect2.cpp
+  delete effect3.cpp
+  effect.cpp
+  enemy bullet.cpp
+  enemy type1.cpp
+  コンパイル中...
+  enemy type2.cpp
+  enemy type3.cpp
+  enemy type4.cpp
+  explosion.cpp
+  fade.cpp
+  game bg manager.cpp
+  game bg.cpp
+  game pointer.cpp
+  game scroll bg.cpp
   game.cpp
+  homing button.cpp
+  homing icon.cpp
+  homing.cpp
+  laser button.cpp
+  laser icon.cpp
+  laser.cpp
+  life button.cpp
+  life tank.cpp
+  life ui.cpp
+  life.cpp
+  コンパイル中...
+  load bg.cpp
+  load.cpp
+  main.cpp
+  manager.cpp
+  mouse pointer.cpp
+  number.cpp
+  player.cpp
+  renderer.cpp
+  result bg.cpp
+  result.cpp
+  scene.cpp
+  scene2d.cpp
+  score bar.cpp
+  score.cpp
+  select bg.cpp
+  select pointer.cpp
+  select.cpp
+  speed button.cpp
+  stage.cpp
+  stage_1.cpp
+  コンパイル中...
+  stage_2.cpp
+  stage_3.cpp
+  start button.cpp
+  telop bullet.cpp
+  telop homing.cpp
+  telop laser.cpp
+  telop life.cpp
+  telop speed.cpp
+  telop tutorial.cpp
+  telop.cpp
+  texture.cpp
+  title bg.cpp
+  title.cpp
+  tutorial bg.cpp
+  tutorial.cpp
+  ui count.cpp
+  warning.cpp
+  weapon manager.cpp
+  weapon ui.cpp
   コード生成しています。
-  1 of 1028 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  12 of 974 functions ( 1.2%) were compiled, the rest were copied from previous compilation.
+    5 functions were new in current compilation
+    7 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
-  Virtual Shooting.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\吉田学園情報ビジネス専門学校_吉田悠人\3_二年シューティングゲーム\0_バーチャルシューティング\開発環境\Release\Virtual Shooting.exe
-  Virtual Shooting.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\吉田学園情報ビジネス専門学校_吉田悠人\3_二年シューティングゲーム\0_バーチャルシューティング\開発環境\Release\Virtual Shooting.pdb (Full PDB)
+  Virtual Shooting.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\吉田学園情報ビジネス専門学校_吉田悠人\0_二年シューティングゲーム\0_バーチャルシューティング\開発環境\Release\Virtual Shooting.exe
+  Virtual Shooting.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\吉田学園情報ビジネス専門学校_吉田悠人\0_二年シューティングゲーム\0_バーチャルシューティング\開発環境\Release\Virtual Shooting.pdb (Full PDB)

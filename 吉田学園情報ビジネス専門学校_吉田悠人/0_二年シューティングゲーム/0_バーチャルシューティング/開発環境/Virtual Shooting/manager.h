@@ -13,6 +13,7 @@
 #include "main.h"
 #include "scene.h"
 #include "game.h"
+#include <mutex>
 
 //=============================================================================
 //前方宣言
@@ -88,6 +89,7 @@ private:
 	static CTutorial*		m_pTutorial;	// チュートリアルポインタ
 	static CLoad*			m_pLoad;		// ロード画面
 	static bool				m_bLoad;		// ロードが終わっているか
+	std::mutex				m_mtx_;			// 排他的用ミューテックス
 };
 
 

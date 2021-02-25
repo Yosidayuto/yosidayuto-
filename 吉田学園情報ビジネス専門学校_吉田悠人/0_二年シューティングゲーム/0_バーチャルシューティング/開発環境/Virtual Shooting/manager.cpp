@@ -113,13 +113,17 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	m_pLoad = new CLoad;
 	//ロード画面ロード
 	CLoad::Load();
-	//LoadFile();
-	//ファイルロード(マルチスレッド)
-	std::thread thWorker(LoadFile);
-	thWorker.detach();
-	
-	//オブジェクトクラス生成
-	m_pFade->SetFade(m_Mode);
+	LoadFile();
+	////ファイルロード(マルチスレッド)
+	//std::thread thLoad(LoadFile);
+	////マルチスレッドがあるか
+	//if (thLoad.joinable())
+	//{
+	//	//マルチスレッドを手放す
+	//	thLoad.detach();
+	//}
+	////オブジェクトクラス生成
+	//m_pFade->SetFade(m_Mode);
 
 	return S_OK;
 }
@@ -289,6 +293,7 @@ void CManager::Update()
 //=============================================================================
 void CManager::Draw(void)
 {
+	//std::lock_guard<std::mutex> lock(m_mtx_);
 	//レンダラの描画
 	if (m_pRenderer != NULL)
 	{
@@ -496,6 +501,9 @@ void CManager::UnLoadFile(void)
 
 }
 
+//=============================================================================
+// プレイヤーデータセッター関数
+//=============================================================================
 void CManager::SetPlayer(CPlayerData* Player)
 {
 	m_pPlayerData = Player;

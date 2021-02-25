@@ -25,7 +25,11 @@
 //=============================================================================
 // マクロ定義
 //=============================================================================
-#define PLAYER_DAMAGE	(100)	//ダメージ状態の最大無敵時間
+#define PLAYER_DAMAGE		(100)	//ダメージ状態の最大無敵時間
+#define PLAYER_BULLET_TIME	(20)	//バレットのクールタイム
+#define PLAYER_LASER_TIME	(30)	//レーザーのクールタイム
+#define PLAYER_HOMING_TIME	(35)	//ホーミングのクールタイム
+
 //=============================================================================
 // 静的メンバー変数
 //=============================================================================
@@ -381,11 +385,12 @@ void CPlayer::Weapon(void)
 		//攻撃までのカウント
 		m_nAttackCount[CLICK_LEFT]++;
 
+		//装備によって攻撃を変える
 		switch (m_Weapon.Left)
 		{
 			//通常弾処理
 		case WEAPONS_MODE_BUTTOL:
-			if (m_nAttackCount[CLICK_LEFT] >= 20)
+			if (m_nAttackCount[CLICK_LEFT] >= PLAYER_BULLET_TIME)
 			{
 				//バレット生成
 				CBullet::Create(D3DXVECTOR3(pos.x - 20, pos.y, pos.z), D3DXVECTOR3(0, -20, 0.0f));
@@ -395,7 +400,7 @@ void CPlayer::Weapon(void)
 			break;
 			//レーザー処理
 		case WEAPONS_MODE_LASER:
-			if (m_nAttackCount[CLICK_LEFT] >= 40)
+			if (m_nAttackCount[CLICK_LEFT] >= PLAYER_LASER_TIME)
 			{
 				//レーザー生成
 				CLaser::Create(D3DXVECTOR3(pos.x - 20, pos.y, pos.z), D3DXVECTOR3(0, -17, 0.0f));
@@ -405,7 +410,7 @@ void CPlayer::Weapon(void)
 			break;
 			//ホーミング弾処理
 		case WEAPONS_MODE_HOMING:
-			if (m_nAttackCount[CLICK_LEFT] >= 35)
+			if (m_nAttackCount[CLICK_LEFT] >= PLAYER_HOMING_TIME)
 			{
 				//ホーミング生成
 				CHoming::Create(D3DXVECTOR3(pos.x - 20, pos.y, pos.z), D3DXVECTOR3(0, -17, 0.0f));
@@ -428,7 +433,7 @@ void CPlayer::Weapon(void)
 		{
 			//通常弾処理
 		case WEAPONS_MODE_BUTTOL:
-			if (m_nAttackCount[CLICK_RIGHT] >= 20)
+			if (m_nAttackCount[CLICK_RIGHT] >= PLAYER_BULLET_TIME)
 			{
 				//バレット生成
 				CBullet::Create(D3DXVECTOR3(pos.x + 20, pos.y, pos.z), D3DXVECTOR3(0, -20, 0.0f));
@@ -438,7 +443,7 @@ void CPlayer::Weapon(void)
 			break;
 			//レーザー処理
 		case WEAPONS_MODE_LASER:
-			if (m_nAttackCount[CLICK_RIGHT] >= 40)
+			if (m_nAttackCount[CLICK_RIGHT] >= PLAYER_LASER_TIME)
 			{
 				//レーザー生成
 				CLaser::Create(D3DXVECTOR3(pos.x + 20, pos.y, pos.z), D3DXVECTOR3(0, -17, 0.0f));
@@ -448,7 +453,7 @@ void CPlayer::Weapon(void)
 			break;
 			//ホーミング弾処理
 		case WEAPONS_MODE_HOMING:
-			if (m_nAttackCount[CLICK_RIGHT] >= 35)
+			if (m_nAttackCount[CLICK_RIGHT] >= PLAYER_HOMING_TIME)
 			{
 				//ホーミング生成
 				CHoming::Create(D3DXVECTOR3(pos.x + 20, pos.y, pos.z), D3DXVECTOR3(0, -17, 0.0f));

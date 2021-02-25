@@ -31,6 +31,7 @@ private:
 	void DrawFPS();
 	LPDIRECT3D9				m_pD3D;			// Direct3Dオブジェクト
 	LPDIRECT3DDEVICE9		m_pD3DDevice;	// Deviceオブジェクト(描画に必要)
+	LPDIRECT3DDEVICE9		m_pD3DDeviceSave;
 	LPD3DXFONT				m_pFont;		// フォントへのポインタ
 };
 #endif

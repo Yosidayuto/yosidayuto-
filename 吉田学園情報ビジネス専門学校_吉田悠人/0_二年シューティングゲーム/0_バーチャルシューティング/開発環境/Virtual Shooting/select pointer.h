@@ -4,10 +4,8 @@
 // Author : 吉田悠人
 //
 //=============================================================================
-
 #ifndef _SELECT_POINTER_H_
 #define _SELECT_POINTER_H_
-
 //=============================================================================
 // ヘッダファイルのインクルード
 //=============================================================================
@@ -19,7 +17,6 @@
 class CSelectPointer : public CPointer
 {
 public:
-
 	CSelectPointer();						// コンストラクタ
 	~CSelectPointer();						// デストラクタ
 	static HRESULT			Load(void);		// テクスチャ読み込み
@@ -29,9 +26,7 @@ public:
 	void	Uninit(void);					// 終了処理
 	void	Update(void);					// 更新処理
 	void	Draw(void);						// 描画処理
-
 private:
 	static TEXTURE_DATA	m_TextureData;	//テクスチャデータ
-
 };
 #endif // !_POLYGON_H_

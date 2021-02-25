@@ -21,8 +21,11 @@
 #include "result.h"		
 #include "sound.h"		
 #include "game pointer.h"
+#include "boss base.h"
+#include "boss effect base.h"
 #include "sound.h"
 #include "game bg manager.h"
+#include "life tank.h"
 #include "stage_1.h"
 #include "stage_2.h"
 #include "stage_3.h"
@@ -61,6 +64,10 @@ HRESULT CGame::Load(void)
 	CGameBgManager::Load();
 	CEnemyBase::Load();
 	CBulletBase::Load();
+	CBossBase::Load();
+	CBossEffectBase::Load();
+	CLifeTank::Load();
+
 	return S_OK;
 }
 
@@ -77,6 +84,9 @@ void CGame::Unload(void)
 	CGameBgManager::Unload();
 	CEnemyBase::Unload();
 	CBulletBase::Unload();
+	CBossBase::Unload();
+	CBossEffectBase::Unload();
+	CLifeTank::Unload();
 
 }
 

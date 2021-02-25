@@ -79,6 +79,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		hInstance,
 		NULL);
 
+	//マネージャーポインタ
+	CManager *pManager = NULL;
+
+	//マネージャー生成
+	pManager = new CManager;
+	if (pManager != NULL)
+	{
+		pManager->Init(hInstance, hWnd, true);
+	}
 
 	// 分解能を設定
 	timeBeginPeriod(0);
@@ -93,15 +102,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
-	//マネージャーポインタ
-	CManager *pManager = NULL;
-
-	//マネージャー生成
-	pManager = new CManager;
-	if (pManager != NULL)
-	{
-		pManager->Init(hInstance, hWnd, true);
-	}
 
 	// メッセージループ
 	while (1)

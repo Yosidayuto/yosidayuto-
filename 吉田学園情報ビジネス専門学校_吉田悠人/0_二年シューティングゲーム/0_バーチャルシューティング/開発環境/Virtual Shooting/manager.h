@@ -13,7 +13,6 @@
 #include "main.h"
 #include "scene.h"
 #include "game.h"
-#include <mutex>
 
 //=============================================================================
 //前方宣言
@@ -30,10 +29,11 @@ class CPlayerData;
 class CTitle;
 class CTutorial;
 class CLoad;
+
 typedef enum	//ゲームモード
 {
 	GAME_MODE_NONE = 0,
-	GAME_MODE_LOAD,			//ロード
+	//GAME_MODE_LOAD,			//ロード
 	GAME_MODE_TITLE,		//タイトル
 	GAME_MODE_TUTORIAL,		//チュートリアル
 	GAME_MODE_SELECT,		//セレクト
@@ -55,7 +55,7 @@ public:
 	void	Uninit(void);										// 終了処理
 	void	Update(void);										// 更新処理
 	void	Draw(void);											// 描画処理
-																   
+
 	static void SetMode(GAME_MODE mode);						// ゲームモードセット
 	static void	SetScore(int nScore) { m_nScore = nScore; };	// スコアセッター
 	static void SetPlayer(CPlayerData* Player);					// プレイヤーセッター
@@ -69,7 +69,7 @@ public:
 	static CSound			*GetSound(void);	// サウンド取得
 	static CFade			*GetFade(void);		// フェードアウト取得
 private:
-	static void LoadFile(void);						// ファイルロード関数
+	void LoadFile(void);						// ファイルロード関数
 	void UnLoadFile(void);						// ファイルアンロード関数
 
 	static CRenderer		*m_pRenderer;	// レンダリングクラス
@@ -87,11 +87,8 @@ private:
 	static GAME_MODE		m_Mode;			// ゲームモード
 	static CTitle*			m_pTitle;		// タイトルポインタ
 	static CTutorial*		m_pTutorial;	// チュートリアルポインタ
-	static CLoad*			m_pLoad;		// ロード画面
-	static bool				m_bLoad;		// ロードが終わっているか
-	std::mutex				m_mtx_;			// 排他的用ミューテックス
+	//static CLoad*			m_pLoad;		// ロード画面
+	//bool					m_bLoad;		// ロードが終わっているか
 };
-
-
 
 #endif

@@ -1,3 +1,90 @@
-﻿  game.cpp
-  Virtual Shooting.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\吉田学園情報ビジネス専門学校_吉田悠人\3_二年シューティングゲーム\0_バーチャルシューティング\開発環境\Debug\Virtual Shooting.exe
-  Virtual Shooting.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\吉田学園情報ビジネス専門学校_吉田悠人\3_二年シューティングゲーム\0_バーチャルシューティング\開発環境\Debug\Virtual Shooting.pdb (Full PDB)
+﻿  manager.cpp
+  コードを生成中...
+  コンパイル中...
+  weapon ui.cpp
+  weapon manager.cpp
+  warning.cpp
+  ui count.cpp
+  tutorial.cpp
+  tutorial bg.cpp
+  title.cpp
+  title bg.cpp
+  texture.cpp
+  telop.cpp
+  telop tutorial.cpp
+  telop speed.cpp
+  telop life.cpp
+  telop laser.cpp
+  telop homing.cpp
+  telop bullet.cpp
+  start button.cpp
+  stage_3.cpp
+  stage_2.cpp
+  stage_1.cpp
+  コードを生成中...
+  コンパイル中...
+  stage.cpp
+  speed button.cpp
+  select.cpp
+  select pointer.cpp
+  select bg.cpp
+  score.cpp
+  score bar.cpp
+  scene2d.cpp
+  scene.cpp
+  result.cpp
+  result bg.cpp
+  renderer.cpp
+  player.cpp
+  number.cpp
+  mouse pointer.cpp
+  main.cpp
+  load.cpp
+  load bg.cpp
+  life.cpp
+  life ui.cpp
+  コードを生成中...
+  コンパイル中...
+  life tank.cpp
+  life button.cpp
+  laser.cpp
+  laser icon.cpp
+  laser button.cpp
+  homing.cpp
+  homing icon.cpp
+  homing button.cpp
+  game.cpp
+  game scroll bg.cpp
+  game pointer.cpp
+  game bg.cpp
+  game bg manager.cpp
+  fade.cpp
+  explosion.cpp
+  enemy type4.cpp
+  enemy type3.cpp
+  enemy type2.cpp
+  enemy type1.cpp
+  enemy bullet.cpp
+  コードを生成中...
+  コンパイル中...
+  effect.cpp
+  delete effect3.cpp
+  delete effect2.cpp
+  delete effect1.cpp
+  clear.cpp
+  button.cpp
+  button manager.cpp
+  bullet.cpp
+  bullet icon.cpp
+  bullet button.cpp
+  bullet base.cpp
+  boss type3.cpp
+  boss type2.cpp
+  boss type1.cpp
+  boss effect3.cpp
+  boss effect2.cpp
+  boss effect1.cpp
+  bg.cpp
+  コードを生成中...
+  Virtual Shooting.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\吉田学園情報ビジネス専門学校_吉田悠人\0_二年シューティングゲーム\0_バーチャルシューティング\開発環境\Debug\Virtual Shooting.exe
+  Virtual Shooting.vcxproj -> C:\Users\S-JoBi-035\Desktop\就活\yosidayuto-\吉田学園情報ビジネス専門学校_吉田悠人\0_二年シューティングゲーム\0_バーチャルシューティング\開発環境\Debug\Virtual Shooting.pdb (Full PDB)

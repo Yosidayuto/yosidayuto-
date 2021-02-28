@@ -49,7 +49,7 @@ public:
 	void			Uninit(void);	// 終了処理
 	void			Update(void);	// 更新処理
 	void			Draw(void);		// 描画処理
-	static CScore*			GetScore(void);		// スコアゲッター
+	static CScore*			GetScore(void);	// スコアゲッター
 	STAGE_TYPE			GetStageType(void);	// ステージタイプゲッター
 	static void			SetStageType(STAGE_TYPE stage);
 	static CPlayer*		GetPlayer(void);

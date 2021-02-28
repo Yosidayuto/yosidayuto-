@@ -61,7 +61,7 @@ void CEnemyType2::Unload(void)
 //=============================================================================
 // 生成処理
 //=============================================================================
-CEnemyType2 * CEnemyType2::Create(D3DXVECTOR3 pos)
+CEnemyType2 * CEnemyType2::Create(ENEMY_MOVE_PATTERN MoveType, ENEMY_ATTACK_PATTERN AttackType, int nInTime, int nActionTime, int nAttacTime, int nReturnTime, D3DXVECTOR3 pos, float fSpeed, int nLife)
 {
 	//メモリ確保
 	CEnemyType2* pEnemyType2 = NULL;
@@ -70,12 +70,26 @@ CEnemyType2 * CEnemyType2::Create(D3DXVECTOR3 pos)
 	//NULLチェック
 	if (pEnemyType2 != NULL)
 	{
+		//行動パターン
+		pEnemyType2->SetMovePattern(MoveType);
+		//攻撃パターン
+		pEnemyType2->SetAttackPattern(AttackType);
+		//出現時間
+		pEnemyType2->SetInTime(nInTime);
+		//行動時間
+		pEnemyType2->SetActionTime(nActionTime);
+		//攻撃までの時間設定
+		pEnemyType2->SetAttackTime(nAttacTime);
+		//帰還までの時間設定
+		pEnemyType2->SetOutTime(nReturnTime);
 		//位置設定
 		pEnemyType2->SetPos(pos);
+		//スピード設定
+		pEnemyType2->SetSpeed(fSpeed);
+		//ライフ設定
+		pEnemyType2->SetLife(nLife);
 		//サイズ設定
 		pEnemyType2->SetSize(D3DXVECTOR3(TYPE1_SIZE / 2.0f, TYPE1_SIZE / 2.0f, 0.0f));
-		//ライフ設定
-		pEnemyType2->SetLife(TYPE1_LIFE);
 		//スコア設定
 		pEnemyType2->SetScore(TYPE1_SCORE);
 		//テクスチャセット

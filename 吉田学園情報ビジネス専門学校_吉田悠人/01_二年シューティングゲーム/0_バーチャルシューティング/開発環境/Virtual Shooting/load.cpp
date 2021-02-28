@@ -144,6 +144,7 @@ void CLoad::Draw(void)
 void CLoad::FileLoad(void)
 {
 	std::lock_guard<std::mutex> lock(m_mtx_);
+	
 	//テクスチャの読み込み
 	CClear::Load();
 	CNumber::Load();

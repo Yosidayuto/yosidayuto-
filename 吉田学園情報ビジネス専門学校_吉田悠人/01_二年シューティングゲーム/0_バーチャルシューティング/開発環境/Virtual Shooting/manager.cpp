@@ -412,7 +412,7 @@ void CManager::LoadFile(void)
 	CResultBg::Load();
 	CScoreBar::Load();
 	//テキスト読み込み
-	CStage::LoadFile();
+	CStage::LoadEnemyData();
 
 }
 

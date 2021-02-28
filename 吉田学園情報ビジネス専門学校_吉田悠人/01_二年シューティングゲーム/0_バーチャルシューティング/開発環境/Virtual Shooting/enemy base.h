@@ -29,13 +29,25 @@ typedef enum						//エネミータイプ
 	ENEMY_TYPE_4,
 	ENEMY_TYPE_MAX
 }ENEMY_TYPE;
+
+typedef enum						//エネミー行動パターン
+{
+	ENEMY_MOVE_RETURN = 0,			//Uターン
+	ENEMY_MOVE_STRAIGHT,			//直進
+	ENEMY_MOVE_RIGHT,				//右に曲がる
+	ENEMY_MOVE_LEFT,				//左に曲がる
+	ENEMY_MOVE_RIGHT_SLIDE,			//右に向かって横移動
+	ENEMY_MOVE_LEFT_SLIDE,			//左に向かって横移動
+	ENEMY_MOVE_MAX,
+}ENEMY_MOVE_PATTERN;
+
 typedef enum						//エネミーパターン
 {
 	BULLET_PATTERN_NONE = 0,		//NULL
 	BULLET_PATTERN_SHOTS,			//通常ショット
 	BULLET_PATTERN_SPIRAL,			//螺旋ショット
-	BULLET_PATTERN_MAX				//マックス
-}ENEMY_PATTERN;
+	BULLET_PATTERN_MAX				
+}ENEMY_ATTACK_PATTERN;
 
 //=============================================================================
 // クラス定義
@@ -43,6 +55,7 @@ typedef enum						//エネミーパターン
 class CEnemyBase :public CScene2d
 {
 public:
+
 	CEnemyBase(int nPriorit = PRIORITY_OBJECT_1);	//コンストラクタ
 	~CEnemyBase();									//デストラクタ	
 
@@ -60,17 +73,20 @@ public:
 	void	Rotate(void);			// 回転処理
 	void	Bullet(void);			// ショット処理
 
-	void		SetMove(D3DXVECTOR3 move);	// 移動量セッター
-	D3DXVECTOR3	GetMove(void);				// 移動量ゲッター
-	void		SetLife(int nLife);			// ライフセッター
-	int			GetLife(void);				// ライフゲッター
-	void		SetScore(int nScore);		// スコアセッター
-	int			GetScore(void);				// スコアゲッター
-	void		SetSpeed(float nSpeed,int nPointer);		// スピードセッター
-	float		GetSpeed(int nPointer);				// スピードゲッター
-	void		SetMovePointer(D3DXVECTOR3 pointer, int nPointer,float fSpeed);	// 移動位置セット
-	void			SetPattern(ENEMY_PATTERN type);					// 攻撃パターンセッター
-	ENEMY_PATTERN	GetPattern(void);								// 攻撃パターンゲッター
+	void		SetMovePattern(ENEMY_MOVE_PATTERN MovePattern);			// 行動パターンセッター
+	void		SetAttackPattern(ENEMY_ATTACK_PATTERN AttackPaattern);	// 攻撃パターンセッター
+	void		SetInTime(int nInTime);			// 出現時間セッター
+	void		SetActionTime(int nActionTime);	// 行動時間セッター
+	void		SetAttackTime(int nAttackTime);	// 攻撃時間セッター
+	void		SetOutTime(int nOutTime);		// 帰還時間セッター
+
+	void		SetLife(int nLife);				// ライフセッター
+	int			GetLife(void);					// ライフゲッター
+	void		SetScore(int nScore);			// スコアセッター
+	int			GetScore(void);					// スコアゲッター
+	void		SetSpeed(float nSpeed);			// スピードセッター
+	float		GetSpeed(void);					// スピードゲッター
+
 private:
 	typedef enum				// エネミーの状態
 	{
@@ -79,16 +95,22 @@ private:
 		STATS_MODE_DEATH		// 死
 	}STATS_MODE;
 
-	STATS_MODE			m_Stats;						// エネミーの状態
-	ENEMY_PATTERN		m_Shots;						// ショットタイプ
-	D3DXVECTOR3			m_move;							// 移動量
-	int					m_Score;						// スコア
+	ENEMY_MOVE_PATTERN		m_MovePattern;				// 移動パターン	
+	ENEMY_ATTACK_PATTERN	m_Shots;					// ショットタイプ
+
+	int					m_nInTime;						// 画面に入ってくるまで
+	int					m_nActionTime;					// 行動を起こすまでのタイム
+	int					m_nAttackTime;					// 攻撃までの時間
+	int					m_nOutTime;						// 帰還タイム
+	int					m_nCount;						// カウント
 	int					m_nLife;						// エネミーのライフ
-	int					m_nPointer;						// 最大移動回数
-	int					m_nMoveCount;					// 移動回数	
-	float				m_fSpeed[ENEMY_POINTER];		// エネミーのスピード
-	D3DXVECTOR3			m_movePointer[ENEMY_POINTER];	// 移動地点ポインター
+	float				m_fSpped;						// エネミースピード
+
+	STATS_MODE			m_Stats;						// エネミーの状態
 	bool				m_bAttack;						// 攻撃したか
+	int					m_Score;						// スコア
 	CShotsBase*			m_pShotsBase;					// ショットポインタ
+	float				m_fRot;							// 回転角度
+
 };
 #endif

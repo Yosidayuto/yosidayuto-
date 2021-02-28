@@ -27,18 +27,20 @@
 //=============================================================================
 CEnemyBase::CEnemyBase(int nPriorit)
 {
+	//m_nMoveCount	= 0;
+	//m_nPointer	= 0;
+	m_nInTime		= 0;
 	m_nLife			= 0;
 	m_Score			= 0;
-	m_nMoveCount	= 0;
-	m_nPointer		= 0;
+	m_nCount		= 0;
 	m_bAttack		= false;
+	m_fRot			= 0.0f;
 	m_Stats			= STATS_MODE_NORMAL;
 	m_Shots			= BULLET_PATTERN_NONE;
 	m_pShotsBase	= NULL;
 
-	memset(m_fSpeed, NULL, sizeof(m_fSpeed));
-	memset(m_move,NULL, sizeof(m_move));
-	memset(m_movePointer, NULL, sizeof(m_movePointer));
+	//memset(m_fSpeed, NULL, sizeof(m_fSpeed));
+	//memset(m_movePointer, NULL, sizeof(m_movePointer));
 	SetObjType(OBJ_TYPE_ENEMY);				//タイプ処理
 }
 
@@ -80,8 +82,8 @@ HRESULT CEnemyBase::Init(void)
 {
 	//初期化処理
 	CScene2d::Init();
-	//初期位置取得
-	SetMovePointer(GetPos(), 0, 0.0f);
+	////初期位置取得
+	//SetMovePointer(GetPos(), 0, 0.0f);
 	return S_OK;
 }
 
@@ -104,6 +106,9 @@ void CEnemyBase::Uninit(void)
 void CEnemyBase::Update(void)
 {
 	CScene2d::Update();
+	//カウントアップ
+	m_nCount++;
+
 	//当たり判定
 	Hit();
 	//移動処理
@@ -185,18 +190,16 @@ void CEnemyBase::StatasManage(void)
 //=============================================================================
 void CEnemyBase::Rotate(void)
 {
-	//回転角度
-	static float fRot = 0;
 	
 	//向きセット
-	SetRot(fRot);
+	SetRot(m_fRot);
 	//回転角度プラス
-	fRot += 2.0f;
+	m_fRot += 2.0f;
 	//回転角度が一定に達したら
-	if (fRot>360.0f)
+	if (m_fRot>360.0f)
 	{
 		//角度初期化
-		fRot = 0;
+		m_fRot = 0;
 	}
 
 }
@@ -208,21 +211,29 @@ void CEnemyBase::Bullet(void)
 {
 	//位置取得
 	D3DXVECTOR3 pos = GetPos();
-	if (!m_bAttack)
+	
+	//カウントが攻撃時間を過ぎると
+	if (m_nCount>m_nAttackTime)
 	{
-		switch (m_Shots)
+		//攻撃をしているか
+		if (!m_bAttack)
 		{
-		case BULLET_PATTERN_SHOTS:
-			m_pShotsBase = CShots::Create(pos);
-			m_Shots = BULLET_PATTERN_NONE;
-			break;
-		case BULLET_PATTERN_SPIRAL:
-			m_pShotsBase = CSpiral::Create(pos);
-			m_Shots = BULLET_PATTERN_NONE;
-			break;
+			//攻撃のタイプ分け
+			switch (m_Shots)
+			{
+			case BULLET_PATTERN_SHOTS:
+				m_pShotsBase = CShots::Create(this);
+				m_Shots = BULLET_PATTERN_NONE;
+				break;
+			case BULLET_PATTERN_SPIRAL:
+				m_pShotsBase = CSpiral::Create(this);
+				m_Shots = BULLET_PATTERN_NONE;
+				break;
+			}
+			m_bAttack = true;
 		}
-		m_bAttack = true;
 	}
+
 }
 
 //=============================================================================
@@ -282,59 +293,191 @@ void CEnemyBase::Hit(void)
 //=============================================================================
 void CEnemyBase::Move(void)
 {
-	//目標の方向
-	float fAngle;
 	//位置取得
 	D3DXVECTOR3 pos = GetPos();
 	//サイズ取得
 	D3DXVECTOR3 size = GetSize();
+
 	//移動位置
-	if (m_nMoveCount<m_nPointer+1)
+	//if (m_nMoveCount<m_nPointer+1)
+	//{
+	//	//目標の位置方向取得
+	//	fAngle = atan2f((-pos.x + m_movePointer[m_nMoveCount].x), (-pos.y + m_movePointer[m_nMoveCount].y));
+	//	//目標までの移動
+	//	m_move.x = sinf(fAngle) * m_fSpeed[m_nMoveCount];
+	//	m_move.y = cosf(fAngle) * m_fSpeed[m_nMoveCount];
+	//	//位置更新
+	//	pos += m_move;
+	//	//位置設定
+	//	SetPos(pos);
+	//
+	//	
+	//	if (pos.x + 5.0f>m_movePointer[m_nMoveCount].x
+	//		&&pos.x - 5.0f<m_movePointer[m_nMoveCount].x
+	//		&&pos.y + 5.0f>m_movePointer[m_nMoveCount].y
+	//		&&pos.y - 5.0f<m_movePointer[m_nMoveCount].y)
+	//	{
+	//		//次の位置
+	//		m_nMoveCount++;
+	//	}
+	//}
+
+	//出現時間を過ぎてから行動する
+	if (m_nCount>m_nInTime)
 	{
-		//目標の位置方向取得
-		fAngle = atan2f((-pos.x + m_movePointer[m_nMoveCount].x), (-pos.y + m_movePointer[m_nMoveCount].y));
-		//目標までの移動
-		m_move.x = sinf(fAngle) * m_fSpeed[m_nMoveCount];
-		m_move.y = cosf(fAngle) * m_fSpeed[m_nMoveCount];
-		//位置更新
-		pos += m_move;
-		//位置設定
-		SetPos(pos);
-	
-		if (pos.x + 5.0f>m_movePointer[m_nMoveCount].x
-			&&pos.x - 5.0f<m_movePointer[m_nMoveCount].x
-			&&pos.y + 5.0f>m_movePointer[m_nMoveCount].y
-			&&pos.y - 5.0f<m_movePointer[m_nMoveCount].y)
+		//行動パターン
+		switch (m_MovePattern)
 		{
-			//次の位置
-			m_nMoveCount++;
+			//Uターン
+		case ENEMY_MOVE_RETURN:
+
+			//カウントがアクションタイムを越していないとき
+			if (m_nCount<m_nActionTime
+				&&m_nCount < m_nOutTime)
+			{
+				//移動量セット
+				pos += D3DXVECTOR3(0.0f, 1.0f, 0.0f)*m_fSpped;
+			}
+
+			//カウントが一定になったら
+			if (m_nCount > m_nOutTime)
+			{
+				//移動量セット
+				pos += D3DXVECTOR3(0.0f, -1.0f, 0.0f)*m_fSpped;
+			}
+
+			//位置セット
+			SetPos(pos);
+			break;
+
+			//直進
+		case ENEMY_MOVE_STRAIGHT:
+
+			//移動量セット
+			pos += D3DXVECTOR3(0.0f, 1.0f, 0.0f)*m_fSpped;
+			//位置セット
+			SetPos(pos);
+
+			break;
+
+			//右に曲がる
+		case ENEMY_MOVE_RIGHT:
+			//移動量セット
+			pos += D3DXVECTOR3(0.0f, 1.0f, 0.0f)*m_fSpped;
+
+			//カウントが一定に達したら
+			if (m_nCount>m_nActionTime)
+			{
+				//移動量セット
+				pos.x += 3.0;
+
+			}
+			//位置セット
+			SetPos(pos);
+
+			break;
+
+			//左に曲がる
+		case ENEMY_MOVE_LEFT:
+			//移動量セット
+			pos += D3DXVECTOR3(0.0f, 1.0f, 0.0f)*m_fSpped;
+
+			//カウントが一定に達したら
+			if (m_nCount>m_nActionTime)
+			{
+				//移動量セット
+				pos.x += -3.0;
+
+			}
+			//位置セット
+			SetPos(pos);
+
+			break;
+
+			//右に向かって横移動
+		case ENEMY_MOVE_RIGHT_SLIDE:
+
+			//移動量セット
+			pos += D3DXVECTOR3(1.0f, 0.0f, 0.0f)*m_fSpped;
+			//位置セット
+			SetPos(pos);
+
+			break;
+
+			//左に向かって横移動
+		case ENEMY_MOVE_LEFT_SLIDE:
+			//移動量セット
+			pos += D3DXVECTOR3(-1.0f, 0.0f, 0.0f)*m_fSpped;
+			//位置セット
+			SetPos(pos);
+
+			break;
 		}
 
-		//画面外処理
-		if (pos.y > SCREEN_HEIGHT+(size.y / 2)						// 画面下
-			|| pos.x > (STAGE_POS+ STAGE_SIZE /2)+ (size.x / 2)		// 画面右
-			|| pos.x < (STAGE_POS - STAGE_SIZE / 2) - (size.x / 2))	// 画面左
+
+	}
+	//画面外処理
+	if (pos.y > SCREEN_HEIGHT + (size.y / 2)					// 画面下
+		|| pos.x > (STAGE_POS + STAGE_SIZE / 2) + (size.x / 2)	// 画面右
+		|| pos.x < (STAGE_POS - STAGE_SIZE / 2) - (size.x / 2))	// 画面左
+	{
+		//アクションカウントが0になっていたら
+		if (m_nCount <= m_nActionTime)
 		{
 			//終了
 			CEnemyBase::Uninit();
+
 		}
 	}
+
 }
 
 //=============================================================================
-// 移動量セッター
+// 行動パターンセッター
 //=============================================================================
-void CEnemyBase::SetMove(D3DXVECTOR3 move)
+void CEnemyBase::SetMovePattern(ENEMY_MOVE_PATTERN MovePattern)
 {
-	m_move = move;
+	m_MovePattern =	MovePattern;
 }
 
 //=============================================================================
-// 移動量ゲッター
+// 攻撃パターンセッター
 //=============================================================================
-D3DXVECTOR3 CEnemyBase::GetMove(void)
+void CEnemyBase::SetAttackPattern(ENEMY_ATTACK_PATTERN AttackPaattern)
 {
-	return m_move;
+	m_Shots = AttackPaattern;
+}
+
+//=============================================================================
+// 出現時間セッター
+//=============================================================================
+void CEnemyBase::SetInTime(int nInTime)
+{
+	m_nInTime = nInTime;
+}
+
+//=============================================================================
+// 行動時間セッター
+//=============================================================================
+void CEnemyBase::SetActionTime(int nActionTime)
+{
+	m_nActionTime = nActionTime;
+}
+
+//=============================================================================
+// 攻撃時間セッター
+//=============================================================================
+void CEnemyBase::SetAttackTime(int nAttackTime)
+{
+	m_nAttackTime = nAttackTime;
+}
+
+//=============================================================================
+// 帰還時間セッター
+//=============================================================================
+void CEnemyBase::SetOutTime(int nOutTime)
+{
+	m_nOutTime = nOutTime;
 }
 
 //=============================================================================
@@ -372,41 +515,16 @@ int CEnemyBase::GetScore(void)
 //=============================================================================
 // スピードセッター
 //=============================================================================
-void CEnemyBase::SetSpeed(float nSpeed, int nPointer)
+void CEnemyBase::SetSpeed(float nSpeed)
 {
-	m_fSpeed[nPointer] = nSpeed;
+	m_fSpped = nSpeed;
 }
 
 //=============================================================================
 // スピードゲッター
 //=============================================================================
-float CEnemyBase::GetSpeed(int nPointer)
+float CEnemyBase::GetSpeed(void)
 {
-	return m_fSpeed[nPointer];
+	return m_fSpped;
 }
 
-//=============================================================================
-// 移動地点ポインター
-//=============================================================================
-void CEnemyBase::SetMovePointer(D3DXVECTOR3 pointer, int nPointer, float fSpeed)
-{
-	m_nPointer = nPointer;
-	SetSpeed(fSpeed,m_nPointer);
-	m_movePointer[m_nPointer] = pointer;
-}
-
-//=============================================================================
-// 攻撃パターンセッター
-//=============================================================================
-void CEnemyBase::SetPattern(ENEMY_PATTERN type)
-{
-	m_Shots = type;
-}
-
-//=============================================================================
-// 攻撃パターンゲッター
-//=============================================================================
-ENEMY_PATTERN CEnemyBase::GetPattern(void)
-{
-	return m_Shots;
-}

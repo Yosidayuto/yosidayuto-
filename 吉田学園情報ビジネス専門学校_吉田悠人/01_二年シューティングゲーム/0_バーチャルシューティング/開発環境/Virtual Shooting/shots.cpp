@@ -36,7 +36,7 @@ CShots::~CShots()
 //=============================================================================
 // 生成処理
 //=============================================================================
-CShots * CShots::Create(D3DXVECTOR3 pos)
+CShots * CShots::Create(CScene2d* Scene2d)
 {
 	//メモリの確保
 	CShots* pShots = NULL;
@@ -45,8 +45,10 @@ CShots * CShots::Create(D3DXVECTOR3 pos)
 	//NULLチェック
 	if (pShots != NULL)
 	{
+		//ポインタ設定
+		pShots->m_pScene2d = Scene2d;
 		//位置設定
-		pShots->SetPos(pos);
+		pShots->SetPos(Scene2d->GetPos());
 		//向き設定
 		pShots->Tracking(SHOTS_SPEED);
 		//初期化処理
@@ -87,7 +89,7 @@ void CShots::Update(void)
 void CShots::Shots(void)
 {
 	//位置取得
-	D3DXVECTOR3 pos = GetPos();
+	D3DXVECTOR3 pos = m_pScene2d->GetPos();
 	//向き取得
 	D3DXVECTOR3 rot = GetRot();
 

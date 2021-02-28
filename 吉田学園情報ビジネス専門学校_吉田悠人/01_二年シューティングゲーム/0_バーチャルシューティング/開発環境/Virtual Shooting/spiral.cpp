@@ -36,7 +36,7 @@ CSpiral::~CSpiral()
 //=============================================================================
 // 生成処理
 //=============================================================================
-CSpiral * CSpiral::Create(D3DXVECTOR3 pos)
+CSpiral * CSpiral::Create(CScene2d* Scene2d)
 {
 	//メモリの確保
 	CSpiral* pSpiral = NULL;
@@ -45,8 +45,9 @@ CSpiral * CSpiral::Create(D3DXVECTOR3 pos)
 	//NULLチェック
 	if (pSpiral != NULL)
 	{
+		pSpiral->m_pScene2d = Scene2d;
 		//位置設定
-		pSpiral->SetPos(pos);
+		pSpiral->SetPos(Scene2d->GetPos());
 		//向き設定
 		pSpiral->Tracking(SPIRAL_SPEED);
 		//初期化処理

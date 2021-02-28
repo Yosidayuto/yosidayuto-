@@ -28,7 +28,16 @@ public:
 
 	static HRESULT		Load(void);					// テクスチャ読み込み
 	static void			Unload(void);				// テクスチャの破棄
-	static CEnemyType1*	Create(D3DXVECTOR3 pos);	// 生成処理
+
+	static CEnemyType1*	Create( ENEMY_MOVE_PATTERN MoveType,		// 行動パターン
+								ENEMY_ATTACK_PATTERN AttackType,	// 攻撃パターン
+								int nInTime,						// 出現タイム
+								int nActionTime,					// アクションタイム
+								int nAttacTime,						// アタックタイム
+								int nReturnTime,					// リターンタイム
+								D3DXVECTOR3 pos,					// 出現位置
+								float fSpeed,						// スピード
+								int nLife);							// ライフ
 
 	HRESULT Init(void);				// 初期化処理
 	void	Uninit(void);			// 終了処理

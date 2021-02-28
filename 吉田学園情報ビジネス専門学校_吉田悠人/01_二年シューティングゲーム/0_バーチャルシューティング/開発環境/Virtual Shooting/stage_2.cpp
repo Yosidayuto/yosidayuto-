@@ -144,57 +144,57 @@ void CStage2::StageMode(void)
 //=============================================================================
 void CStage2::EnemyCreate(void)
 {
-	//エネミーのポインタ
-	CEnemyBase* pEnemy = NULL;
+	////エネミーのポインタ
+	//CEnemyBase* pEnemy = NULL;
 
-	//エネミーの数分
-	for (int nEnemy = 0; nEnemy<m_StageData.Phase[m_EnemyCreate].nEnemyCount + 1; nEnemy++)
-	{
-		//エネミーの行動数分
-		for (int nMoveCount = 0; nMoveCount<m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nEnemyMoveNumber; nMoveCount++)
-		{
-			//位置取得
-			D3DXVECTOR3 pos = m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].MoveData[nMoveCount].pos;
-			//位置修正
-			pos.x += STAGE_POS - (STAGE_SIZE / 2);
-			//エネミーのクリエイト
-			if (nMoveCount == 0)
-			{
-				//位置修正
-				pos.y -= 200;
+	////エネミーの数分
+	//for (int nEnemy = 0; nEnemy<m_StageData.Phase[m_EnemyCreate].nEnemyCount + 1; nEnemy++)
+	//{
+	//	//エネミーの行動数分
+	//	for (int nMoveCount = 0; nMoveCount<m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nEnemyMoveNumber; nMoveCount++)
+	//	{
+	//		//位置取得
+	//		D3DXVECTOR3 pos = m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].MoveData[nMoveCount].pos;
+	//		//位置修正
+	//		pos.x += STAGE_POS - (STAGE_SIZE / 2);
+	//		//エネミーのクリエイト
+	//		if (nMoveCount == 0)
+	//		{
+	//			//位置修正
+	//			pos.y -= 200;
 
-				switch (m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].EnemyType)
-				{
-				case ENEMY_TYPE_1:
-					pEnemy = CEnemyType1::Create(pos);
-					break;
-				case ENEMY_TYPE_2:
-					pEnemy = CEnemyType2::Create(pos);
-					break;
-				case ENEMY_TYPE_3:
-					pEnemy = CEnemyType3::Create(pos);
-					break;
-				case ENEMY_TYPE_4:
-					pEnemy = CEnemyType4::Create(pos);
-					break;
-				}
-			}
-			//エネミーの行動位置設定
-			else
-			{
-				//スピード取得
-				float fSpeed = m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].MoveData[nMoveCount].fSpeed;
-				//最後の行動の場合
-				if (nMoveCount + 1 == m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nEnemyMoveNumber)
-				{
-					//位置修正
-					pos.y += 200;
-				}
-				//移動するポイント設定
-				pEnemy->SetMovePointer(pos, nMoveCount, fSpeed);
-			}
-		}
-	}
+	//			switch (m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].EnemyType)
+	//			{
+	//			case ENEMY_TYPE_1:
+	//				pEnemy = CEnemyType1::Create(pos);
+	//				break;
+	//			case ENEMY_TYPE_2:
+	//				pEnemy = CEnemyType2::Create(pos);
+	//				break;
+	//			case ENEMY_TYPE_3:
+	//				pEnemy = CEnemyType3::Create(pos);
+	//				break;
+	//			case ENEMY_TYPE_4:
+	//				pEnemy = CEnemyType4::Create(pos);
+	//				break;
+	//			}
+	//		}
+	//		//エネミーの行動位置設定
+	//		else
+	//		{
+	//			//スピード取得
+	//			float fSpeed = m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].MoveData[nMoveCount].fSpeed;
+	//			//最後の行動の場合
+	//			if (nMoveCount + 1 == m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nEnemyMoveNumber)
+	//			{
+	//				//位置修正
+	//				pos.y += 200;
+	//			}
+	//			//移動するポイント設定
+	//			pEnemy->SetMovePointer(pos, nMoveCount, fSpeed);
+	//		}
+	//	}
+	//}
 }
 
 //=============================================================================

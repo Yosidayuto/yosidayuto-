@@ -39,30 +39,34 @@ typedef enum	//エネミーの出現モード
 	ENEMY_CREATE_9,		//フェーズ9
 	ENEMY_CREATE_MAX,
 }STAGE_ENEMY;
-typedef struct	//エネミーの移動情報
-{
-	D3DXVECTOR3	pos;		// 移動位置
-	float		fSpeed;		// スピード
-}MOVE_DATA;
 
-typedef struct	//エネミーの出現情報
+typedef struct	//エネミーデータ
 {
-	MOVE_DATA	MoveData[ENEMY_POINTER];	// 移動データ
-	ENEMY_TYPE	EnemyType;					// エネミータイプ
-	int			nEnemyMoveNumber;			// 最大行動数
-} SPAWN_DATA;
+	ENEMY_TYPE				EnemyType;			// タイプ
+	ENEMY_MOVE_PATTERN		EnemyMovePattern;	// 行動パターン
+	ENEMY_ATTACK_PATTERN	EnemyAttack;		// 攻撃パターン
+	int						nSpwan;				// 出現までの時間
+	int						nActionTime;		// アクションタイム
+	int						nAttackTime;		// 攻撃までのタイム
+	int						nReturnTime;		// 戻るまでのタイム
+	D3DXVECTOR3				pos;				// 最初の出現位置
+	float					fSpeed;				// スピード
+	int						nLife;				// 体力
+}ENEMY_DATA;
 
 typedef struct	//フェーズ情報
 {
-	SPAWN_DATA	EnemySpawn[MAX_ENEMY];		// エネミーデータ
-	int			nEnemyCount;				// 最大エネミー数
+	ENEMY_DATA	EnemySpawn[MAX_ENEMY];			// エネミーデータ
+	int			nEnemyCount;					// 最大エネミー数
+	int			nPhaseCount;					// 次のフェーズまでの時間
 } PHASE_DATA;
 
 typedef struct //ステージ情報
 {
-	PHASE_DATA	Phase[ENEMY_CREATE_MAX];	//フェーズ情報
-	int			nCountPhase;				//最大フェーズ
+	PHASE_DATA	Phase[ENEMY_CREATE_MAX];		// フェーズ情報
+	int			nCountPhase;					// 最大フェーズ
 }STAGE_DATA;
+
 
 //=============================================================================
 // クラス定義
@@ -83,6 +87,7 @@ public:
 	void			SetScore(CScore* pScore);			// スコアポインタセッター
 	void			EnemeyCreate(void);					// エネミークリエイト
 	static void		LoadFile(void);						// ロードファイル
+	static void		LoadEnemyData(void);						// エクセルからエネミーデータ取得
 	virtual void	StageMode(void) = 0;				// エネミーのスポーンモード
 	STAGE_DATA		GetStageEnemy(STAGE_TYPE stage);	// ステージエネミーデータゲッター
 	bool			BossSearch(void);					// ボスがいるか
@@ -91,5 +96,7 @@ private:
 	static STAGE_DATA	m_Stage[STAGE_TYPE_MAX];	// ステージのエネミー出現データ
 	static char*		pFileName[STAGE_TYPE_MAX];	// ファイルネーム
 	CScore*				m_pScore;					// スコアポインタ
+	ENEMY_DATA			m_Enemy[MAX_ENEMY];			// エネミーデータ保存
+
 };
 #endif

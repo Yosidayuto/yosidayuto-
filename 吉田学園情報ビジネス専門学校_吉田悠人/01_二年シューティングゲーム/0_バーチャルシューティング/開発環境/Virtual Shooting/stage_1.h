@@ -24,9 +24,9 @@ class CStage1 :public CStage
 {
 public:
 
-	CStage1();	//コンストラクタ
-	~CStage1();	//デストラクタ
-	static CStage1*	Create(void);	//生成処理
+	CStage1();						// コンストラクタ
+	~CStage1();						// デストラクタ
+	static CStage1*	Create(void);	// 生成処理
 
 	HRESULT	Init(void);			// 初期化処理
 	void	Uninit(void);		// 終了処理
@@ -36,9 +36,9 @@ public:
 	void	BossCreate(void);	// ボス生成
 private:
 
-	STAGE_ENEMY		m_EnemyCreate;	//エネミーの出現モード
-	STAGE_DATA		m_StageData;	//エネミーの出現データ
-	int				m_nBossPhase;	//ボス出現データ
+	STAGE_ENEMY		m_EnemyCreate;	// エネミーの出現モード
+	STAGE_DATA		m_StageData;	// エネミーの出現データ
+	int				m_nBossPhase;	// ボス出現データ
 
 };
 

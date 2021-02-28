@@ -204,7 +204,7 @@ void CBossBase::Bullet(void)
 		
 		break;
 	case  BOSS_PATTERN_SHOTS:
-		m_pShots = CShots::Create(pos);
+		m_pShots = CShots::Create(this);
 		m_Shots = BOSS_PATTERN_NONE;
 		break;
 	case BOSS_PATTERN_All_DIR:
@@ -222,7 +222,7 @@ void CBossBase::Bullet(void)
 		break;
 
 	case  BOSS_PATTERN_SPIRAL:
-		m_pShots = CSpiral::Create(pos);
+		m_pShots = CSpiral::Create(this);
 		m_Shots = BOSS_PATTERN_NONE;
 		break;
 	}

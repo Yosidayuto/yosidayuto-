@@ -105,7 +105,6 @@ CPlayer * CPlayer::Create(D3DXVECTOR3 Pos)
 		pPlayer->SetWeapon(CManager::GetPlayer()->GetWeaponData());
 		//‰Šú‰»ˆ—
 		pPlayer->Init();
-
 	}
 
 	return pPlayer;

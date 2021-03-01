@@ -38,6 +38,8 @@ typedef enum						//エネミー行動パターン
 	ENEMY_MOVE_LEFT,				//左に曲がる
 	ENEMY_MOVE_RIGHT_SLIDE,			//右に向かって横移動
 	ENEMY_MOVE_LEFT_SLIDE,			//左に向かって横移動
+	ENEMY_MOVE_RIGHT_STOP,			//右に向かって横移動(途中で一度止まる)
+	ENEMY_MOVE_LEFT_STOP,			//左に向かって横移動(途中で一度止まる)
 	ENEMY_MOVE_MAX,
 }ENEMY_MOVE_PATTERN;
 

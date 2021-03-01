@@ -101,15 +101,19 @@ void CStage2::Update(void)
 void CStage2::StageMode(void)
 {
 	//ステージ進行
-	if (m_EnemyCreate < m_StageData.nCountPhase)
+	if (m_EnemyCreate <= m_StageData.nCountPhase)
 	{
 		m_EnemyCreate = (STAGE_ENEMY)(m_EnemyCreate + 1);
 	}
 
 	//エネミー生成用のフェーズが終わっているか
-	if (m_StageData.Phase[m_EnemyCreate].nEnemyCount>m_EnemyCreate)
+	if (m_EnemyCreate<=m_StageData.nCountPhase)
 	{
+		//エネミー生成
 		EnemyCreate();
+		//次のフェーズまでの時間設定
+		SetEnemyCount(m_StageData.Phase[m_EnemyCreate].nPhaseCount);
+
 	}
 	//ボス生成処理
 	else
@@ -132,11 +136,12 @@ void CStage2::StageMode(void)
 			Result(STAGE_TYPE_2);
 			break;
 		}
+		//フェーズまでのカウントセット
+		SetEnemyCount(PHASE_COUNT);
 		//進める
 		m_nBossPhase++;
 
 	}
-	SetEnemyCount(PHASE_COUNT);
 }
 
 //=============================================================================
@@ -144,57 +149,63 @@ void CStage2::StageMode(void)
 //=============================================================================
 void CStage2::EnemyCreate(void)
 {
-	////エネミーのポインタ
-	//CEnemyBase* pEnemy = NULL;
+	//エネミーのポインタ
+	CEnemyBase* pEnemy = NULL;
 
-	////エネミーの数分
-	//for (int nEnemy = 0; nEnemy<m_StageData.Phase[m_EnemyCreate].nEnemyCount + 1; nEnemy++)
-	//{
-	//	//エネミーの行動数分
-	//	for (int nMoveCount = 0; nMoveCount<m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nEnemyMoveNumber; nMoveCount++)
-	//	{
-	//		//位置取得
-	//		D3DXVECTOR3 pos = m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].MoveData[nMoveCount].pos;
-	//		//位置修正
-	//		pos.x += STAGE_POS - (STAGE_SIZE / 2);
-	//		//エネミーのクリエイト
-	//		if (nMoveCount == 0)
-	//		{
-	//			//位置修正
-	//			pos.y -= 200;
+	//エネミーの数分
+	for (int nEnemy = 0; nEnemy<m_StageData.Phase[m_EnemyCreate].nEnemyCount; nEnemy++)
+	{
+		switch (m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].EnemyType)
+		{
+		case ENEMY_TYPE_1:
+			CEnemyType1::Create(m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].EnemyMovePattern,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].EnemyAttack,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nSpwan,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nActionTime,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nAttackTime,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nReturnTime,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].pos,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].fSpeed,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nLife);
+			break;
 
-	//			switch (m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].EnemyType)
-	//			{
-	//			case ENEMY_TYPE_1:
-	//				pEnemy = CEnemyType1::Create(pos);
-	//				break;
-	//			case ENEMY_TYPE_2:
-	//				pEnemy = CEnemyType2::Create(pos);
-	//				break;
-	//			case ENEMY_TYPE_3:
-	//				pEnemy = CEnemyType3::Create(pos);
-	//				break;
-	//			case ENEMY_TYPE_4:
-	//				pEnemy = CEnemyType4::Create(pos);
-	//				break;
-	//			}
-	//		}
-	//		//エネミーの行動位置設定
-	//		else
-	//		{
-	//			//スピード取得
-	//			float fSpeed = m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].MoveData[nMoveCount].fSpeed;
-	//			//最後の行動の場合
-	//			if (nMoveCount + 1 == m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nEnemyMoveNumber)
-	//			{
-	//				//位置修正
-	//				pos.y += 200;
-	//			}
-	//			//移動するポイント設定
-	//			pEnemy->SetMovePointer(pos, nMoveCount, fSpeed);
-	//		}
-	//	}
-	//}
+		case ENEMY_TYPE_2:
+			CEnemyType2::Create(m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].EnemyMovePattern,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].EnemyAttack,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nSpwan,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nActionTime,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nAttackTime,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nReturnTime,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].pos,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].fSpeed,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nLife);
+			break;
+
+		case ENEMY_TYPE_3:
+			CEnemyType3::Create(m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].EnemyMovePattern,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].EnemyAttack,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nSpwan,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nActionTime,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nAttackTime,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nReturnTime,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].pos,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].fSpeed,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nLife);
+			break;
+
+		case ENEMY_TYPE_4:
+			CEnemyType4::Create(m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].EnemyMovePattern,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].EnemyAttack,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nSpwan,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nActionTime,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nAttackTime,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nReturnTime,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].pos,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].fSpeed,
+				m_StageData.Phase[m_EnemyCreate].EnemySpawn[nEnemy].nLife);
+			break;
+		}
+	}
 }
 
 //=============================================================================

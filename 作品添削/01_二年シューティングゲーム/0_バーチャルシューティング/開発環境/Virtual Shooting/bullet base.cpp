@@ -175,7 +175,10 @@ bool CBulletBase::Range(void)
 	}
 
 	//画面外に出た時
-	if (pos.y < 0 || pos.y>SCREEN_HEIGHT || pos.x<0 || pos.x>SCREEN_WIDTH)
+	if (pos.y < 0					//画面上
+		|| pos.y>SCREEN_HEIGHT		//画面下
+		|| pos.x<(STAGE_POS - STAGE_SIZE / 2)	//画面左 
+		|| pos.x>(STAGE_POS + STAGE_SIZE / 2))	//画面右
 	{
 		CBulletBase::Uninit();	//終了処理
 		return true;

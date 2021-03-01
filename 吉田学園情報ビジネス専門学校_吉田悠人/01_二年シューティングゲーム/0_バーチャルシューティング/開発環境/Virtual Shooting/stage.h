@@ -86,8 +86,7 @@ public:
 	void			SetEnemyCount(int nConut);			// エネミーカウントセット
 	void			SetScore(CScore* pScore);			// スコアポインタセッター
 	void			EnemeyCreate(void);					// エネミークリエイト
-	static void		LoadFile(void);						// ロードファイル
-	static void		LoadEnemyData(void);						// エクセルからエネミーデータ取得
+	static void		LoadEnemyData(void);				// エクセルからエネミーデータ取得
 	virtual void	StageMode(void) = 0;				// エネミーのスポーンモード
 	STAGE_DATA		GetStageEnemy(STAGE_TYPE stage);	// ステージエネミーデータゲッター
 	bool			BossSearch(void);					// ボスがいるか

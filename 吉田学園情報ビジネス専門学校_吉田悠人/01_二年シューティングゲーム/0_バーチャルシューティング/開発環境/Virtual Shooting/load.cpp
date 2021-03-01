@@ -160,7 +160,7 @@ void CLoad::FileLoad(void)
 	CResultBg::Load();
 	CScoreBar::Load();
 	//テキスト読み込み
-	CStage::LoadFile();
+	CStage::LoadEnemyData();
 	
 	//読み終えたか
 	m_bLoad = true;

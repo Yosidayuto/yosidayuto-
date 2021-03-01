@@ -328,9 +328,7 @@ void CEnemyBase::Move(void)
 		//行動パターン
 		switch (m_MovePattern)
 		{
-			//Uターン
-		case ENEMY_MOVE_RETURN:
-
+		case ENEMY_MOVE_RETURN:		//Uターン
 			//カウントがアクションタイムを越していないとき
 			if (m_nCount<m_nActionTime
 				&&m_nCount < m_nOutTime)
@@ -338,91 +336,111 @@ void CEnemyBase::Move(void)
 				//移動量セット
 				pos += D3DXVECTOR3(0.0f, 1.0f, 0.0f)*m_fSpped;
 			}
-
 			//カウントが一定になったら
 			if (m_nCount > m_nOutTime)
 			{
 				//移動量セット
 				pos += D3DXVECTOR3(0.0f, -1.0f, 0.0f)*m_fSpped;
 			}
-
 			//位置セット
 			SetPos(pos);
 			break;
 
-			//直進
-		case ENEMY_MOVE_STRAIGHT:
-
+			
+		case ENEMY_MOVE_STRAIGHT:	//直進
 			//移動量セット
 			pos += D3DXVECTOR3(0.0f, 1.0f, 0.0f)*m_fSpped;
 			//位置セット
 			SetPos(pos);
-
 			break;
 
-			//右に曲がる
-		case ENEMY_MOVE_RIGHT:
+		case ENEMY_MOVE_RIGHT:		//右に曲がる
 			//移動量セット
 			pos += D3DXVECTOR3(0.0f, 1.0f, 0.0f)*m_fSpped;
-
 			//カウントが一定に達したら
 			if (m_nCount>m_nActionTime)
 			{
 				//移動量セット
 				pos.x += 3.0;
-
 			}
 			//位置セット
 			SetPos(pos);
-
 			break;
 
-			//左に曲がる
-		case ENEMY_MOVE_LEFT:
+		case ENEMY_MOVE_LEFT:		//左に曲がる
 			//移動量セット
 			pos += D3DXVECTOR3(0.0f, 1.0f, 0.0f)*m_fSpped;
-
 			//カウントが一定に達したら
 			if (m_nCount>m_nActionTime)
 			{
 				//移動量セット
 				pos.x += -3.0;
-
 			}
 			//位置セット
 			SetPos(pos);
 
 			break;
 
-			//右に向かって横移動
-		case ENEMY_MOVE_RIGHT_SLIDE:
-
+		case ENEMY_MOVE_RIGHT_SLIDE://右に向かって横移動
 			//移動量セット
 			pos += D3DXVECTOR3(1.0f, 0.0f, 0.0f)*m_fSpped;
 			//位置セット
 			SetPos(pos);
-
 			break;
 
-			//左に向かって横移動
-		case ENEMY_MOVE_LEFT_SLIDE:
+		case ENEMY_MOVE_LEFT_SLIDE:	//左に向かって横移動
 			//移動量セット
 			pos += D3DXVECTOR3(-1.0f, 0.0f, 0.0f)*m_fSpped;
 			//位置セット
 			SetPos(pos);
+			break;
 
+		case ENEMY_MOVE_RIGHT_STOP:	//右に向かって横移動(途中で一度止まる)
+			//カウントがアクションタイムを越していないとき
+			if (m_nCount<m_nActionTime
+				&&m_nCount < m_nOutTime)
+			{
+				//移動量セット
+				pos += D3DXVECTOR3(1.0f, 0.0f, 0.0f)*m_fSpped;
+			}
+			//カウントが一定になったら
+			if (m_nCount > m_nOutTime)
+			{
+				//移動量セット
+				pos += D3DXVECTOR3(1.0f, 0.0f, 0.0f)*m_fSpped;
+			}
+			//位置セット
+			SetPos(pos);
+			break;
+		
+		case ENEMY_MOVE_LEFT_STOP:	//左に向かって横移動(途中で一度止まる)
+			//カウントがアクションタイムを越していないとき
+			if (m_nCount<m_nActionTime
+				&&m_nCount < m_nOutTime)
+			{
+				//移動量セット
+				pos += D3DXVECTOR3(-1.0f, 0.0f, 0.0f)*m_fSpped;
+			}
+			//カウントが一定になったら
+			if (m_nCount > m_nOutTime)
+			{
+				//移動量セット
+				pos += D3DXVECTOR3(-1.0f, 0.0f, 0.0f)*m_fSpped;
+			}
+			//位置セット
+			SetPos(pos);
 			break;
 		}
-
-
 	}
+
 	//画面外処理
 	if (pos.y > SCREEN_HEIGHT + (size.y / 2)					// 画面下
-		|| pos.x > (STAGE_POS + STAGE_SIZE / 2) + (size.x / 2)	// 画面右
+		|| pos.y< 0 - (size.y / 2)								// 画面上
+		|| pos.x >(STAGE_POS + STAGE_SIZE / 2) + (size.x / 2)	// 画面右
 		|| pos.x < (STAGE_POS - STAGE_SIZE / 2) - (size.x / 2))	// 画面左
 	{
 		//アクションカウントが0になっていたら
-		if (m_nCount <= m_nActionTime)
+		if (m_nCount >= m_nActionTime)
 		{
 			//終了
 			CEnemyBase::Uninit();

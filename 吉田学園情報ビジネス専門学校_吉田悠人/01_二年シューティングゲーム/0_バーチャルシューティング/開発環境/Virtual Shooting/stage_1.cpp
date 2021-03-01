@@ -108,9 +108,8 @@ void CStage1::StageMode(void)
 		m_EnemyCreate = (STAGE_ENEMY)(m_EnemyCreate + 1);
 	}
 
-
 	//エネミー生成用のフェーズが終わっているか
-	if (m_StageData.nCountPhase>=m_EnemyCreate)
+	if (m_EnemyCreate<= m_StageData.nCountPhase)
 	{
 		//エネミー生成
 		EnemyCreate();

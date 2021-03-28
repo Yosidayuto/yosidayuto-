@@ -14,9 +14,35 @@
 //***************************************************
 //担当箇所
 //***************************************************
-　アニメーションの処理全般
-　エネミーのAIや配置
-　など
+ animation.h
+ animation.cpp
+ fade.h
+ fade.cpp
+ line.h
+ line.cpp
+ mesfield_cylinder.h
+ mesfield_cylinder.cpp
+ enemy.h
+ enemy.cpp
+ heavy_enemy.h
+ heavy_enemy.cpp
+ light_enemy.h
+ light_enemy.cpp
+ map01.h
+ map01.cpp
+ map02.h
+ map02.cpp
+ map03.h
+ map03.cpp
+ map04.h
+ map04.cpp
+ goal.h
+ goal.cpp
+ trap.h
+ trap.cpp
+ weapons_ui.h
+ weapons_ui.cpp
+
 //***************************************************
 //ポイント
 //***************************************************

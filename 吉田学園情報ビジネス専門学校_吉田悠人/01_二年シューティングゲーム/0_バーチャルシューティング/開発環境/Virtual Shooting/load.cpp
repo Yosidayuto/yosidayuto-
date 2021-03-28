@@ -33,6 +33,7 @@ CLoad::CLoad()
 {
 	m_bLoad = false;
 	m_pLoadBg = NULL;
+	nLoad = 0;
 }
 
 //=============================================================================
@@ -72,17 +73,10 @@ HRESULT CLoad::Init(void)
 	//背景生成
 	m_pLoadBg = CLoadBg::Create();
 
-	//アップデート（マルチスレッド）
-	std::thread LoadUpdate(&CLoad::Update,this);
-	//描画（マルチスレッド）
-	std::thread LoadDraw(&CLoad::Draw, this);
 	//ファイルロード(マルチスレッド)
-	std::thread Load(&CLoad::FileLoad, this);
+	m_stLoad = std::thread (&CLoad::FileLoad, this);
 
-	//スレッドが終了するまで待機する
-	LoadUpdate.join();
-	LoadDraw.join();
-	Load.join();
+	m_stLoad.detach();
 	//ここまで
 	return S_OK;
 }
@@ -99,69 +93,67 @@ void CLoad::Uninit(void)
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CLoad::Update(void)
+bool CLoad::GetLoad(void)
 {
-
-	while (!m_bLoad)
-	{
-		//レンダラーポインタ取得
-		CRenderer* Renderer = NULL;
-		Renderer = CManager::GetRenderer();
-
-		//NULLチェック
-		if (Renderer != NULL)
-		{
-			std::lock_guard<std::mutex> lock(m_mtx_);
-			Renderer->Update();
-		}
-	}
-
-}
-
-//=============================================================================
-// 描画関数
-//=============================================================================
-void CLoad::Draw(void)
-{
-
-	while (!m_bLoad)
-	{
-		//レンダラーポインタ取得
-		CRenderer* Renderer = NULL;
-		Renderer = CManager::GetRenderer();
-
-
-		//NULLチェック
-		if (Renderer != NULL)
-		{
-			std::lock_guard<std::mutex> lock(m_mtx_);
-			Renderer->Draw();
-		}
-
-	}
+	return m_bLoad;
 }
 
 void CLoad::FileLoad(void)
 {
-	std::lock_guard<std::mutex> lock(m_mtx_);
-	
-	//テクスチャの読み込み
-	CClear::Load();
-	CNumber::Load();
-	CTelop::Load();
-	CPointer::Load();
-	CTitleBg::Load();
-	CTutorialBg::Load();
-	CSelectBg::Load();
-	CLifeUi::Load();
-	CWeaponManager::Load();
-	CButtonManager::Load();
-	CGame::Load();
-	CResultBg::Load();
-	CScoreBar::Load();
-	//テキスト読み込み
-	CStage::LoadEnemyData();
-	
-	//読み終えたか
-	m_bLoad = true;
+	while (!m_bLoad)
+	{
+		File();
+	}
+}
+
+void CLoad::File(void)
+{
+	switch (nLoad)
+	{
+	case 0:
+		CClear::Load();
+		break;
+	case 1:
+		CNumber::Load();
+		break;
+	case 2:
+		CTelop::Load();
+		break;
+	case 3:
+		CPointer::Load();
+		break;
+	case 4:
+		CTitleBg::Load();
+		break;
+	case 5:
+		CTutorialBg::Load();
+		break;
+	case 6:
+		CSelectBg::Load();
+		break;
+	case 7:
+		CLifeUi::Load();
+		break;
+	case 8:
+		CWeaponManager::Load();
+		break;
+	case 9:
+		CButtonManager::Load();
+		break;
+	case 10:
+		CGame::Load();
+		break;
+	case 11:
+		CResultBg::Load();
+		break;
+	case 12:
+		CScoreBar::Load();
+		break;
+	case 13:
+		CStage::LoadEnemyData();
+		//読み終えたか
+		m_bLoad = true;
+		break;
+	}
+	nLoad++;
 }

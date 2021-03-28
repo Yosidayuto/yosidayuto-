@@ -40,8 +40,8 @@ public:
 	}FADE;
 	CFade();											// コンストラクタ
 	~CFade();											// デストラクタ
-	static CFade *Create(void);				// 作成処理
-	HRESULT Init(void);						// 初期化処理
+	static CFade *Create(void);							// 作成処理
+	HRESULT Init(void);									// 初期化処理
 	void Uninit(void);									// 終了処理
 	void Update(void);									// 更新処理
 	void Draw(void);									// 描画処理

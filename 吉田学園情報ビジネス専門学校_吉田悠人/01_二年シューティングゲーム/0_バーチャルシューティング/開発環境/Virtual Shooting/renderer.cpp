@@ -75,7 +75,7 @@ HRESULT CRenderer::Init(HWND hWnd, bool bWindow)
 		if (FAILED(m_pD3D->CreateDevice(D3DADAPTER_DEFAULT,
 										D3DDEVTYPE_HAL,
 										hWnd,
-										D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+										D3DCREATE_SOFTWARE_VERTEXPROCESSING | D3DCREATE_MULTITHREADED,
 										&d3dpp, &m_pD3DDevice)))
 		{
 			// è„ãLÇÃê›íËÇ™é∏îsÇµÇΩÇÁ

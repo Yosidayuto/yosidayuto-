@@ -33,13 +33,14 @@ public:
 
 	HRESULT Init(void);		// 初期化関数
 	void	Uninit(void);	// 終了関数
-	void	Update(void);	// 更新関数
-	void	Draw(void);		// 描画関数
+	bool	GetLoad(void);	// ロードゲッター
 	void	FileLoad(void); // ファイルロード
+	void	File(void);		// ファイル
 private:
 	CLoadBg*	m_pLoadBg;	// ロード画面の背景ポインタ
 	bool		m_bLoad;	// ロードが終えたか
-	std::mutex	m_mtx_;		// ミューテックス(排他制御)用変数
+	int			nLoad;		// ロード用変数
+	std::thread m_stLoad;
 };
 
 #endif

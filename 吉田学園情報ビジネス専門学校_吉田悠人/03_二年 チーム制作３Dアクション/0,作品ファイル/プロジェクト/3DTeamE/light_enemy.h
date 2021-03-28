@@ -46,13 +46,13 @@ public:
 
 	CLightEnemy();
 	~CLightEnemy();
-	static HRESULT Load(void);
-	static void Unload(void);
+	static HRESULT	Load(void);
+	static void		Unload(void);
 	static CLightEnemy* Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot);
 	HRESULT Init(void);
-	void Uninit(void);
-	void Update(void);
-	void Draw(void);
+	void	Uninit(void);
+	void	Update(void);
+	void	Draw(void);
 
 private:
 	void PartsUpdate(void);

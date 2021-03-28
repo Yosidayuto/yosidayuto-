@@ -53,13 +53,13 @@ CHeavyEnemy::CHeavyEnemy()
 		m_Partsrot[nCount] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//パーツrot情報
 		m_Partspos[nCount] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);		//パーツpos情報
 	}
-	SetMode(ENEMY_TOUR);	//行動モード
-	m_fSpeed = 0.0f;		//スピード
-	m_bSearch = false;		//捜しているかどうか
-	m_pAnima = NULL;		//アニメーションポインタ
-	nWaryCoutn = 0;			//警戒カウント
-	m_bWary = false;		//?
-	m_bDiscovery = false;	//!
+	SetMode(ENEMY_TOUR);		//行動モード
+	m_fSpeed		= 0.0f;		//スピード
+	m_bSearch		= false;	//捜しているかどうか
+	m_pAnima		= NULL;		//アニメーションポインタ
+	nWaryCoutn		= 0;		//警戒カウント
+	m_bWary			= false;	//?
+	m_bDiscovery	= false;	//!
 }
 
 //=============================================================================
@@ -116,13 +116,16 @@ CHeavyEnemy * CHeavyEnemy::Create(D3DXVECTOR3 pos, D3DXVECTOR3 rot)
 {
 	CHeavyEnemy* pLightEnemy = NULL;
 	pLightEnemy = new CHeavyEnemy;
-	pLightEnemy->SetPos(pos);
-	pLightEnemy->SetRot(rot);
-	pLightEnemy->SetSize(D3DXVECTOR3(0.2f,0.2f,0.2f));
-	//巡回ルート設定
-	pLightEnemy->SetTour(0, pos);
 
-	pLightEnemy->Init();
+	if (pLightEnemy != NULL)
+	{
+		pLightEnemy->SetPos(pos);
+		pLightEnemy->SetRot(rot);
+		pLightEnemy->SetSize(D3DXVECTOR3(0.2f, 0.2f, 0.2f));
+		//巡回ルート設定
+		pLightEnemy->SetTour(0, pos);
+		pLightEnemy->Init();
+	}
 
 	return pLightEnemy;
 }

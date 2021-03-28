@@ -49,7 +49,7 @@ CRenderer *CManager::m_pRenderer	 = NULL;
 CInihKeyboard *CManager::m_pInput	 = NULL;
 CInihMouse *CManager::m_pInihMouse	 = NULL;
 CSound *CManager::m_pSound			 = NULL;
-GAME_MODE CManager::m_Mode			 = GAME_MODE_TITLE;
+GAME_MODE CManager::m_Mode			 = GAME_MODE_LOAD;
 CScene *CManager::m_pScene			 = NULL;
 CFade *CManager::m_pFade			 = NULL;
 int CManager::m_nScore				 = 10000;
@@ -58,6 +58,7 @@ CGame* CManager::m_pGame			 = NULL;
 CTitle* CManager::m_pTitle			 = NULL;
 CSelect* CManager::m_pSelect		 = NULL;
 CTutorial* CManager::m_pTutorial	 = NULL;
+CLoad* CManager::m_pLoad			 = NULL;
 //=============================================================================
 //コンストラクタ
 //=============================================================================
@@ -104,8 +105,13 @@ HRESULT CManager::Init(HINSTANCE hInstance, HWND hWnd, bool bWindow)
 	m_pSelect	= new CSelect;
 	//ゲーム処理
 	m_pGame = new CGame;
-	//ファイルロード
-	LoadFile();
+	//ロード処理
+	m_pLoad = new CLoad;
+
+	CLoad::Load();
+	////ファイルロード
+	//LoadFile();
+
 	//オブジェクトクラス生成
 	m_pFade->SetFade(m_Mode);
 
@@ -219,6 +225,17 @@ void CManager::Update()
 	//場面ごとのアップデート
 	switch (m_Mode)
 	{
+	case GAME_MODE_LOAD:
+		if (m_pLoad != NULL)
+		{
+			if (m_pLoad->GetLoad())
+			{
+				//オブジェクトクラス生成
+				m_pFade->SetFade(GAME_MODE_TITLE);
+			}
+		}
+		break;
+
 	case GAME_MODE_TITLE:
 		if (m_pTitle != NULL)
 		{
@@ -269,6 +286,12 @@ void CManager::SetMode(GAME_MODE mode)
 	//終了処理
 	switch (m_Mode)
 	{
+	case GAME_MODE_LOAD:
+		if (m_pLoad != NULL)
+		{
+			m_pLoad->Uninit();
+		}
+		break;
 	case GAME_MODE_TITLE:
 		if (m_pTitle != NULL)
 		{
@@ -313,6 +336,13 @@ void CManager::SetMode(GAME_MODE mode)
 	//初期化処理
 	switch (m_Mode)
 	{
+	case GAME_MODE_LOAD:
+		if (m_pLoad != NULL)
+		{
+			m_pLoad->Init();
+		}
+		break;
+
 	case GAME_MODE_TITLE:
 		if (m_pTitle != NULL)
 		{
